@@ -1,0 +1,153 @@
+body{
+    margin:0;
+    padding:0;
+}
+
+@font-face{
+	font-family: Emoona;
+	src:url('font/Avenir.ttc');
+
+}
+
+.wrapper{
+	background-image: url('../img/background.png');
+	background-size: cover;
+	height: 100vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#welcome{
+	letter-spacing: 10px;
+	font-family: Emoona;
+	margin-top: 10px;
+	margin-bottom: -10px;
+
+}
+.page-logo{
+	text-align: center;
+	margin-top: 5vh;
+	margin-bottom: 10px;
+}
+
+.page-logo img
+{	
+
+	height: 180px;
+	width: 180px;
+	
+}
+
+.page-title{
+	text-align: center;
+
+}
+
+#line{
+
+	width: 95%;
+	border-bottom: 1px solid black;
+}
+
+.page-social{
+text-align: center;
+
+}
+
+.social-bar{
+	list-style: none;
+	margin-top: 20px;
+	margin-bottom:10px;
+	padding: 0;
+
+}
+
+.social-bar li{
+	display: inline-block;
+}
+
+a{
+	cursor: pointer;
+
+}
+
+.page-social img{
+	
+	width:60px;
+
+
+}
+
+.page-caption{
+
+	text-align: center;
+
+}
+
+#caption{
+	font-family: Emoona;
+	margin-bottom: 10px;
+	margin-top: 10px;
+}
+
+.page-txtbox{
+	text-align: center;
+}
+
+#email{
+	width: 90%;
+	padding:5px 15px 5px 15px;
+	margin-top:1em;
+	opacity:0.6;
+	transition: all .3s ease-in-out;
+	border:solid 1px #000;
+}
+
+#email:focus
+{
+	outline:0;
+	opacity: 1;
+}
+
+.button{
+	text-align: center;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.button button{
+	cursor: pointer;
+
+}
+
+.button button:hover{
+	opacity: 0.6;
+}
+
+.button button:focus
+{
+	outline:0;
+}
+
+#btnSubmit{
+	padding:.5em 1.5em .5em 1.5em;
+	color: white;
+	background-color: black;
+	transition: all .3s ease-in-out;
+}
+
+@media screen and (min-width: 1091px){
+
+	#line{
+		width: 60%;
+
+	}
+
+	#email{
+
+		width: 50%;
+	}
+
+}

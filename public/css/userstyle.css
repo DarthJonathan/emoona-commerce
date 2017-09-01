@@ -1,0 +1,47 @@
+.registerArea{
+	width: 50%;
+	margin: 0 auto;
+}
+
+.profileArea{
+	width: 60%;
+	margin: 0 auto;
+}
+
+textarea{
+	resize:none;
+}
+
+a{
+	color: black;
+}
+
+a:hover{
+	text-decoration: none;
+}
+
+a:visited{
+	color: black;
+}
+
+.errMsg{
+	color: red !important;
+	font-size: 10pt;
+}
+
+#pref_phone{
+	
+}
+
+.hint{
+	color: #636c72;
+}
+
+.phone-plus{
+
+}
+
+.phone-dash{
+	margin-right: 5px;
+	margin-left: 5px;
+}
