@@ -2,8 +2,10 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Auth;
 
 class User extends Authenticatable
 {
@@ -35,5 +37,107 @@ class User extends Authenticatable
     public function users_groups ()
     {
         return $this->hasOne('App\users_groups', 'user_id', 'user_id');
+    }
+
+    /*
+     * checkCompletion
+     * check for user data completion
+     *
+     * @return boolean
+     */
+    private static function checkCompletion ()
+    {
+        $elsecheck = user_info::where('user_id', Auth::id())->first()->toArray();
+        $data = 0;
+        $completed = 0;
+
+        //Check if user profile is completed
+        if($elsecheck['address'] != null)
+        {
+            $completed++;
+            $data++;
+        }else
+            $data++;
+
+        if($elsecheck['postcode'] != null)
+        {
+            $completed++;
+            $data++;
+        }else
+            $data++;
+
+        if($elsecheck['province'] != null)
+        {
+            $completed++;
+            $data++;
+        }else
+            $data++;
+
+        if($elsecheck['country'] != null)
+        {
+            $completed++;
+            $data++;
+        }else
+            $data++;
+
+        if($elsecheck['gender'] != null)
+        {
+            $completed++;
+            $data++;
+        }else
+            $data++;
+
+        if($completed/$data == 1)
+            return true;
+        else
+            return false;
+    }
+
+    /*
+     * getNotificationTable
+     * get from user_notification table
+     *
+     * @return: array
+     *
+     */
+    public static function getNotificationTable ()
+    {
+        $notifications = array ();
+
+        try {
+            $notifications = user_notification::where('user_id', '=', Auth::id())->get()->toArray();
+        } catch (ModelNotFoundException $e)
+        {
+            $notifications = null;
+        }
+
+        return $notifications;
+    }
+
+    public static function getNotifications ()
+    {
+        $checkingUser = self::find(Auth::id())->toArray();
+
+        $notifications = array();
+
+        //Check if user is activated
+        if($checkingUser['activation_code'] != null){
+            $notifications['User not activated'] = null;
+        }
+
+        //Check user completion
+        if(!self::checkCompletion())
+        {
+            $notifications['User data not completed'] = null;
+        }
+
+        foreach(User::getNotificationTable() as $notif)
+        {
+            $notif_name = $notif['notification_name'];
+            $notif_url = $notif['notification_url'];
+            $notifications[$notif_name] = $notif_url;
+        }
+
+        return $notifications;
     }
 }

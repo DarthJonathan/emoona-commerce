@@ -57,16 +57,20 @@
                 <div class="dropdown">
                     <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         {{ Auth::user()->firstname }} {{ Auth::user()->lastname }}
-                        <span class="badge badge-primary">
-                        4
-                    </span>
+                        @if(count(\Illuminate\Support\Facades\Session::get('notifications')) > 0)
+                            <span class="badge badge-primary">
+                                {{ count(\Illuminate\Support\Facades\Session::get('notifications')) }}
+                            </span>
+                        @endif
                     </button>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="Notifications">
-                        <a class="dropdown-item" href="profile/notifications">
+                        <a class="dropdown-item" href="notifications">
                             Notifications
-                            <span class="badge badge-secondary">
-                                4
-                        </span>
+                            @if(count(\Illuminate\Support\Facades\Session::get('notifications')) > 0)
+                                <span class="badge badge-primary">
+                                    {{ count(\Illuminate\Support\Facades\Session::get('notifications')) }}
+                                </span>
+                            @endif
                         </a>
                         <hr>
                         <a class="dropdown-item" href="profile/edit">Edit Profile</a>

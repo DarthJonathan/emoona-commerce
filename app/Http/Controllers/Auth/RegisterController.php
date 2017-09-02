@@ -63,7 +63,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        if($data['newsletter']==true)
+        if(isset($_POST['newsletter']))
         {$newsletter = 1;}
         else
         {$newsletter = 0;}
