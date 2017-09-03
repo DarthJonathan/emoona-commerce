@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
@@ -68,11 +69,13 @@ class RegisterController extends Controller
         else
         {$newsletter = 0;}
 
-        return User::create([
+        $activation_code = time().uniqid();
+
+        $user = User::create([
             'firstname' => $data['firstname'],
             'lastname' => $data['lastname'],
             'email' => $data['email'],
-            'activation_code' => time().uniqid(),
+            'activation_code' => $activation_code,
             'password' => bcrypt($data['password']),
         ])->user_info()->create([
             'newsletter' => $newsletter,
@@ -80,5 +83,18 @@ class RegisterController extends Controller
         ])->users_groups()->create([
             'group_id' => 1
         ]);
+
+        $mail_data = array(
+            'activation_code' => $activation_code
+        );
+
+        Mail::send('emails.activate', $mail_data, function($message) use ($data)
+        {
+            $message->from('activation@emoonastudio.com', 'Emoona Studio')
+                    ->to($data['email'], $data['firstname'] . $data['lastname'])
+                    ->subject('Activate Your Account');
+        });
+
+        return $user;
     }
 }

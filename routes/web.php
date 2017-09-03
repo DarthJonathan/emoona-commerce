@@ -19,8 +19,9 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home')->middleware('notifications');
 
-Route::middleware(['notifications'], function()
+Route::middleware(['notifications'])->group(function()
 {
     Route::get('/notifications', 'UserController@notifications')->name('Notifications');
     Route::get('profile/edit', 'UserController@edit')->name('Edit Profile');
+    Route::get('/resend_activation', 'UserController@resend')->name('Resend Activation Code');
 });
