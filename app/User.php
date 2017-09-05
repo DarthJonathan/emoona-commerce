@@ -2,7 +2,6 @@
 
 namespace App;
 
-use App\Mail\ActivateUser;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -36,9 +35,31 @@ class User extends Authenticatable
         return $this->hasOne('App\user_info');
     }
 
+    public function user_group ()
+    {
+        return $this->hasOne('App\users_groups');
+    }
+
+
+    /**
+     * users_groups
+     * use this only for signing up.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
     public function users_groups ()
     {
         return $this->hasOne('App\users_groups', 'user_id', 'user_id');
+    }
+
+    public function isAdmin ()
+    {
+        $groupid = $this->user_group->group_id;
+
+        if($groupid == 1)
+            return true;
+        else
+            return false;
     }
 
     /**
@@ -116,28 +137,41 @@ class User extends Authenticatable
         return $notifications;
     }
 
+    /**
+     * getNotifications
+     * Get all notifications combines getNotificationTable, and checkCompletion
+     *
+     * @return array
+     *
+     */
     public static function getNotifications ()
     {
         $checkingUser = self::find(Auth::id())->toArray();
-
         $notifications = array();
 
-        //Check if user is activated
-        if($checkingUser['activation_code'] != null){
-            $notifications['User not activated'] = '/resend_activation';
-        }
-
-        //Check user completion
-        if(!self::checkCompletion())
+        if(!self::isAdmin())
         {
-            $notifications['User data not completed'] = '/profile/edit';
-        }
+            //Check if user is activated
+            if ($checkingUser['activation_code'] != null) {
+                $notifications['User not activated'] = '/resend_activation';
+            }
 
-        foreach(User::getNotificationTable() as $notif)
-        {
-            $notif_name = $notif['notification_name'];
-            $notif_url = $notif['notification_url'];
-            $notifications[$notif_name] = $notif_url;
+            //Check user completion
+            if (!self::checkCompletion()) {
+                $notifications['User data not completed'] = '/profile/edit';
+            }
+
+            foreach (User::getNotificationTable() as $notif) {
+                $notif_name = $notif['notification_name'];
+                $notif_url = $notif['notification_url'];
+                $notifications[$notif_name] = $notif_url;
+            }
+        }else{
+            foreach (User::getNotificationTable() as $notif) {
+                $notif_name = $notif['notification_name'];
+                $notif_url = $notif['notification_url'];
+                $notifications[$notif_name] = $notif_url;
+            }
         }
 
         return $notifications;

@@ -3,8 +3,10 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 
-class RoleChecker
+class isAdmin
 {
     /**
      * Handle an incoming request.
@@ -15,6 +17,9 @@ class RoleChecker
      */
     public function handle($request, Closure $next)
     {
+        if(!Auth::user()->isAdmin())
+            return Redirect::to('/home');
+
         return $next($request);
     }
 }
