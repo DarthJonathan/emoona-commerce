@@ -30,6 +30,11 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     *
+     * For the connection to user_info
+     */
     public function user_info ()
     {
         return $this->hasOne('App\user_info');
@@ -40,6 +45,23 @@ class User extends Authenticatable
         return $this->hasOne('App\users_groups');
     }
 
+    public function user_notification ()
+    {
+        return $this->hasMany('App\user_notification');
+    }
+
+    protected static function boot() {
+
+        parent::boot();
+
+        static::deleting(function($delete) {
+            $delete->user_info()->delete();
+            $delete->user_group()->delete();
+
+            foreach ($delete->user_notification as $notification)
+                $notification->delete();
+        });
+    }
 
     /**
      * users_groups
@@ -55,6 +77,7 @@ class User extends Authenticatable
     public function isAdmin ()
     {
         $groupid = $this->user_group->group_id;
+        $user_info = $this->user_info->toArray();
 
         if($groupid == 1)
             return true;
@@ -149,7 +172,7 @@ class User extends Authenticatable
         $checkingUser = self::find(Auth::id())->toArray();
         $notifications = array();
 
-        if(!self::isAdmin())
+        if(!Auth::user()->isAdmin())
         {
             //Check if user is activated
             if ($checkingUser['activation_code'] != null) {
