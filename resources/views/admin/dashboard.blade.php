@@ -1,12 +1,8 @@
-@extends ('layouts.app')
+@extends ('layouts.admin')
 
 @section('title', 'Admin Dashboard')
 
 @section('content')
-
-
     <h1>Ini dashboard</h1>
-    <pre>
-    {{ \Illuminate\Support\Facades\Auth::user() }}
-</pre>
+    {{ Auth::user() }}
 @endsection

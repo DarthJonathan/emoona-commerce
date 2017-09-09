@@ -81,7 +81,7 @@ class RegisterController extends Controller
             'newsletter' => $newsletter,
             'birthday' => $data['birthday']
         ])->users_groups()->create([
-            'group_id' => 1
+            'group_id' => 2
         ]);
 
         $mail_data = array(

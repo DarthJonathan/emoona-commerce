@@ -2,11 +2,12 @@
 
 namespace App\Http\Middleware;
 
+use App\User;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 
-class isAdmin
+class isSuspended
 {
     /**
      * Handle an incoming request.
@@ -15,13 +16,14 @@ class isAdmin
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next, $guard = null)
+    public function handle($request, Closure $next)
     {
-        if(!Auth::guard($guard)->check())
-            return Redirect::to('/login');
+        $suspended = User::with('user_info')->where('id', '=', Auth::id())->get()->toArray()[0]['user_info']['suspended'];
 
-        if(!Auth::user()->isAdmin())
-            return Redirect::to('/home');
+        if($suspended == 1) {
+            Auth::logout();
+            return Redirect::to('suspended');
+        }
 
         return $next($request);
     }

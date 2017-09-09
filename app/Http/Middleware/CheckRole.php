@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 
-class isAdmin
+class CheckRole
 {
     /**
      * Handle an incoming request.
@@ -15,13 +15,10 @@ class isAdmin
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next, $guard = null)
+    public function handle($request, Closure $next)
     {
-        if(!Auth::guard($guard)->check())
-            return Redirect::to('/login');
-
-        if(!Auth::user()->isAdmin())
-            return Redirect::to('/home');
+        if(Auth::user()->isAdmin())
+            return Redirect::to('/admin');
 
         return $next($request);
     }

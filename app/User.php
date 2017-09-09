@@ -50,6 +50,11 @@ class User extends Authenticatable
         return $this->hasMany('App\user_notification');
     }
 
+    public function transactions ()
+    {
+        $this->hasMany('App\transactions');
+    }
+
     protected static function boot() {
 
         parent::boot();

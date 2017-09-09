@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\user_info;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -23,7 +24,9 @@ class UserController extends Controller
 
     public function edit ()
     {
-        return view('editprofile');
+        $data = Auth::user()->toArray();
+
+        return view('editprofile', $data);
     }
 
     public function resend ()
@@ -53,6 +56,41 @@ class UserController extends Controller
 
     public function update (Request $req)
     {
+        $rules = array (
+            'firstname' => 'required',
+            'lastname'  => 'required',
+            'address'   => 'required',
+            'postcode'  => 'required|numeric',
+            'province'  => 'required',
+            'country'   => 'required',
+            'birthday'  => 'date|required',
+            'gender'    => 'required',
+            'phone'     => 'required|numeric'
+        );
+
+        $this->validate($req, $rules);
+
+        $updated_data = array (
+            'address'  => $req->input('address'),
+            'postcode'  => $req->input('postcode'),
+            'province'  => $req->input('province'),
+            'country'  => $req->input('country'),
+            'birthday'  => $req->input('birthday'),
+            'gender'  => $req->input('gender'),
+            'phone'  => $req->input('phone'),
+        );
+
+        $updated_data_core = array (
+            'firstname' => $req->input('firstname'),
+            'lastname'  => $req->input('lastname')
+        );
+
+        if(user_info::where('user_id', '=', Auth::id())->update($updated_data) && Auth::user()->update($updated_data_core))
+            Session::flash('message', 'Updating Data Completed');
+        else
+            Session::flash('message', 'Update Failed');
+
+        return Redirect::to('home');
 
     }
 }
