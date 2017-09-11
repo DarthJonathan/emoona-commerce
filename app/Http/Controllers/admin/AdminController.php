@@ -33,4 +33,9 @@ class AdminController extends Controller
 
         return view('admin/accounts', $data);
     }
+
+    public function items()
+    {
+        return view('admin/items');
+    }
 }

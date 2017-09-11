@@ -70,6 +70,9 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{ URL::to('admin/accounts') }}">Account Management</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ URL::to('admin/items') }}">Items Management</a>
+            </li>
         </ul>
         <div class="form-inline my-2 my-lg-0">
             @if(Auth::guest())

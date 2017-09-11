@@ -38,10 +38,12 @@ Route::middleware(['admin'])->group(function()
 
     Route::prefix('admin')->group(function () {
         Route::get('accounts', 'admin\AdminController@accounts')->name('acconuntmanagement');
+        Route::get('items', 'admin\AdminController@items');
+        Route::post('category', 'admin\ItemManagement@category');
+        Route::get('category', 'admin\ItemManagement@category');
         Route::post('userinfo', 'admin\UserManagementController@userinfo');
         Route::post('user_transactions', 'admin\UserManagementController@userTransactions');
         Route::post('user_transaction_detail', 'admin\UserManagementController@userTransactionDetails');
-        Route::get('user_transaction_detail', 'admin\UserManagementController@userTransactionDetails');
         Route::post('suspend', 'admin\UserManagementController@suspend');
         Route::post('delete_confirmation', 'admin\UserManagementController@confirmDelete');
         Route::post('remove', 'admin\UserManagementController@removeUser');

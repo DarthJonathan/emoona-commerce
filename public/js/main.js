@@ -138,7 +138,7 @@ function seeTransactionDetail (e)
 
             const transaction_details = JSON.parse(data);
 
-            console.log(transaction_details);
+            // console.log(transaction_details);
 
             var html = '<h3 class="m-2 mb-4">User Information</h3>' +
                 '<table class="table">' +
@@ -169,6 +169,38 @@ function seeTransactionDetail (e)
             });
 
             $('#modal').modal('toggle');
+        }
+    });
+}
+
+function loadNextCategory (e)
+{
+    const next = $(e).data('id');
+
+    $.ajax({
+        url:'/admin/category',
+        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+        type: 'POST',
+        data: { category:next },
+        success: function(data) {
+            switch(data.category)
+            {
+                case 1:
+                {
+                    $('.category-two').append(html);
+                }break;
+
+
+                case 2:
+                {
+                    $('.category-three').append(html);
+                }break;
+
+                case 3:
+                {
+                    $('.items-list').append(html);
+                }break
+            }
         }
     });
 }
