@@ -175,13 +175,14 @@ function seeTransactionDetail (e)
 
 function loadNextCategory (e)
 {
-    const next = $(e).data('id');
+    const id = $(e).data('id');
+    const next = $(e).data('category');
 
     $.ajax({
         url:'/admin/category',
         headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
         type: 'POST',
-        data: { category:next },
+        data: { category:next, id:id },
         success: function(data) {
             switch(data.category)
             {

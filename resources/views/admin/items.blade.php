@@ -25,8 +25,8 @@
                     </div>
                     <div class="category-wrapper">
                         <div class="list-group list-group-flush category-one">
-                            <a onclick="loadNextCategory(this)" style="cursor:pointer" data-id="male" class="list-group-item list-group-item-action">Male</a>
-                            <a onclick="loadNextCategory(this)" style="cursor:pointer" data-id="Female" class="list-group-item list-group-item-action">Female</a>
+                            <a onclick="loadNextCategory(this)" style="cursor:pointer" data-id="male" data-category="1" class="list-group-item list-group-item-action">Male</a>
+                            <a onclick="loadNextCategory(this)" style="cursor:pointer" data-id="Female" data-category="1" class="list-group-item list-group-item-action">Female</a>
                        </div>
                     </div>
                 </div>
