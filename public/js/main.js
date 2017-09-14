@@ -184,22 +184,71 @@ function loadNextCategory (e)
         type: 'POST',
         data: { category:next, id:id },
         success: function(data) {
-            switch(data.category)
+
+            const out = JSON.parse(data);
+            var html = "";
+
+            switch(out.category)
             {
-                case 1:
+                case '1':
                 {
-                    $('.category-two').append(html);
+                    $('.category-two').empty();
+                    $('.category-three').empty();
+                    $('.items-list').empty();
+
+                    $.each(out.html, function(key, value){
+
+                        html = '<div style="cursor:pointer" class="list-group-item list-group-item-action">' +
+                            '<a onclick="loadNextCategory(this)" data-id="'+ value.id +'" data-category="2">' +
+                            value.name +
+                            '</a>' +
+                            '<button style="cursor: pointer" class="btn btn-primary float-right btn-sm" data-id="'+ value.id +'" onclick="editCategory(this)">Edit Item</button>' +
+                            '<button style="cursor: pointer" class="btn btn-danger float-right btn-sm mr-2" data-id="'+ value.id +'" onclick="deleteCategory(this)">Delete Item</button>' +
+                            '</div>';
+
+                        $('.category-two').append(html);
+                    });
                 }break;
 
-
-                case 2:
+                case '2':
                 {
-                    $('.category-three').append(html);
+                    $('.category-three').empty();
+                    $('.items-list').empty();
+
+                    $.each(out.html, function(key, value){
+
+                        html = '<div style="cursor:pointer" class="list-group-item list-group-item-action">' +
+                            '<a onclick="loadNextCategory(this)" data-id="'+ value.id +'" data-category="3">' +
+                            value.name +
+                            '</a>' +
+                            '<button style="cursor: pointer" class="btn btn-primary float-right btn-sm" data-id="'+ value.id +'" onclick="editItem(this)">Edit Item</button>' +
+                            '<button style="cursor: pointer" class="btn btn-danger float-right btn-sm mr-2" data-id="'+ value.id +'" onclick="deleteItem(this)">Delete Item</button>' +
+                            '</a>';
+
+                        $('.category-three').append(html);
+                    });
                 }break;
 
-                case 3:
+                case '3':
                 {
-                    $('.items-list').append(html);
+                    $('.items-list').empty();
+
+                    $.each(out.html, function(key, value){
+
+                        html = '<tr>' +
+                            '<td>'+ (key+1) +'</td>' +
+                            '<td>'+ value.color +'</td>' +
+                            '<td>'+ value.size +'</td>' +
+                            '<td>'+ value.images +'</td>' +
+                            '<td>'+ value.stock +'</td>' +
+                            '<td>'+ value.status +'</td>' +
+                            '<td>' +
+                            '<button class="btn btn-danger" onclick="deleteItemDetail(this)" data-id="'+ value.id +'" style="cursor:pointer">Delete</button>' +
+                            '</td>' +
+                            '</tr>';
+
+                        $('.items-list').append(html);
+                    });
                 }break
             }
         }

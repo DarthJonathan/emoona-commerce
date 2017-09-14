@@ -13,7 +13,6 @@
         }
 
         .category-wrapper {
-            overflow: scroll;
         }
     </style>
     <div class="container">
@@ -45,7 +44,7 @@
             <div class="col-lg-4">
                 <div class="card category-cards">
                     <div class="card-header">
-                        Category
+                        Items
                     </div>
                     <div class="category-wrapper">
                         <div class="list-group list-group-flush category-three">
@@ -59,11 +58,25 @@
             <div class="col-lg-12">
                 <div class="card content-card">
                     <div class="card-header">
-                        Items
+                        Item Details
                     </div>
                     <div class="card-body">
-                        <div class="list-group list-group-flush items-list">
-                        </div>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <td>No.</td>
+                                    <td>Color</td>
+                                    <td>Size</td>
+                                    <td>Image</td>
+                                    <td>Stock</td>
+                                    <td>Status</td>
+                                    <td>Action</td>
+                                </tr>
+                            </thead>
+                            <tbody class="items-list">
+
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
