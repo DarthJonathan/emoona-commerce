@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\admin;
 
+use App\ItemDetail;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
