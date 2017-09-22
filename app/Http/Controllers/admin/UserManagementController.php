@@ -64,15 +64,15 @@ class UserManagementController extends Controller
         echo $msg;
     }
 
-    public function confirmDelete (Request $req)
-    {
-        $data = array('type' => $req->input('type'), 'id' => $req->input('id'));
-        return view('confirm', $data);
-    }
-
     public function removeUser (Request $req)
     {
-        User::with('user_info', 'user_group')->where('id', $req->input('id'))->first()->delete();
-        echo 'Delete Complete';
+        try
+        {
+            User::with('user_info', 'user_group')->where('id', $req->input('id'))->first()->delete();
+            echo json_encode(['error' => false, 'msg' => 'User Removal Success!']);
+        }catch(\Exception $e)
+        {
+            echo json_encode(['error' => true, 'msg' => $e]);
+        }
     }
 }

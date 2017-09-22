@@ -51,4 +51,38 @@ class ItemManagement extends Controller
             }break;
         }
     }
+
+    function deleteCategory (Request $req)
+    {
+        $category_id = $req->input('id');
+        $check_category = count(Item::where('category_id', '=', $category_id)->get()->toArray());
+
+        if($check_category > 0)
+            $return = ['error' => true, 'msg' => 'There are items in this category'];
+        else
+        {
+            try {
+                ItemCategory::where('id', '=', $category_id)->first()->delete();
+                $return = ['error' => false, 'msg' => 'Deleting category completed'];
+            } catch (\Exception $e) {
+                $return = ['error' => true, 'msg' => $e];
+            }
+        }
+
+        echo json_encode($return);
+    }
+
+    function deleteItem (Request $req)
+    {
+        $item_id = $req->input('id');
+
+        try {
+            Item::where('id', '=', $item_id)->first()->delete();
+            $return = ['error' => false, 'msg' => 'Deleting item completed'];
+        } catch (\Exception $e) {
+            $return = ['error' => true, 'msg' => $e];
+            }
+
+        echo json_encode($return);
+    }
 }

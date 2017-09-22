@@ -16,6 +16,20 @@
         }
     </style>
     <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="jumbotron">
+                    <button
+                        class="btn btn-primary"
+                        onclick="newItem()"
+                        style="cursor:pointer">Create New Product</button>
+                    <button
+                            class="btn btn-primary"
+                            onclick="newCategory()"
+                            style="cursor:pointer">Create New Category</button>
+                </div>
+            </div>
+        </div>
         <div class="row mb-3">
             <div class="col-lg-4">
                 <div class="card category-cards">

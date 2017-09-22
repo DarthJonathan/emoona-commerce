@@ -111,18 +111,93 @@ function confirmDelete(e)
         {
             url = '/admin/remove';
         }
+
+        case 'category':
+        {
+            url = '/admin/delete_category';
+        }
     }
 
     $.ajax({
         url: url,
         headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
         type: 'POST',
+        dataType: 'json',
         data: { id:id, type: type },
         success: function(data) {
-            $('#modal').modal('toggle');
-            toggleSuccess(data);
+
+            if(!data.error)
+            {
+                $('#modal').modal('toggle');
+                toggleSuccess(data.msg);
+            }else
+            {
+                $('#modal').modal('toggle');
+                toggleError(data.msg);
+            }
         }
     });
+}
+
+function deleteCategory (e)
+{
+    const id = $(e).data('id');
+    $('#modal').modal('toggle');
+
+    $.ajax({
+        url: '/admin/delete_confirmation',
+        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+        type: 'POST',
+        data: {id: id, type: 'category'},
+        success: function (data) {
+            $('.modal-body').html(data);
+        }
+    });
+}
+
+function deleteItem (e)
+{
+    const id = $(e).data('id');
+
+    $.ajax({
+        url: '/admin/delete_item',
+        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+        type: 'POST',
+        dataType: 'json',
+        data: {id: id},
+        success: function (data) {
+            if(!data.error)
+                toggleSuccess(data.msg);
+            else
+                toggleError(data.msg);
+        }
+    });
+}
+
+function deleteItemDetail (e) {
+    const id = $(e).data('id');
+
+    $.ajax({
+        url: '/admin/delete_item_detail',
+        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+        type: 'POST',
+        dataType: 'json',
+        data: {id: id},
+        success: function (data) {
+            if(!data.error)
+                toggleSuccess(data.msg);
+            else
+                toggleError(data.msg);
+        }
+    });
+}
+
+function newItem () {
+
+}
+
+function newCategory () {
+
 }
 
 function seeTransactionDetail (e)
@@ -258,7 +333,7 @@ function loadNextCategory (e)
 function toggleSuccess (data)
 {
     $('.notification-success').removeClass('hidden');
-    $('.alert-body').html(data);
+    $('.alert-body-success').html(data);
     setTimeout(function()
     {
         $('.notification-success').addClass('hidden');
@@ -268,10 +343,10 @@ function toggleSuccess (data)
 
 function toggleError (data)
 {
-    $('.notification-success').removeClass('hidden');
+    $('.notification-error').removeClass('hidden');
+    $('.alert-body-error').html(data);
     setTimeout(function()
     {
-        $('.notification-success').addClass('hidden');
-        location.reload();
+        $('.notification-error').addClass('hidden');
     }, 1500);
 }
