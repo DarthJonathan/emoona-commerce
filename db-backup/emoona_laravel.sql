@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Sep 11, 2017 at 02:21 PM
+-- Generation Time: Sep 21, 2017 at 07:52 PM
 -- Server version: 10.1.26-MariaDB
 -- PHP Version: 7.1.8
 
@@ -153,18 +153,6 @@ CREATE TABLE `item_studio` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `migrations`
---
-
-CREATE TABLE `migrations` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `batch` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `newsletter`
 --
 
@@ -222,6 +210,18 @@ CREATE TABLE `sign_up_participant` (
   `hash` varchar(255) DEFAULT NULL,
   `created` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `sign_up_participant`
+--
+
+INSERT INTO `sign_up_participant` (`id`, `email`, `hash`, `created`) VALUES
+(3, 'gitaandreina@ymail.com', 'f13a76b2d04edbbda9da70a433d15ff7', '2017-09-18'),
+(4, 'reii_chan723@ymail.com', '7733e42be12b56a4b08ee1489baa7774', '2017-09-18'),
+(5, 'michellevinnetan@gmail.com', NULL, '2017-09-18'),
+(6, 'rxzraiser@gmail.com', NULL, '2017-09-18'),
+(7, 'gitaandreina@gmail.com', NULL, '2017-09-18'),
+(9, 'sharonputri27@gmail.com', NULL, '2017-09-18');
 
 -- --------------------------------------------------------
 
@@ -306,9 +306,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `firstname`, `lastname`, `activation_code`, `email`, `password`, `last_login`, `remember_token`, `created_at`, `updated_at`) VALUES
-(22, 'Jonathan', 'Hosea', NULL, 'jonathan.hosea@me.com', '$2y$10$6Xd3Y7E.CcYAsSsDbGD82eWDg2tmh31F.TfRSYiGK923eMENkT4ti', '2017-09-11 12:01:07', 'xdDo0FeD9FTgaV5kYElMkTVHqdxZ2D4a7WUNSskAmZq3QnP5CPuL21Kcu6FU', '2017-09-05 19:46:09', '2017-09-05 23:15:17'),
-(24, 'Administrator', 'Admin', '150468752659afb5a698dc0', 'admin@admin.com', '$2y$10$awV4e.Kuz85DjE.jnx/Cz.EtIvxuYSZv8Wl0nDofqVcXkmPoOi5My', '2017-09-11 11:59:53', 'LMyPoyPvx99NU7ayjUOJvqB7f3M6GjCHcda9FkaDZquZmv1SRBp5usXFTWty', '2017-09-06 01:45:26', '2017-09-06 01:45:26'),
-(28, 'ytfff`', 'vhjjhvjhvm', '150513122359b67ad7a5c95', 'zonecaptain@gmail.com', '$2y$10$FBmuPOj54ajRzHqAnfo/3exnRVylWOrl3dQYB4xZKJwyxQAWgKQo2', '2017-09-11 12:00:23', NULL, '2017-09-11 05:00:23', '2017-09-11 05:00:23');
+(22, 'Jonathan', 'Hosea', NULL, 'jonathan.hosea@me.com', '$2y$10$6Xd3Y7E.CcYAsSsDbGD82eWDg2tmh31F.TfRSYiGK923eMENkT4ti', '2017-09-11 05:01:07', 'xdDo0FeD9FTgaV5kYElMkTVHqdxZ2D4a7WUNSskAmZq3QnP5CPuL21Kcu6FU', '2017-09-05 12:46:09', '2017-09-05 16:15:17'),
+(24, 'Administrator', 'Admin', '150468752659afb5a698dc0', 'admin@admin.com', '$2y$10$awV4e.Kuz85DjE.jnx/Cz.EtIvxuYSZv8Wl0nDofqVcXkmPoOi5My', '2017-09-11 04:59:53', 'LMyPoyPvx99NU7ayjUOJvqB7f3M6GjCHcda9FkaDZquZmv1SRBp5usXFTWty', '2017-09-05 18:45:26', '2017-09-05 18:45:26'),
+(28, 'ytfff`', 'vhjjhvjhvm', '150513122359b67ad7a5c95', 'zonecaptain@gmail.com', '$2y$10$FBmuPOj54ajRzHqAnfo/3exnRVylWOrl3dQYB4xZKJwyxQAWgKQo2', '2017-09-11 05:00:23', NULL, '2017-09-10 22:00:23', '2017-09-10 22:00:23');
 
 -- --------------------------------------------------------
 
@@ -438,12 +438,6 @@ ALTER TABLE `item_studio`
   ADD KEY `category_id` (`category_id`);
 
 --
--- Indexes for table `migrations`
---
-ALTER TABLE `migrations`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `newsletter`
 --
 ALTER TABLE `newsletter`
@@ -477,17 +471,13 @@ ALTER TABLE `studio_category`
 -- Indexes for table `transactions`
 --
 ALTER TABLE `transactions`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `user_id` (`user_id`),
-  ADD KEY `payment_type_id` (`payment_type_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `transaction_detail`
 --
 ALTER TABLE `transaction_detail`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `transaction_id` (`transaction_id`),
-  ADD KEY `item_id` (`item_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `users`
@@ -499,17 +489,13 @@ ALTER TABLE `users`
 -- Indexes for table `users_groups`
 --
 ALTER TABLE `users_groups`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `uc_users_groups` (`user_id`,`group_id`),
-  ADD KEY `fk_users_groups_users1_idx` (`user_id`),
-  ADD KEY `fk_users_groups_groups1_idx` (`group_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `user_info`
 --
 ALTER TABLE `user_info`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `user_id` (`user_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `user_notification`
@@ -553,20 +539,10 @@ ALTER TABLE `item_category`
 ALTER TABLE `item_detail`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
--- AUTO_INCREMENT for table `item_notify`
---
-ALTER TABLE `item_notify`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
 -- AUTO_INCREMENT for table `item_studio`
 --
 ALTER TABLE `item_studio`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `migrations`
---
-ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `newsletter`
 --
@@ -586,7 +562,7 @@ ALTER TABLE `promo`
 -- AUTO_INCREMENT for table `sign_up_participant`
 --
 ALTER TABLE `sign_up_participant`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT for table `studio_category`
 --

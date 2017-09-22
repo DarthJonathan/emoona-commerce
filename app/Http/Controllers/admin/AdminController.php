@@ -39,4 +39,10 @@ class AdminController extends Controller
     {
         return view('admin/items');
     }
+
+    public function confirmDelete (Request $req)
+    {
+        $data = array('type' => $req->input('type'), 'id' => $req->input('id'));
+        return view('confirm', $data);
+    }
 }

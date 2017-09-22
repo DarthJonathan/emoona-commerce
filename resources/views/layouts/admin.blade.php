@@ -142,7 +142,17 @@
 <div class="notification-success notification hidden">
     <div class="container">
         <div class="col-lg-6 mx-auto mt-2">
-            <div class="alert alert-success alert-body">
+            <div class="alert alert-success alert-body-success">
+                Success!
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="notification-error notification hidden">
+    <div class="container">
+        <div class="col-lg-6 mx-auto mt-2">
+            <div class="alert alert-danger alert-body-error">
                 Success!
             </div>
         </div>

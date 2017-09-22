@@ -40,12 +40,14 @@ Route::middleware(['admin'])->group(function()
         Route::get('accounts', 'admin\AdminController@accounts')->name('acconuntmanagement');
         Route::get('items', 'admin\AdminController@items');
         Route::post('category', 'admin\ItemManagement@category');
-        Route::get('category', 'admin\ItemManagement@category');
+        Route::post('delete_category', 'admin\ItemManagement@deleteCategory');
+        Route::post('delete_item', 'admin\ItemManagement@deleteItem');
+        Route::post('delete_item_detail', 'admin\ItemManagement@deleteItemDetail');
         Route::post('userinfo', 'admin\UserManagementController@userinfo');
         Route::post('user_transactions', 'admin\UserManagementController@userTransactions');
         Route::post('user_transaction_detail', 'admin\UserManagementController@userTransactionDetails');
         Route::post('suspend', 'admin\UserManagementController@suspend');
-        Route::post('delete_confirmation', 'admin\UserManagementController@confirmDelete');
+        Route::post('delete_confirmation', 'admin\AdminController@confirmDelete');
         Route::post('remove', 'admin\UserManagementController@removeUser');
     });
 });
