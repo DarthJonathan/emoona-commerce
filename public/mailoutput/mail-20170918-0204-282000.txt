@@ -1,0 +1,141 @@
+To: testtest <test@gmail.com>
+Subject: Activate Your Account
+Message-ID: <c1842538de8b36b97d6556e738c8fe96@127.0.0.1>
+Date: Mon, 18 Sep 2017 02:04:03 +0000
+From: Emoona Studio <activation@emoonastudio.com>
+MIME-Version: 1.0
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+<html>
+<head>
+    <meta name=3D"viewport" content=3D"width=3Ddevice-width, initial-scale=
+=3D1 ,user-scalable=3D0">
+    <style>
+        body{
+            margin:0;
+            padding: 0;
+        }
+        @font-face{
+            font-family: Emoona;
+            src:url("http://localhost:8000/css/font/Avenir.ttc");
+        }
+
+        .wrapper{
+            background-color: #e3e3e3;
+            height: 100vh;
+            padding: 5%;
+            box-sizing: border-box;
+
+        }
+        .inside-wrapper{
+            background-color: white;
+            border-radius: 10px;
+            margin:  0;
+            max-width:100%;
+            text-align: center;
+            font-family: Emoona;
+            border-bottom:0px solid grey;
+            display:flex;
+            height: 100%;
+            justify-content: center;
+            align-items: center;
+        }
+        .title{
+
+            font-size: 24px;
+            letter-spacing: 10px;
+            margin-top: 10px;
+        }
+
+
+        #logo{
+            max-width: 130px;
+            margin-top: 5%;
+            margin-bottom: 20px;
+        }
+        .context{
+            font-size: 18px;
+            margin-top: 20px;
+        }
+        .button{
+            text-align: center;
+            margin-top: 30px;
+            margin-bottom: 25px;
+        }
+        #btnVerify{
+            padding:1em 2.5em 1em 2.5em;
+            border:0;
+            color: white;
+            background-color: black;
+            transition: all .3s ease-in-out;
+            font-family: Emoona;
+        }
+        #btnVerify:hover {
+            background:#e3e3e3;
+        }
+        .button button{
+            cursor: pointer;
+        }
+
+        a{
+            cursor: pointer;
+            text-decoration: none;
+        }
+        table
+        {
+            width:100%;
+            text-align: center;
+        }
+    </style>
+
+</head>
+<body>
+<div class=3D"wrapper">
+    <div class=3D"inside-wrapper">
+        <table>
+            <tr>
+                <td>
+                    <img src=3D"http://localhost:8000/img/logo.png" alt=3D"=
+" id=3D"logo">
+                    <div class=3D"title">
+                        THANKS FOR SIGNING UP
+                        <br>
+                    </div><!--title-->
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class=3D"Context">
+                        <div class=3D"text">
+                            You're one step away from receiving news from u=
+s
+                            <br>
+                            click the link below to confirm your email.
+                        </div><!--text-->
+
+                        <div class=3D"button">
+                            <a href=3D"http://localhost:8000/activate/15057=
+0020359bf296bf030a">
+                                <button class=3D"btn btn-default" id=3D"btn=
+Verify">Verify Email Address</button>
+                            </a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class=3D"note">
+                        Need Help?
+                        <p>Contact Us Through <br>
+                            help@emoonastudio.com</p>
+                    </div><!--Note-->
+                </td>
+            </tr>
+        </table>
+    </div><!--inside-wrapper-->
+</div><!--wrapper-->
+</body>
+
+</html>

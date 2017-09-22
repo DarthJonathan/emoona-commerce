@@ -9,7 +9,7 @@
 
     <!-- CSS -->
     <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
-
+    <link rel="stylesheet" href="{{ asset('css/adminstyle.css') }}">
     <!-- JS -->
     <script src="{{ asset('js/jquery-3.2.1.min.js') }}"></script>
     <script src="{{ asset('js/popper.js') }}"></script>
@@ -22,41 +22,13 @@
 
     <title>@yield('title') | Emoona Studio</title>
 
-    <style>
-        .dropdown-menu-right {
-            right: 0;
-            left: auto;
-        }
-
-        .center-box {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .hidden {
-            transform: translateY(-100px);
-            opacity: 0;
-            z-index: -100;
-            margin-bottom: -50px;
-        }
-
-        .notification {
-            transition: all .3s ease-in-out;
-        }
-
-        .navbar{
-            z-index: 100;
-        }
-    </style>
-
 </head>
 <body>
 
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark desktopNavbar">
     <a class="navbar-brand" href="#">
-        Emoona Studio
+        E.MOON.A
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -64,59 +36,176 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="{{ URL::to('admin') }}">Dashboard</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ URL::to('admin/accounts') }}">Account Management</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ URL::to('admin/items') }}">Items Management</a>
-            </li>
         </ul>
-        <div class="form-inline my-2 my-lg-0">
-            @if(Auth::guest())
-                <a href="/register" class="nav-link">Register</a>
-                <a href="/login" class="nav-link">Login</a>
-            @else
-                <div class="dropdown">
-                    <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {{ Auth::user()->firstname }} {{ Auth::user()->lastname }}
-                        @if(count(Session::get('notifications')) > 0)
-                            <span class="badge badge-primary">
-                                {{ count(Session::get('notifications')) }}
-                            </span>
-                        @endif
-                    </button>
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="Notifications">
-                        <a class="dropdown-item" href="notifications">
-                            Notifications
-                            @if(count(Session::get('notifications')) > 0)
-                                <span class="badge badge-primary">
-                                    {{ count(Session::get('notifications')) }}
-                                </span>
-                            @endif
-                        </a>
-                        <hr>
-                        <a class="dropdown-item" href="profile/edit">Edit Profile</a>
 
-                        <a href="{{ route('logout') }}" class="dropdown-item"
-                           onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                            Logout
-                        </a>
+        <ul class="navbar-nav">
+            <li class="nav-item dropdown">
+                <a class="nav-link" href="#" id="mailsDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <img src="{{ asset('img/mail-icon.png') }}" width="20px" height="auto">
+                    @if(count(Session::get('notifications')) > 0)
+                        <span class="mailBubble">
+                            {{ count(Session::get('notifications')) }}
+                        </span>
+                    @endif
+                </a>
 
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                            {{ csrf_field() }}
-                        </form>
-                    </div>
+                <!-- sample only, delete later-->
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="mailsDropdown">
+                    <a class="dropdown-item" href="#">do A</a>
+                    <a class="dropdown-item" href="#">do B</a>
+                    <a class="dropdown-item" href="#">do C</a>
                 </div>
-            @endif
-        </div>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link" href="#" id="accountDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <div class="profilePicture" style="background-image: url({{ asset('img/profile-icon.png') }})"></div>
+                    {{ Auth::user()->firstname }} {{ Auth::user()->lastname }}
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="accountDropdown">
+                    <a class="dropdown-item" href="profile/edit">Edit Profile</a>
+                    <a href="{{ route('logout') }}" class="dropdown-item"
+                       onclick="event.preventDefault();
+                                                 document.getElementById('logout-form').submit();">
+                        Logout
+                    </a>
+
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        {{ csrf_field() }}
+                    </form>
+                </div>
+            </li>
+        </ul> 
     </div>
 </nav>
 
-{{--Modal--}}
+<!-- Mobile Navbar -->
+
+<nav class="navbar fixed-top navbar-dark mobileNavbar">
+    <a class="navbar-brand" href="#">
+        E.MOON.A
+    </a>
+
+    <div class="navbar-toggler" data-toggle="collapse" data-target="#navbarMobileContent" aria-controls="navbarContent" aria-expanded="false">
+        {{ Auth::user()->firstname }} {{ Auth::user()->lastname }}
+        <div class="profilePicture" style="background-image: url({{ asset('img/profile-icon.png') }})"></div>
+    </div>
+
+    <div class="collapse navbar-collapse" id="navbarMobileContent">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <img src="{{ asset('img/mail-icon.png') }}">
+                    <span>Notifications</span>
+                    @if(count(Session::get('notifications')) > 0)
+                        <span style="margin-left: 20px; color:white; opacity:0.5">
+                            {{ count(Session::get('notifications')) }} new notification(s)
+                        </span>
+                    @else
+                        <span style="margin-left: 20px; color:white; opacity:0.5">
+                            No new notifications
+                        </span>
+                    @endif
+                </a>   
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#"> <img src="{{ asset('img/sidebar-icons/dashboard-icon.png') }}"><span>Dashboard</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#"> <img src="{{ asset('img/sidebar-icons/post-icon.png') }}"><span>Post</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#"> <img src="{{ asset('img/sidebar-icons/media-icon.png') }}"><span>Media</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#"> <img src="{{ asset('img/sidebar-icons/sales-icon.png') }}"><span>Sales</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#"> <img src="{{ asset('img/sidebar-icons/report-icon.png') }}"><span>Report</span></a>
+            </li>
+
+            <hr style=" width:100%; border: 1px solid white;">
+            <li class="nav-item">
+                 <a class="nav-link" href="profile/edit">Edit Profile</a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('logout') }}" class="nav-link"
+                   onclick="event.preventDefault();
+                            document.getElementById('logout-form').submit();">
+                    Logout
+                </a>
+
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    {{ csrf_field() }}
+                </form>
+            </li>
+        </ul>
+    </div>
+
+</nav>
+
+<div class="bodyWrapper">
+        <!-- Sidebar -->
+        <div class="sidebarWrapper col-lg-2">
+            <div id="sidebar">
+                <center>
+                    <div class="sidebarLogo">
+                        <img src="{{ asset('img/logo.png') }}" width="50%" height="auto">
+                    </div>
+                    
+                    <form class="searchBox">
+                        <div class="input-group sidebarSearch">
+                            <input class="form-control" type="text" placeholder="Search">
+                            <button class="input-group-addon"><img src="{{ asset('img/search-icon.png') }}" width="20px"></button>
+                        </div>
+                    </form>
+                        
+                    
+                </center>
+                    <div class="sidebarSectionHeader">NAVIGATION</div>
+                    <ul class="sidebarSection">
+                        <a href="#"><li class="active"><img src="{{ asset('img/sidebar-icons/dashboard-icon.png') }}">Dashboard</li></a>
+                        <a href="#"><li><img src="{{ asset('img/sidebar-icons/post-icon.png') }}">Post</li></a>
+                        <a href="#"><li><img src="{{ asset('img/sidebar-icons/media-icon.png') }}">Media</li></a>
+                        <a href="#"><li><img src="{{ asset('img/sidebar-icons/sales-icon.png') }}">Sales</li></a>
+                        <a href="#"><li><img src="{{ asset('img/sidebar-icons/report-icon.png') }}">Report</li></a>
+                    </ul>
+
+                    <div class="sidebarSectionHeader">IMPORTANCE</div>
+                    <ul class="sidebarImportance">
+                        <li><div class="importanceBubble"></div><span>Important</span></li>
+                        <li><div class="importanceBubble"></div><span>Warning</span></li>
+                        <li><div class="importanceBubble"></div></span>Information</span></li>
+                    </ul>
+            
+            </div>
+        </div>
+        <!-- Body -->
+        <section class="contentWrapper col-lg-10 pull-right">
+            <div class="content">
+                @if( Session::has('message') )
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-8 m-auto">
+                                <div class="alert alert-primary placeholder">
+                                    {{ Session::get('message') }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+                
+                @yield('content')
+                @yield('content')
+                @yield('content')
+                @yield('content')
+                @yield('content')
+                @yield('content')
+            </div>
+        </section>  
+</div>
+
+<!-- {{--Modal--}}
 <div class="center-box">
     <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -157,24 +246,7 @@
             </div>
         </div>
     </div>
-</div>
-
-<!-- Body -->
-<section class="body px-3 py-3">
-    @if( Session::has('message') )
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 m-auto">
-                    <div class="alert alert-primary">
-                        {{ Session::get('message') }}
-                    </div>
-                </div>
-            </div>
-        </div>
-    @endif
-
-    @yield('content')
-</section>
+</div> -->
 
 </body>
 </html>
