@@ -77,11 +77,37 @@ class ItemManagement extends Controller
         $item_id = $req->input('id');
 
         try {
+            //Delete The Item
             Item::where('id', '=', $item_id)->first()->delete();
+
+            //Delete the following item details
+            ItemDetail::where('item_id', '=', $item_id)->get()->delete();
+
+            //todo make a deletion of item detail picture
+
             $return = ['error' => false, 'msg' => 'Deleting item completed'];
         } catch (\Exception $e) {
             $return = ['error' => true, 'msg' => $e];
             }
+
+        echo json_encode($return);
+    }
+
+    function deleteItemDetail (Request $req)
+    {
+        $item_detail_id = $req->input('id');
+
+        try
+        {
+            ItemDetail::where('id' , '=', $item_detail_id)->first()->delete();
+
+            //todo make a deletion of item detail picture
+
+            $return = ['error' => false, 'msg' => 'Deleting item details completed'];
+        }catch(\Exception $e)
+        {
+            $return = ['error' => true, 'msg' => $e];
+        }
 
         echo json_encode($return);
     }

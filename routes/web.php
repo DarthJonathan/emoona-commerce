@@ -34,11 +34,13 @@ Route::middleware(['notifications', 'checkRole', 'suspended'])->group(function()
 
 Route::middleware(['admin'])->group(function()
 {
-    Route::get('admin', 'admin\AdminController@dashboard')->name('Dashboard');
+    Route::get('admin', 'admin\AdminController@dashboard')->name('admindashboard');
 
     Route::prefix('admin')->group(function () {
-        Route::get('accounts', 'admin\AdminController@accounts')->name('acconuntmanagement');
-        Route::get('items', 'admin\AdminController@items');
+        Route::get('accounts', 'admin\AdminController@accounts')->name('accounts');
+        Route::get('items', 'admin\AdminController@items')->name('storeitems');
+        Route::get('items', 'admin\AdminController@transactions')->name('transactions');
+        Route::get('items', 'admin\AdminController@tickets')->name('tickets');
         Route::post('category', 'admin\ItemManagement@category');
         Route::post('delete_category', 'admin\ItemManagement@deleteCategory');
         Route::post('delete_item', 'admin\ItemManagement@deleteItem');
