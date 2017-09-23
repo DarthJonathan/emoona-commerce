@@ -1,0 +1,156 @@
+body{
+	padding: 0;
+	margin: 0;
+
+}
+
+a{
+	text-decoration: none;
+	color:white;
+}
+
+@font-face{
+	font-family: Emoona;
+	src:url("font/Avenir-Light.ttf");
+
+}
+
+@font-face{
+	font-family: EmoonaMedium;
+	src:url("font/Avenir-Medium.ttf");
+
+}
+
+@font-face{
+	font-family: EmoonaHeavy;
+	src:url("font/Avenir-Heavy.ttf");
+
+}
+
+
+
+.main-wrapper{
+	
+	background-color: #eeeff1;
+	color: #2e2e2e;
+	height: 100vh;
+	overflow: hidden;
+}
+
+
+
+.text-container{
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+	
+	
+}
+
+
+
+.text{
+	font-family:Emoona;
+	display: block;
+	margin-top:30vh;
+	
+	
+}
+
+.text1{
+	font-size: 100px;
+	margin-bottom: -20px;
+}
+
+.text2{
+	font-size: 30px;
+}
+
+.button{
+	margin-top: 10px;
+}
+
+.scene{
+	position: relative;
+	width: 100%;
+
+}
+
+
+.level1{
+	position: absolute;
+	display: block;
+
+}
+.level2{
+	position: absolute;
+	display: block;
+
+}
+.level3{
+	position: absolute;
+	display: block;
+}
+.level4{
+	position: absolute;
+	display: block;
+}
+.level5{
+	position: absolute;
+	display: block;
+}
+.level6{
+	position: absolute;
+	display: block;
+}
+
+
+.level1.object-1{
+	left:-150px;
+	top:20px;
+
+
+}
+
+.level2.object-2{
+
+left: 800px;
+
+
+}
+
+.level3.object-3{
+top: 340px;
+
+
+}
+
+.level4.object-4{
+top: 400px;
+left: 790px;
+
+}
+
+.level5.object-5{
+left: 220px;
+
+}
+
+.level5.object-5{
+left: 220px;
+
+
+}
+
+.level6.object-6{
+top: 190px;
+left: 630px;
+
+}
+
+.btn{
+	background-color: black;
+	color: white;
+}
+
