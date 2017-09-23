@@ -22,11 +22,12 @@
                     <button
                         class="btn btn-primary"
                         onclick="newItem()"
+                        type="button"
                         style="cursor:pointer">Create New Product</button>
                     <button
-                            class="btn btn-primary"
-                            onclick="newCategory()"
-                            style="cursor:pointer">Create New Category</button>
+                        class="btn btn-primary"
+                        onclick="newCategory()"
+                        style="cursor:pointer">Create New Category</button>
                 </div>
             </div>
         </div>

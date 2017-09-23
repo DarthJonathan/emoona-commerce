@@ -110,12 +110,22 @@ function confirmDelete(e)
         case 'user':
         {
             url = '/admin/remove';
-        }
+        }break;
 
         case 'category':
         {
             url = '/admin/delete_category';
-        }
+        }break;
+
+        case 'item' :
+        {
+            url = '/admin/delete_item';
+        }break;
+
+        case 'itemDetail' :
+        {
+            url = '/admin/delete_item_detail';
+        }break;
     }
 
     $.ajax({
@@ -158,46 +168,53 @@ function deleteCategory (e)
 function deleteItem (e)
 {
     const id = $(e).data('id');
+    $('#modal').modal('toggle');
 
     $.ajax({
-        url: '/admin/delete_item',
+        url: '/admin/delete_confirmation',
         headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
         type: 'POST',
-        dataType: 'json',
-        data: {id: id},
+        data: {id: id, type: 'item'},
         success: function (data) {
-            if(!data.error)
-                toggleSuccess(data.msg);
-            else
-                toggleError(data.msg);
+            $('.modal-body').html(data);
         }
     });
 }
 
 function deleteItemDetail (e) {
+
     const id = $(e).data('id');
+    $('#modal').modal('toggle');
 
     $.ajax({
-        url: '/admin/delete_item_detail',
+        url: '/admin/delete_confirmation',
         headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
         type: 'POST',
-        dataType: 'json',
-        data: {id: id},
+        data: {id: id, type: 'itemDetail'},
         success: function (data) {
-            if(!data.error)
-                toggleSuccess(data.msg);
-            else
-                toggleError(data.msg);
+            $('.modal-body').html(data);
         }
     });
 }
 
 function newItem () {
 
+    $('#modal').modal('toggle');
+
+    alert('a');
+
+    $.ajax({
+        url: '/admin/delete_confirmation',
+        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+        type: 'get',
+        success: function (data) {
+            $('.modal-body').html(data);
+        }
+    });
 }
 
 function newCategory () {
-
+    alert('a');
 }
 
 function seeTransactionDetail (e)

@@ -45,4 +45,14 @@ class AdminController extends Controller
         $data = array('type' => $req->input('type'), 'id' => $req->input('id'));
         return view('confirm', $data);
     }
+
+    public function tickets ()
+    {
+
+    }
+
+    public function transactions ()
+    {
+
+    }
 }

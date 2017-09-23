@@ -28,7 +28,7 @@
 <!-- Navbar -->
 <nav class="navbar fixed-top navbar-expand-lg navbar-dark desktopNavbar">
     <a class="navbar-brand" href="#">
-        E.MOON.A
+        E.MOON.A Admin
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -50,7 +50,7 @@
                 </a>
 
                 <!-- sample only, delete later-->
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="mailsDropdown">
+                <div class="dropdown-menu dropdown-menu-right mr-3" aria-labelledby="mailsDropdown">
                     <a class="dropdown-item" href="#">do A</a>
                     <a class="dropdown-item" href="#">do B</a>
                     <a class="dropdown-item" href="#">do C</a>
@@ -83,7 +83,7 @@
 
 <nav class="navbar fixed-top navbar-dark mobileNavbar">
     <a class="navbar-brand" href="#">
-        E.MOON.A
+        E.MOON.A Dashboard
     </a>
 
     <div class="navbar-toggler" data-toggle="collapse" data-target="#navbarMobileContent" aria-controls="navbarContent" aria-expanded="false">
@@ -164,18 +164,18 @@
                 </center>
                     <div class="sidebarSectionHeader">NAVIGATION</div>
                     <ul class="sidebarSection">
-                        <a href="#"><li class="active"><img src="{{ asset('img/sidebar-icons/dashboard-icon.png') }}">Dashboard</li></a>
-                        <a href="#"><li><img src="{{ asset('img/sidebar-icons/post-icon.png') }}">Post</li></a>
-                        <a href="#"><li><img src="{{ asset('img/sidebar-icons/media-icon.png') }}">Media</li></a>
-                        <a href="#"><li><img src="{{ asset('img/sidebar-icons/sales-icon.png') }}">Sales</li></a>
-                        <a href="#"><li><img src="{{ asset('img/sidebar-icons/report-icon.png') }}">Report</li></a>
+                        <a href="{{ route('admindashboard') }}"><li class="active"><img src="{{ asset('img/sidebar-icons/dashboard-icon.png') }}">Dashboard</li></a>
+                        <a href="{{ route('storeitems') }}"><li><img src="{{ asset('img/sidebar-icons/post-icon.png') }}">Store Items</li></a>
+                        <a href="{{ route('accounts') }}"><li><img src="{{ asset('img/sidebar-icons/media-icon.png') }}">Accounts</li></a>
+                        <a href="{{ route('transactions') }}"><li><img src="{{ asset('img/sidebar-icons/sales-icon.png') }}">Sales</li></a>
+                        <a href="{{ route('tickets') }}"><li><img src="{{ asset('img/sidebar-icons/report-icon.png') }}">Report</li></a>
                     </ul>
 
                     <div class="sidebarSectionHeader">IMPORTANCE</div>
                     <ul class="sidebarImportance">
                         <li><div class="importanceBubble"></div><span>Important</span></li>
                         <li><div class="importanceBubble"></div><span>Warning</span></li>
-                        <li><div class="importanceBubble"></div></span>Information</span></li>
+                        <li><div class="importanceBubble"></div><span>Information</span></li>
                     </ul>
             
             </div>
@@ -196,16 +196,11 @@
                 @endif
                 
                 @yield('content')
-                @yield('content')
-                @yield('content')
-                @yield('content')
-                @yield('content')
-                @yield('content')
             </div>
         </section>  
 </div>
 
-<!-- {{--Modal--}}
+{{--Modal--}}
 <div class="center-box">
     <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -230,7 +225,7 @@
 {{--Notification--}}
 <div class="notification-success notification hidden">
     <div class="container">
-        <div class="col-lg-6 mx-auto mt-2">
+        <div class="col-lg-6 mx-auto">
             <div class="alert alert-success alert-body-success">
                 Success!
             </div>
@@ -246,7 +241,19 @@
             </div>
         </div>
     </div>
-</div> -->
+</div>
 
+@if(old('message', null) != null)
+    <script>
+        $(document).ready(function()
+        {
+            @if(old('message-type') == 'danger')
+                toggleSuccess({{ old('message') }});
+            @elseif(old('message-type') == 'danger')
+                toggleError({{ old('message') }})
+            @endif
+        });
+    </script>
+@endif
 </body>
 </html>
