@@ -13,7 +13,7 @@
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
 
 Auth::routes();
 
@@ -25,7 +25,7 @@ Route::get('suspended', function()
 
 Route::middleware(['notifications', 'checkRole', 'suspended'])->group(function()
 {
-    Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/home', 'HomeController@index')->name('profile');
     Route::get('/notifications', 'UserController@notifications')->name('notification');
     Route::get('profile/edit', 'UserController@edit')->name('editprofile');
     Route::get('/resend_activation', 'UserController@resend')->name('resend');
@@ -39,8 +39,8 @@ Route::middleware(['admin'])->group(function()
     Route::prefix('admin')->group(function () {
         Route::get('accounts', 'admin\AdminController@accounts')->name('accounts');
         Route::get('items', 'admin\AdminController@items')->name('storeitems');
-        Route::get('items', 'admin\AdminController@transactions')->name('transactions');
-        Route::get('items', 'admin\AdminController@tickets')->name('tickets');
+        Route::get('transaction', 'admin\AdminController@transactions')->name('transactions');
+        Route::get('tickets', 'admin\AdminController@tickets')->name('tickets');
         Route::post('category', 'admin\ItemManagement@category');
         Route::post('delete_category', 'admin\ItemManagement@deleteCategory');
         Route::post('delete_item', 'admin\ItemManagement@deleteItem');

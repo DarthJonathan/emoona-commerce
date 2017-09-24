@@ -9,6 +9,18 @@
     align-items: center;
 }
 
+#accountDropdown {
+    transition: all .2s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#mailsDropdown {
+    margin-top: 3px;
+    margin-right: 10px;
+}
+
 .hidden {
     transform: translateY(-100px);
     opacity: 0;
@@ -35,6 +47,7 @@
 .profilePicture{
     width: 30px;
     height: 30px;
+    margin-right: 10px;
     border-radius: 50%;
     background-position: center center;
     background-size: cover;

@@ -181,7 +181,7 @@
             </div>
         </div>
         <!-- Body -->
-        <section class="contentWrapper col-lg-10 pull-right">
+        <section class="contentWrapper col-lg-10 pull-right pb-4">
             <div class="content">
                 @if( Session::has('message') )
                     <div class="container">
