@@ -1,41 +1,47 @@
-.registerArea {
+.registerArea{
   width: 50%;
   margin: 0 auto;
 }
 
-.profileArea {
+.profileArea{
   width: 60%;
   margin: 0 auto;
 }
 
-textarea {
-  resize: none;
+textarea{
+  resize:none;
 }
 
-a {
+a{
   color: black;
 }
 
-a:hover {
+a:hover{
   text-decoration: none;
 }
 
-a:visited {
+a:visited{
   color: black;
 }
 
-.errMsg {
+.errMsg{
   color: red !important;
   font-size: 10pt;
 }
 
-.hint {
+#pref_phone{
+
+}
+
+.hint{
   color: #636c72;
 }
 
-.phone-dash {
+.phone-plus{
+
+}
+
+.phone-dash{
   margin-right: 5px;
   margin-left: 5px;
 }
-
-/*# sourceMappingURL=userstyle.css.map */

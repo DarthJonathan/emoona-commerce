@@ -7,7 +7,7 @@
     <title>Not Found</title>
 
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/style_404.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/style404.css') }}">
 
     <script type="text/javascript" src ="{{ asset('js/jquery-3.2.1.min.js') }}"></script>
     <script type="text/javascript" src ="{{ asset('js/popper.min.js') }}"></script>

@@ -1,135 +1,153 @@
-body {
-  margin: 0;
-  padding: 0;
+body{
+  margin:0;
+  padding:0;
 }
 
-@font-face {
+@font-face{
   font-family: Emoona;
-  src: url("font/Avenir.ttc");
+  src:url('font/Avenir.ttc');
+
 }
 
-.wrapper {
-  background-image: url("../img/background.png");
+.wrapper{
+  background-image: url('../img/background.png');
   background-size: cover;
   height: 100vh;
-  display: -webkit-box;
+
   display: flex;
-  -webkit-box-align: center;
   align-items: center;
-  -webkit-box-pack: center;
   justify-content: center;
 }
 
-#welcome {
+#welcome{
   letter-spacing: 10px;
   font-family: Emoona;
   margin-top: 10px;
   margin-bottom: -10px;
-}
 
-.page-logo {
+}
+.page-logo{
   text-align: center;
   margin-top: 5vh;
   margin-bottom: 10px;
 }
 
-.page-logo img {
+.page-logo img
+{
+
   height: 180px;
   width: 180px;
+
 }
 
-.page-title {
+.page-title{
   text-align: center;
+
 }
 
-#line {
+#line{
+
   width: 95%;
   border-bottom: 1px solid black;
 }
 
-.page-social {
+.page-social{
   text-align: center;
+
 }
 
-.social-bar {
+.social-bar{
   list-style: none;
   margin-top: 20px;
-  margin-bottom: 10px;
+  margin-bottom:10px;
   padding: 0;
+
 }
 
-.social-bar li {
+.social-bar li{
   display: inline-block;
 }
 
-a {
+a{
   cursor: pointer;
+
 }
 
-.page-social img {
-  width: 60px;
+.page-social img{
+
+  width:60px;
+
+
 }
 
-.page-caption {
+.page-caption{
+
   text-align: center;
+
 }
 
-#caption {
+#caption{
   font-family: Emoona;
   margin-bottom: 10px;
   margin-top: 10px;
 }
 
-.page-txtbox {
+.page-txtbox{
   text-align: center;
 }
 
-#email {
+#email{
   width: 90%;
-  padding: 5px 15px 5px 15px;
-  margin-top: 1em;
-  opacity: 0.6;
+  padding:5px 15px 5px 15px;
+  margin-top:1em;
+  opacity:0.6;
   transition: all .3s ease-in-out;
-  border: solid 1px #000;
+  border:solid 1px #000;
 }
 
-#email:focus {
-  outline: 0;
+#email:focus
+{
+  outline:0;
   opacity: 1;
 }
 
-.button {
+.button{
   text-align: center;
   margin-top: 20px;
   margin-bottom: 20px;
 }
 
-.button button {
+.button button{
   cursor: pointer;
+
 }
 
-.button button:hover {
+.button button:hover{
   opacity: 0.6;
 }
 
-.button button:focus {
-  outline: 0;
+.button button:focus
+{
+  outline:0;
 }
 
-#btnSubmit {
-  padding: .5em 1.5em .5em 1.5em;
+#btnSubmit{
+  padding:.5em 1.5em .5em 1.5em;
   color: white;
   background-color: black;
   transition: all .3s ease-in-out;
 }
 
-@media screen and (min-width: 1091px) {
-  #line {
+@media screen and (min-width: 1091px){
+
+  #line{
     width: 60%;
+
   }
-  #email {
+
+  #email{
+
     width: 50%;
   }
-}
 
-/*# sourceMappingURL=style.css.map */
+}
