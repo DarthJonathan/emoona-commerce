@@ -201,8 +201,8 @@
 </div>
 
 {{--Modal--}}
-<div class="center-box">
-    <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
+    <div class="center-box">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -213,9 +213,6 @@
                 </div>
                 <div class="modal-body">
                     &nbsp
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>

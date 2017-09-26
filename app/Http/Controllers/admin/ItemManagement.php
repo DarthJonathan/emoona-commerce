@@ -111,4 +111,14 @@ class ItemManagement extends Controller
 
         echo json_encode($return);
     }
+
+    function newItemAjax (Request $req)
+    {
+        return view('admin.new_item');
+    }
+
+    function newCategoryAjax (Request $req)
+    {
+        return view('admin.new_category');
+    }
 }

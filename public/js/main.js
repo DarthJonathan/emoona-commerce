@@ -7,6 +7,7 @@ function userInfo (e)
     const id = e.id;
 
     $('#modal').modal('toggle');
+    $('.modal-title').empty();
 
     $.ajax({
         url: '/admin/userinfo',
@@ -82,6 +83,7 @@ function deleteUser (e)
     const id = e.id;
 
     $('#modal').modal('toggle');
+    $('.modal-title').empty();
 
     $.ajax({
         url:'/admin/delete_confirmation',
@@ -89,6 +91,7 @@ function deleteUser (e)
         type: 'POST',
         data: { id:id, type:'user' },
         success: function(data) {
+            $('.modal-title').html('Are You Sure');
             $('.modal-body').html(data);
         }
     });
@@ -152,6 +155,7 @@ function confirmDelete(e)
 function deleteCategory (e)
 {
     const id = $(e).data('id');
+    $('.modal-title').empty();
     $('#modal').modal('toggle');
 
     $.ajax({
@@ -160,6 +164,7 @@ function deleteCategory (e)
         type: 'POST',
         data: {id: id, type: 'category'},
         success: function (data) {
+            $('.modal-title').html('Are You Sure');
             $('.modal-body').html(data);
         }
     });
@@ -168,6 +173,7 @@ function deleteCategory (e)
 function deleteItem (e)
 {
     const id = $(e).data('id');
+    $('.modal-title').empty();
     $('#modal').modal('toggle');
 
     $.ajax({
@@ -176,6 +182,7 @@ function deleteItem (e)
         type: 'POST',
         data: {id: id, type: 'item'},
         success: function (data) {
+            $('.modal-title').html('Are You Sure');
             $('.modal-body').html(data);
         }
     });
@@ -184,6 +191,7 @@ function deleteItem (e)
 function deleteItemDetail (e) {
 
     const id = $(e).data('id');
+    $('.modal-title').empty();
     $('#modal').modal('toggle');
 
     $.ajax({
@@ -192,21 +200,20 @@ function deleteItemDetail (e) {
         type: 'POST',
         data: {id: id, type: 'itemDetail'},
         success: function (data) {
+            $('.modal-title').html('Are You Sure');
             $('.modal-body').html(data);
         }
     });
 }
 
 function newItem () {
-
     $('#modal').modal('toggle');
-
-    alert('a');
+    $('.modal-title').html('New Item');
 
     $.ajax({
-        url: '/admin/delete_confirmation',
+        url: '/admin/new_item_req',
         headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
-        type: 'get',
+        type: 'post',
         success: function (data) {
             $('.modal-body').html(data);
         }
@@ -214,7 +221,17 @@ function newItem () {
 }
 
 function newCategory () {
-    alert('a');
+    $('.modal-title').empty();
+    $('#modal').modal('toggle');
+
+    $.ajax({
+        url: '/admin/new_category_req',
+        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+        type: 'post',
+        success: function (data) {
+            $('.modal-body').html(data);
+        }
+    });
 }
 
 function seeTransactionDetail (e)

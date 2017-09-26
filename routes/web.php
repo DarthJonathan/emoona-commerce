@@ -37,13 +37,24 @@ Route::middleware(['admin'])->group(function()
     Route::get('admin', 'admin\AdminController@dashboard')->name('admindashboard');
 
     Route::prefix('admin')->group(function () {
+        /*
+         * Normal Routes
+         */
         Route::get('accounts', 'admin\AdminController@accounts')->name('accounts');
         Route::get('items', 'admin\AdminController@items')->name('storeitems');
         Route::get('transaction', 'admin\AdminController@transactions')->name('transactions');
         Route::get('tickets', 'admin\AdminController@tickets')->name('tickets');
+
+        /*
+         * Ajax
+         */
         Route::post('category', 'admin\ItemManagement@category');
         Route::post('delete_category', 'admin\ItemManagement@deleteCategory');
         Route::post('delete_item', 'admin\ItemManagement@deleteItem');
+        Route::post('new_item_req', 'admin\ItemManagement@newItemAjax');
+        Route::post('new_category_req', 'admin\ItemManagement@newCategoryAjax');
+        Route::post('new_item', 'admin\ItemManagement@newItem');
+        Route::post('new_category', 'admin\ItemManagement@newCategory');
         Route::post('delete_item_detail', 'admin\ItemManagement@deleteItemDetail');
         Route::post('userinfo', 'admin\UserManagementController@userinfo');
         Route::post('user_transactions', 'admin\UserManagementController@userTransactions');
