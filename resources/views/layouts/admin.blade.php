@@ -9,7 +9,7 @@
 
     <!-- CSS -->
     <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/adminstyle.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/styleadmin.css') }}">
     <!-- JS -->
     <script src="{{ asset('js/jquery-3.2.1.min.js') }}"></script>
     <script src="{{ asset('js/popper.js') }}"></script>
@@ -66,7 +66,7 @@
                     <a class="dropdown-item" href="profile/edit">Edit Profile</a>
                     <a href="{{ route('logout') }}" class="dropdown-item"
                        onclick="event.preventDefault();
-                                                 document.getElementById('logout-form').submit();">
+                       document.getElementById('logout-form').submit();">
                         Logout
                     </a>
 
@@ -211,8 +211,11 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
+                <div id="ajax-loading">
+                    <img id="loading-image" class="m-3" src="/img/ajax-loader.gif"/>
+                </div>
                 <div class="modal-body">
-                    &nbsp
+
                 </div>
             </div>
         </div>

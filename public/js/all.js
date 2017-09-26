@@ -59,6 +59,7 @@ function userInfo (e)
                 '</table>';
 
             $('.modal-body').html(html);
+            $('#ajax-loading').hide();
         }
     });
 }
@@ -93,6 +94,7 @@ function deleteUser (e)
         success: function(data) {
             $('.modal-title').html('Are You Sure');
             $('.modal-body').html(data);
+            $('#ajax-loading').hide();
         }
     });
 }
@@ -166,6 +168,7 @@ function deleteCategory (e)
         success: function (data) {
             $('.modal-title').html('Are You Sure');
             $('.modal-body').html(data);
+            $('#ajax-loading').hide();
         }
     });
 }
@@ -184,6 +187,7 @@ function deleteItem (e)
         success: function (data) {
             $('.modal-title').html('Are You Sure');
             $('.modal-body').html(data);
+            $('#ajax-loading').hide();
         }
     });
 }
@@ -202,6 +206,7 @@ function deleteItemDetail (e) {
         success: function (data) {
             $('.modal-title').html('Are You Sure');
             $('.modal-body').html(data);
+            $('#ajax-loading').hide();
         }
     });
 }
@@ -216,23 +221,12 @@ function newItem () {
         type: 'post',
         success: function (data) {
             $('.modal-body').html(data);
+            $('#ajax-loading').hide();
         }
     });
 }
 
-function newCategory () {
-    $('.modal-title').empty();
-    $('#modal').modal('toggle');
 
-    $.ajax({
-        url: '/admin/new_category_req',
-        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
-        type: 'post',
-        success: function (data) {
-            $('.modal-body').html(data);
-        }
-    });
-}
 
 function seeTransactionDetail (e)
 {

@@ -20,6 +20,14 @@
             </div>
 
             <div class="form-group row">
+                <label for="gender" class="col-sm-3 col-form-label">Gender</label>
+                <select class="form-control col-sm-8" id="gender" name="gender">
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+            </div>
+
+            <div class="form-group row">
                 <label for="inputPassword3" class="col-sm-3 col-form-label">SKU</label>
                 <div class="col-sm-9">
                     <input type="text" class="form-control" id="itemSKU" name="itemSKU" placeholder="Enter SKU">

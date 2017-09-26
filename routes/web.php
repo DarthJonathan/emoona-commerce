@@ -52,9 +52,7 @@ Route::middleware(['admin'])->group(function()
         Route::post('delete_category', 'admin\ItemManagement@deleteCategory');
         Route::post('delete_item', 'admin\ItemManagement@deleteItem');
         Route::post('new_item_req', 'admin\ItemManagement@newItemAjax');
-        Route::post('new_category_req', 'admin\ItemManagement@newCategoryAjax');
         Route::post('new_item', 'admin\ItemManagement@newItem');
-        Route::post('new_category', 'admin\ItemManagement@newCategory');
         Route::post('delete_item_detail', 'admin\ItemManagement@deleteItemDetail');
         Route::post('userinfo', 'admin\UserManagementController@userinfo');
         Route::post('user_transactions', 'admin\UserManagementController@userTransactions');

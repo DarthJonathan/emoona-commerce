@@ -117,8 +117,12 @@ class ItemManagement extends Controller
         return view('admin.new_item');
     }
 
-    function newCategoryAjax (Request $req)
+    function newItem (Request $req)
     {
-        return view('admin.new_category');
+        $data = [
+            'name'  => $req->input('itemName'),
+            'price' => $req->input('itemPrice'),
+            ''
+        ];
     }
 }
