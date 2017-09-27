@@ -226,7 +226,15 @@ function newItem () {
     });
 }
 
+function editItem (e) {
 
+    const id = $(e).data('id');
+
+}
+
+function editItemDetail () {
+
+}
 
 function seeTransactionDetail (e)
 {
@@ -301,12 +309,12 @@ function loadNextCategory (e)
 
                     $.each(out.html, function(key, value){
 
-                        html = '<div style="cursor:pointer" class="list-group-item list-group-item-action">' +
-                            '<a onclick="loadNextCategory(this)" data-id="'+ value.id +'" data-category="2">' +
-                            value.name +
-                            '</a>' +
-                            '<button style="cursor: pointer" class="btn btn-primary float-right btn-sm" data-id="'+ value.id +'" onclick="editCategory(this)">Edit Item</button>' +
-                            '<button style="cursor: pointer" class="btn btn-danger float-right btn-sm mr-2" data-id="'+ value.id +'" onclick="deleteCategory(this)">Delete Item</button>' +
+                        html = '<div style="cursor:pointer" class="list-group-item list-group-item-action" onclick="loadNextCategory(this)" data-id="'+ value.id +'" data-category="2">' +
+                            '<span class="float-left">' +
+                                value.name +
+                            '</span>' +
+                                '<button style="cursor: pointer" class="btn btn-primary float-right btn-sm" data-id="'+ value.id +'" onclick="editCategory(this)">Edit Item</button>' +
+                                '<button style="cursor: pointer" class="btn btn-danger float-right btn-sm mr-2" data-id="'+ value.id +'" onclick="deleteCategory(this)">Delete Item</button>' +
                             '</div>';
 
                         $('.category-two').append(html);
@@ -320,8 +328,8 @@ function loadNextCategory (e)
 
                     $.each(out.html, function(key, value){
 
-                        html = '<div style="cursor:pointer" class="list-group-item list-group-item-action">' +
-                            '<a onclick="loadNextCategory(this)" data-id="'+ value.id +'" data-category="3">' +
+                        html = '<div style="cursor:pointer" class="list-group-item list-group-item-action" onclick="loadNextCategory(this)" data-id="'+ value.id +'" data-category="3">' +
+                            '<a>' +
                             value.name +
                             '</a>' +
                             '<button style="cursor: pointer" class="btn btn-primary float-right btn-sm" data-id="'+ value.id +'" onclick="editItem(this)">Edit Item</button>' +

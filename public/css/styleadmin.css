@@ -263,4 +263,17 @@ body {
   height: 100%;
 }
 
+.noscroll-bar::-webkit-scrollbar {
+  display: none;
+}
+
+.list-group-item div {
+  width: 50%;
+  float: left;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+}
+
 /*# sourceMappingURL=styleadmin.css.map */

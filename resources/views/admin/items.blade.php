@@ -25,7 +25,7 @@
                     <div class="card-header">
                         Gender
                     </div>
-                    <div class="category-wrapper">
+                    <div class="category-wrapper noscroll-bar">
                         <div class="list-group list-group-flush category-one">
                             <a onclick="loadNextCategory(this)" style="cursor:pointer" data-id="male" data-category="1" class="list-group-item list-group-item-action">Male</a>
                             <a onclick="loadNextCategory(this)" style="cursor:pointer" data-id="Female" data-category="1" class="list-group-item list-group-item-action">Female</a>
@@ -38,7 +38,7 @@
                     <div class="card-header">
                         Category Name
                     </div>
-                    <div class="category-wrapper">
+                    <div class="category-wrapper noscroll-bar">
                         <div class="list-group list-group-flush category-two">
                         </div>
                     </div>
@@ -52,7 +52,7 @@
                     <div class="card-header">
                         Items
                     </div>
-                    <div class="category-wrapper">
+                    <div class="category-wrapper noscroll-bar">
                         <div class="list-group list-group-flush category-three">
                         </div>
                     </div>
