@@ -114,15 +114,43 @@ class ItemManagement extends Controller
 
     function newItemAjax (Request $req)
     {
-        return view('admin.new_item');
+        $data =[
+            'categories'    => json_encode(ItemCategory::all()->toArray())
+        ];
+        return view('admin.new_item', $data);
     }
 
     function newItem (Request $req)
     {
         $data = [
-            'name'  => $req->input('itemName'),
-            'price' => $req->input('itemPrice'),
-            ''
+            'name'          => $req->input('itemName'),
+            'price'         => $req->input('itemPrice'),
+            'category_id'   => $req->input('category'),
+            'sku'           => $req->input('sku'),
+            'description'   => $req->input('description'),
+            'preorder'      => $req->input('preorder')==null?0:1
         ];
+
+        try
+        {
+            $item = new Item();
+
+            $item->category_id  = $data['category_id'];
+            $item->name         = $data['name'];
+            $item->price        = $data['price'];
+            $item->sku          = $data['sku'];
+            $item->description  = $data['description'];
+            $item->preorder     = $data['preorder'];
+            $item->hidden       = 0;
+
+            $item->save();
+
+            return back()->with('success', 'Successfully added a new item!');
+
+        }catch(\Exception $e) {
+
+            return back()->with('error', 'Storing into Database Failed (ERR: 311)');
+
+        }
     }
 }

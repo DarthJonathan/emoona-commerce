@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Item extends Model
 {
     protected $fillable = [
-      'name', 'sku', 'description', 'price', 'hidden'
+      'name', 'sku', 'description', 'price', 'hidden', 'category_id', 'preorder'
     ];
 
     public $dates = ['created'];

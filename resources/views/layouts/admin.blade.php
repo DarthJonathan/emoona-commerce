@@ -223,7 +223,7 @@
 </div>
 
 {{--Notification--}}
-<div class="notification-success notification hidden">
+<div class="notification-success notification hidden mt-5">
     <div class="container">
         <div class="col-lg-6 mx-auto">
             <div class="alert alert-success alert-body-success">
@@ -233,7 +233,7 @@
     </div>
 </div>
 
-<div class="notification-error notification hidden">
+<div class="notification-error notification hidden mt-5">
     <div class="container">
         <div class="col-lg-6 mx-auto mt-2">
             <div class="alert alert-danger alert-body-error">
@@ -251,6 +251,22 @@
                 toggleSuccess({{ old('message') }});
             @elseif(old('message-type') == 'danger')
                 toggleError({{ old('message') }})
+            @endif
+        });
+    </script>
+@endif
+
+{{ old('success') }}
+
+
+@if(session('error', null) != null || session('success',null) != null)
+    <script>
+        $(document).ready(function()
+        {
+            @if(session('error',null) != null)
+                toggleError('{{ session('error') }}');
+            @elseif(session('success', null) != null)
+                toggleSuccess('{{ session('success') }}');
             @endif
         });
     </script>

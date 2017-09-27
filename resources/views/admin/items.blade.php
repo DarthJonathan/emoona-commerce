@@ -3,18 +3,6 @@
 @section('title', 'Item Management')
 
 @section('content')
-    <style>
-        .category-cards {
-            height:30vh;
-        }
-
-        .content-card {
-            height: 55vh;
-        }
-
-        .category-wrapper {
-        }
-    </style>
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
@@ -32,7 +20,7 @@
             </div>
         </div>
         <div class="row mb-3">
-            <div class="col-lg-4">
+            <div class="col-md-6">
                 <div class="card category-cards">
                     <div class="card-header">
                         Gender
@@ -45,7 +33,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4">
+            <div class="col-md-6">
                 <div class="card category-cards">
                     <div class="card-header">
                         Category Name
@@ -56,8 +44,11 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+        <div class="row mt-3">
             <div class="col-lg-4">
-                <div class="card category-cards">
+                <div class="card content-card">
                     <div class="card-header">
                         Items
                     </div>
@@ -67,10 +58,7 @@
                     </div>
                 </div>
             </div>
-        </div>
-
-        <div class="row mt-3">
-            <div class="col-lg-12">
+            <div class="col-lg-8">
                 <div class="card content-card">
                     <div class="card-header">
                         Item Details

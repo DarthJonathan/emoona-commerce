@@ -221,3 +221,26 @@ body{
       display: block;
     }
 }
+
+.content-card {
+  height: 55vh;
+
+  .category-wrapper {
+    overflow: scroll;
+  }
+}
+
+.category-cards
+{
+  height:40vh;
+
+  .category-wrapper
+  {
+    overflow: scroll;
+
+    .category-three
+    {
+      height: 100%;
+    }
+  }
+}
