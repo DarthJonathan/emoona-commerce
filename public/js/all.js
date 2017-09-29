@@ -142,7 +142,6 @@ function confirmDelete(e)
         dataType: 'json',
         data: { id:id, type: type },
         success: function(data) {
-
             if(!data.error)
             {
                 $('#modal').modal('toggle');
@@ -405,8 +404,8 @@ function toggleSuccess (data)
     setTimeout(function()
     {
         $('.notification-success').addClass('hidden');
-        location.reload();
     }, 1500);
+    location.reload();
 }
 
 function toggleError (data)
@@ -416,6 +415,6 @@ function toggleError (data)
     setTimeout(function()
     {
         $('.notification-error').addClass('hidden');
-    }, 1500);
+    }, 2500);
 }
 //# sourceMappingURL=all.js.map

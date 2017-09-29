@@ -6,6 +6,8 @@ use App\Http\Requests\ItemDetailRequest;
 use App\Item;
 use App\ItemCategory;
 use App\ItemDetail;
+use Faker\Provider\File;
+use Illuminate\Support\Facades\Storage;
 use Validator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -68,7 +70,7 @@ class ItemManagement extends Controller
                 ItemCategory::where('id', '=', $category_id)->first()->delete();
                 $return = ['error' => false, 'msg' => 'Deleting category completed'];
             } catch (\Exception $e) {
-                $return = ['error' => true, 'msg' => $e];
+                $return = ['error' => true, 'msg' => $e->getMessage()];
             }
         }
 
@@ -84,14 +86,25 @@ class ItemManagement extends Controller
             Item::where('id', '=', $item_id)->first()->delete();
 
             //Delete the following item details
-            ItemDetail::where('item_id', '=', $item_id)->get()->delete();
+            $details = ItemDetail::where('item_id', '=', $item_id)->get();
 
-            //todo make a deletion of item detail picture
+            if($details->isNotEmpty()) {
+                foreach ($details as $detail) {
+
+                    $image_path = $detail->images;
+
+                    //Delete Image Folder
+                    Storage::deleteDirectory($image_path);
+
+                    $detail->delete();
+                }
+            }
 
             $return = ['error' => false, 'msg' => 'Deleting item completed'];
-        } catch (\Exception $e) {
-            $return = ['error' => true, 'msg' => $e];
-            }
+        } catch (\Exception $e)
+        {
+            $return = ['error' => true, 'msg' => $e->getMessage()];
+        }
 
         echo json_encode($return);
     }
@@ -102,14 +115,18 @@ class ItemManagement extends Controller
 
         try
         {
-            ItemDetail::where('id' , '=', $item_detail_id)->first()->delete();
+            $detail = ItemDetail::where('id' , '=', $item_detail_id)->first();
 
-            //todo make a deletion of item detail picture
+            $image_path = $detail->images;
+
+            Storage::deleteDirectory($image_path);
+
+            $detail->delete();
 
             $return = ['error' => false, 'msg' => 'Deleting item details completed'];
         }catch(\Exception $e)
         {
-            $return = ['error' => true, 'msg' => $e];
+            $return = ['error' => true, 'msg' => $e->getMessage()];
         }
 
         echo json_encode($return);
@@ -134,7 +151,7 @@ class ItemManagement extends Controller
             'preorder'      => 'nullable'
         ];
 
-        $validator = $this->validate($req, $rules);
+        $validator = Validator::make($req->all(), $rules);
 
         if($validator->fails())
         {
@@ -187,24 +204,30 @@ class ItemManagement extends Controller
         $parentId   = $req->input('id');
         $imagePath  = $parentId . '#' . time().uniqid();
 
-        //Create a new database record
-        $itemDetail = new ItemDetail();
+        try {
+            //Create a new database record
+            $itemDetail = new ItemDetail();
 
-        $itemDetail->color  = $req->input('color');
-        $itemDetail->stock  = $req->input('stock');
-        $itemDetail->size   = $req->input('size');
-        $itemDetail->status = $req->input('status');
-        $itemDetail->image  = $imagePath;
-        //$itemDetail->save();
+            $itemDetail->item_id = $parentId;
+            $itemDetail->color = $req->input('color');
+            $itemDetail->stock = $req->input('stock');
+            $itemDetail->size = $req->input('size');
+            $itemDetail->status = $req->input('status');
+            $itemDetail->images = $imagePath;
+            $itemDetail->save();
 
-        //Store the file
-        foreach($req->image as $image)
+            //Store the file
+            foreach($req->image as $image)
+            {
+                echo $image->store($imagePath);
+            }
+
+            return back()->with('success', 'Creating New Item Detail Success');
+
+        }catch(\Exception $e)
         {
-            echo $image->store($imagePath);
+            return back()->withErrors($e->getMessage());
         }
 
-        echo '<pre>';
-        print_r($req->input());
-        print_r($req->file());
     }
 }

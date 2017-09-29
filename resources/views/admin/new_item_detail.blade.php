@@ -40,7 +40,11 @@
                         <span>Status</span>
                         <br>
                       <label class="form-check-label">
-                        <input class="form-check-input mt-3 mb-3" type="radio" name="status">Available
+                        <input class="form-check-input mt-3 mb-3" type="radio" name="status" value="available">Available
+                      </label>
+                        <br>
+                      <label class="form-check-label">
+                        <input class="form-check-input mt-3 mb-3" type="radio" name="status" value="preorder">Pre-Order
                       </label>
                     </div>
                 </div>

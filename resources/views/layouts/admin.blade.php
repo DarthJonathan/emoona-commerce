@@ -223,7 +223,7 @@
 </div>
 
 {{--Notification--}}
-<div class="notification-success notification hidden mt-5">
+<div class="notification-success notification hidden mt-3">
     <div class="container">
         <div class="col-lg-6 mx-auto">
             <div class="alert alert-success alert-body-success">
@@ -233,7 +233,7 @@
     </div>
 </div>
 
-<div class="notification-error notification hidden mt-5">
+<div class="notification-error notification hidden mt-3">
     <div class="container">
         <div class="col-lg-6 mx-auto mt-2">
             <div class="alert alert-danger alert-body-error">
