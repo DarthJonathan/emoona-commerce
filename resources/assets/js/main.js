@@ -7,6 +7,7 @@ function userInfo (e)
     const id = e.id;
 
     $('#modal').modal('toggle');
+    $('#ajax-loading').show();
     $('.modal-title').empty();
 
     $.ajax({
@@ -102,6 +103,7 @@ function deleteUser (e)
 function cancelDelete()
 {
     $('#modal').modal('toggle');
+    $('#ajax-loading').show();
 }
 
 function confirmDelete(e)
@@ -159,6 +161,7 @@ function deleteCategory (e)
     const id = $(e).data('id');
     $('.modal-title').empty();
     $('#modal').modal('toggle');
+    $('#ajax-loading').show();
 
     $.ajax({
         url: '/admin/delete_confirmation',
@@ -178,6 +181,7 @@ function deleteItem (e)
     const id = $(e).data('id');
     $('.modal-title').empty();
     $('#modal').modal('toggle');
+    $('#ajax-loading').show();
 
     $.ajax({
         url: '/admin/delete_confirmation',
@@ -197,6 +201,7 @@ function deleteItemDetail (e) {
     const id = $(e).data('id');
     $('.modal-title').empty();
     $('#modal').modal('toggle');
+    $('#ajax-loading').show();
 
     $.ajax({
         url: '/admin/delete_confirmation',
@@ -214,6 +219,7 @@ function deleteItemDetail (e) {
 function newItem () {
     $('#modal').modal('toggle');
     $('.modal-title').html('New Item');
+    $('#ajax-loading').show();
 
     $.ajax({
         url: '/admin/new_item_req',
@@ -233,6 +239,7 @@ function newItemDetail (e)
     $('#modal').modal('toggle');
     $('.modal-title').html('New Item Detail');
     $('.modal-body').empty();
+    $('#ajax-loading').show();
 
     $.ajax({
         url: '/admin/new_item_detail_req',
@@ -249,6 +256,8 @@ function newItemDetail (e)
 function editItem (e) {
 
     const id = $(e).data('id');
+
+
 
 
 

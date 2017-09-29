@@ -26,7 +26,27 @@ class ItemDetailRequest extends FormRequest
         return [
             'color'     => 'required',
             'size'      => 'required',
-            'stock'     => 'required'
+            'stock'     => 'required',
+            'image'     => 'required',
+            'image.*'   => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+        ];
+    }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'color.required'    => 'Item color is required',
+            'size.required'     => 'Item size is required',
+            'stock.required'    => 'Item stock is required',
+            'image.required'    => 'Item image is required',
+            'image.*.mimes'     => 'Item image file type is invalid',
+            'image.*.image'     => 'Item image file uploaded is not an image',
+            'image.*.max'       => 'Item image maximum file size is 2 MB'
         ];
     }
 }

@@ -6,6 +6,7 @@ use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Exceptions\PostTooLargeException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Handler extends ExceptionHandler
@@ -53,6 +54,13 @@ class Handler extends ExceptionHandler
             }
 
             return response()->view('error.404', [] ,404);
+        }else if($exception instanceof PostTooLargeException)
+        {
+            if($request->ajax()) {
+                return response()->json(['error' => true, 'msg' => 'File too Large'], 422);
+            }
+
+            return back()->withError('The file you are trying too upload is too big');
         }
 
         return parent::render($request, $exception);

@@ -6,6 +6,7 @@ use App\Http\Requests\ItemDetailRequest;
 use App\Item;
 use App\ItemCategory;
 use App\ItemDetail;
+use Validator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductImageRequest;
@@ -183,6 +184,25 @@ class ItemManagement extends Controller
 
     function newItemDetail (ItemDetailRequest $req)
     {
+        $parentId   = $req->input('id');
+        $imagePath  = $parentId . '#' . time().uniqid();
+
+        //Create a new database record
+        $itemDetail = new ItemDetail();
+
+        $itemDetail->color  = $req->input('color');
+        $itemDetail->stock  = $req->input('stock');
+        $itemDetail->size   = $req->input('size');
+        $itemDetail->status = $req->input('status');
+        $itemDetail->image  = $imagePath;
+        //$itemDetail->save();
+
+        //Store the file
+        foreach($req->image as $image)
+        {
+            echo $image->store($imagePath);
+        }
+
         echo '<pre>';
         print_r($req->input());
         print_r($req->file());

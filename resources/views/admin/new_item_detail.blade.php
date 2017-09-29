@@ -17,7 +17,7 @@
                   <input type="text" required class="form-control" name="size" placeholder="Enter Item Size">
                 </div>
                 <div class="col">
-                  <input type="number" required class="form-control" name="stock" placeholder="Enter Item Stock">
+                  <input type="number" class="form-control" name="stock" placeholder="Enter Item Stock">
                 </div>
             </div>
 
