@@ -276,4 +276,8 @@ body {
   align-items: center;
 }
 
+.btn {
+  cursor: pointer !important;
+}
+
 /*# sourceMappingURL=styleadmin.css.map */

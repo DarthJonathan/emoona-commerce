@@ -68,29 +68,37 @@ class UserController extends Controller
             'phone'     => 'required|numeric'
         );
 
-        $this->validate($req, $rules);
+        $validation = $this->validate($req, $rules);
 
-        $updated_data = array (
-            'address'  => $req->input('address'),
-            'postcode'  => $req->input('postcode'),
-            'province'  => $req->input('province'),
-            'country'  => $req->input('country'),
-            'birthday'  => $req->input('birthday'),
-            'gender'  => $req->input('gender'),
-            'phone'  => $req->input('phone'),
-        );
+        if($validation->fails())
+        {
+            $message = $validation->messages();
 
-        $updated_data_core = array (
-            'firstname' => $req->input('firstname'),
-            'lastname'  => $req->input('lastname')
-        );
+            return back()->withError($message);
+        }else
+        {
+            $updated_data = array (
+                'address'  => $req->input('address'),
+                'postcode'  => $req->input('postcode'),
+                'province'  => $req->input('province'),
+                'country'  => $req->input('country'),
+                'birthday'  => $req->input('birthday'),
+                'gender'  => $req->input('gender'),
+                'phone'  => $req->input('phone'),
+            );
 
-        if(user_info::where('user_id', '=', Auth::id())->update($updated_data) && Auth::user()->update($updated_data_core))
-            Session::flash('message', 'Updating Data Completed');
-        else
-            Session::flash('message', 'Update Failed');
+            $updated_data_core = array (
+                'firstname' => $req->input('firstname'),
+                'lastname'  => $req->input('lastname')
+            );
 
-        return Redirect::to('home');
+            if(user_info::where('user_id', '=', Auth::id())->update($updated_data) && Auth::user()->update($updated_data_core))
+                Session::flash('message', 'Updating Data Completed');
+            else
+                Session::flash('message', 'Update Failed');
 
+            return Redirect::to('home');
+
+        }
     }
 }

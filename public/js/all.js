@@ -226,9 +226,31 @@ function newItem () {
     });
 }
 
+function newItemDetail (e)
+{
+    const id = $(e).data('id');
+
+    $('#modal').modal('toggle');
+    $('.modal-title').html('New Item Detail');
+    $('.modal-body').empty();
+
+    $.ajax({
+        url: '/admin/new_item_detail_req',
+        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+        type: 'post',
+        data: {id:id},
+        success: function (data) {
+            $('.modal-body').html(data);
+            $('#ajax-loading').hide();
+        }
+    });
+}
+
 function editItem (e) {
 
     const id = $(e).data('id');
+
+
 
 }
 
@@ -333,6 +355,7 @@ function loadNextCategory (e)
                             value.name +
                             '</a>' +
                             '<button style="cursor: pointer" class="btn btn-primary float-right btn-sm" data-id="'+ value.id +'" onclick="editItem(this)">Edit Item</button>' +
+                            '<button style="cursor: pointer" class="btn btn-primary float-right btn-sm mr-2" data-id="'+ value.id +'" onclick="newItemDetail(this)">New Item Detail</button>' +
                             '<button style="cursor: pointer" class="btn btn-danger float-right btn-sm mr-2" data-id="'+ value.id +'" onclick="deleteItem(this)">Delete Item</button>' +
                             '</a>';
 

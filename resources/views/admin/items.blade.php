@@ -47,7 +47,7 @@
         </div>
 
         <div class="row mt-3">
-            <div class="col-lg-4">
+            <div class="col-lg-12">
                 <div class="card content-card">
                     <div class="card-header">
                         Items
@@ -58,7 +58,10 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-8">
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-lg-12">
                 <div class="card content-card">
                     <div class="card-header">
                         Item Details

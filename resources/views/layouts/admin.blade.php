@@ -256,9 +256,6 @@
     </script>
 @endif
 
-{{ old('success') }}
-
-
 @if(session('error', null) != null || session('success',null) != null)
     <script>
         $(document).ready(function()

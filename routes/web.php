@@ -51,8 +51,16 @@ Route::middleware(['admin'])->group(function()
         Route::post('category', 'admin\ItemManagement@category');
         Route::post('delete_category', 'admin\ItemManagement@deleteCategory');
         Route::post('delete_item', 'admin\ItemManagement@deleteItem');
+            /*
+            * New Item
+            */
         Route::post('new_item_req', 'admin\ItemManagement@newItemAjax');
         Route::post('new_item', 'admin\ItemManagement@newItem');
+            /*
+            * New Item Detail
+            */
+        Route::post('new_item_detail_req', 'admin\ItemManagement@newItemDetailAjax');
+        Route::post('new_item_detail', 'admin\ItemManagement@newItemDetail');
         Route::post('delete_item_detail', 'admin\ItemManagement@deleteItemDetail');
         Route::post('userinfo', 'admin\UserManagementController@userinfo');
         Route::post('user_transactions', 'admin\UserManagementController@userTransactions');

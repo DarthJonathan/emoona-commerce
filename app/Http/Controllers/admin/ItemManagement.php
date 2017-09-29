@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\admin;
 
+use App\Http\Requests\ItemDetailRequest;
 use App\Item;
 use App\ItemCategory;
 use App\ItemDetail;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ProductImageRequest;
 
 class ItemManagement extends Controller
 {
@@ -122,35 +124,67 @@ class ItemManagement extends Controller
 
     function newItem (Request $req)
     {
-        $data = [
-            'name'          => $req->input('itemName'),
-            'price'         => $req->input('itemPrice'),
-            'category_id'   => $req->input('category'),
-            'sku'           => $req->input('sku'),
-            'description'   => $req->input('description'),
-            'preorder'      => $req->input('preorder')==null?0:1
+        $rules = [
+            'itemName'      => 'required',
+            'itemPrice'     => 'required|numeric',
+            'category'      => 'required',
+            'sku'           => 'required',
+            'description'   => 'required',
+            'preorder'      => 'nullable'
         ];
 
-        try
+        $validator = $this->validate($req, $rules);
+
+        if($validator->fails())
         {
-            $item = new Item();
+            $message = $validator->messages();
 
-            $item->category_id  = $data['category_id'];
-            $item->name         = $data['name'];
-            $item->price        = $data['price'];
-            $item->sku          = $data['sku'];
-            $item->description  = $data['description'];
-            $item->preorder     = $data['preorder'];
-            $item->hidden       = 0;
+            return back()->withError($message);
+        }else
+        {
+            $data = [
+                'name'          => $req->input('itemName'),
+                'price'         => $req->input('itemPrice'),
+                'category_id'   => $req->input('category'),
+                'sku'           => $req->input('sku'),
+                'description'   => $req->input('description'),
+                'preorder'      => $req->input('preorder')==null?0:1
+            ];
 
-            $item->save();
+            try
+            {
+                $item = new Item();
 
-            return back()->with('success', 'Successfully added a new item!');
+                $item->category_id  = $data['category_id'];
+                $item->name         = $data['name'];
+                $item->price        = $data['price'];
+                $item->sku          = $data['sku'];
+                $item->description  = $data['description'];
+                $item->preorder     = $data['preorder'];
+                $item->hidden       = 0;
 
-        }catch(\Exception $e) {
+                $item->save();
 
-            return back()->with('error', 'Storing into Database Failed (ERR: 311)');
+                return back()->with('success', 'Successfully added a new item!');
 
+            }catch(\Exception $e) {
+
+                return back()->with('error', 'Storing into Database Failed (ERR: 311)');
+
+            }
         }
+    }
+
+    function newItemDetailAjax (Request $req)
+    {
+        $data = ['id' => $req->input('id')];
+        return view('admin.new_item_detail', $data);
+    }
+
+    function newItemDetail (ItemDetailRequest $req)
+    {
+        echo '<pre>';
+        print_r($req->input());
+        print_r($req->file());
     }
 }
