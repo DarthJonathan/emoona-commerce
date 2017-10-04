@@ -27,8 +27,8 @@ class ItemDetailRequest extends FormRequest
             'color'     => 'required',
             'size'      => 'required',
             'stock'     => 'required',
-            'image'     => 'required',
-            'image.*'   => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            'image'     => 'nullable',
+            'image.*'   => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ];
     }
 
@@ -43,7 +43,6 @@ class ItemDetailRequest extends FormRequest
             'color.required'    => 'Item color is required',
             'size.required'     => 'Item size is required',
             'stock.required'    => 'Item stock is required',
-            'image.required'    => 'Item image is required',
             'image.*.mimes'     => 'Item image file type is invalid',
             'image.*.image'     => 'Item image file uploaded is not an image',
             'image.*.max'       => 'Item image maximum file size is 2 MB'

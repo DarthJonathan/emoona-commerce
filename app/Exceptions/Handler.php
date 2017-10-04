@@ -7,6 +7,7 @@ use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Exceptions\PostTooLargeException;
+use Illuminate\Session\TokenMismatchException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Handler extends ExceptionHandler
@@ -61,6 +62,9 @@ class Handler extends ExceptionHandler
             }
 
             return back()->withError('The file you are trying too upload is too big');
+        }else if($exception instanceof TokenMismatchException)
+        {
+            return redirect('/login');
         }
 
         return parent::render($request, $exception);

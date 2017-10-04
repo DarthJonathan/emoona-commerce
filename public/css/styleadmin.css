@@ -263,6 +263,10 @@ body {
   height: 100%;
 }
 
+.content-card .card-body {
+  overflow-: scroll;
+}
+
 .noscroll-bar::-webkit-scrollbar {
   display: none;
 }
@@ -278,6 +282,10 @@ body {
 
 .btn {
   cursor: pointer !important;
+}
+
+.image-scroller .image-group img {
+  width: 100%;
 }
 
 /*# sourceMappingURL=styleadmin.css.map */

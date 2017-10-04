@@ -16,6 +16,7 @@
     <script src="{{ asset('js/popper-utils.js') }}"></script>
     <script src="{{ asset('js/bootstrap.js') }}"></script>
     <script src="{{ asset('js/all.js') }}"></script>
+    <script src="{{ asset('js/jquery.form.min.js') }}"></script>
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">

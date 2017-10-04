@@ -6,7 +6,8 @@ use App\Http\Requests\ItemDetailRequest;
 use App\Item;
 use App\ItemCategory;
 use App\ItemDetail;
-use Faker\Provider\File;
+use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Validator;
 use Illuminate\Http\Request;
@@ -69,12 +70,14 @@ class ItemManagement extends Controller
             try {
                 ItemCategory::where('id', '=', $category_id)->first()->delete();
                 $return = ['error' => false, 'msg' => 'Deleting category completed'];
+
+                return response()->json($return, 200);
             } catch (\Exception $e) {
                 $return = ['error' => true, 'msg' => $e->getMessage()];
+
+                return response()->json($return, 400);
             }
         }
-
-        echo json_encode($return);
     }
 
     function deleteItem (Request $req)
@@ -91,7 +94,7 @@ class ItemManagement extends Controller
             if($details->isNotEmpty()) {
                 foreach ($details as $detail) {
 
-                    $image_path = $detail->images;
+                    $image_path = 'public/item_detail/' . $detail->images;
 
                     //Delete Image Folder
                     Storage::deleteDirectory($image_path);
@@ -100,13 +103,15 @@ class ItemManagement extends Controller
                 }
             }
 
-            $return = ['error' => false, 'msg' => 'Deleting item completed'];
+            $return = ['error' => false, 'msg' => 'Deleting item completed', 'next' => json_encode(['id' => $item_id, 'next' => 2])];
+
+            return response()->json($return, 200);
         } catch (\Exception $e)
         {
             $return = ['error' => true, 'msg' => $e->getMessage()];
-        }
 
-        echo json_encode($return);
+            return response()->json($return, 400);
+        }
     }
 
     function deleteItemDetail (Request $req)
@@ -117,19 +122,23 @@ class ItemManagement extends Controller
         {
             $detail = ItemDetail::where('id' , '=', $item_detail_id)->first();
 
-            $image_path = $detail->images;
+            $image_path = 'public/item_detail/' . $detail->images;
+
+            $parent = $detail->item_id;
 
             Storage::deleteDirectory($image_path);
 
             $detail->delete();
 
-            $return = ['error' => false, 'msg' => 'Deleting item details completed'];
+            $return = ['error' => false, 'msg' => 'Deleting item details completed', 'next' => ['id' => $parent, 'next' => 3]];
+
+            return response()->json($return, 200);
         }catch(\Exception $e)
         {
             $return = ['error' => true, 'msg' => $e->getMessage()];
-        }
 
-        echo json_encode($return);
+            return response()->json($return, 400);
+        }
     }
 
     function newItemAjax (Request $req)
@@ -157,7 +166,9 @@ class ItemManagement extends Controller
         {
             $message = $validator->messages();
 
-            return back()->withError($message);
+            $return = ['error' => true, 'errors' => $message];
+
+            return response()->json($return, 400);
         }else
         {
             $data = [
@@ -183,11 +194,15 @@ class ItemManagement extends Controller
 
                 $item->save();
 
-                return back()->with('success', 'Successfully added a new item!');
+                $return = ['error' => false, 'msg' => 'Successfully added a new item!', 'id' => $data['category_id']];
+
+                return response()->json($return, 200);
 
             }catch(\Exception $e) {
 
-                return back()->with('error', 'Storing into Database Failed (ERR: 311)');
+                $return = ['error' => true, 'errors' => 'Storing into Database Failed (ERR: 311)', 'errors_debug' => $e->getMessage()];
+
+                return response()->json($return, 400);
 
             }
         }
@@ -202,7 +217,9 @@ class ItemManagement extends Controller
     function newItemDetail (ItemDetailRequest $req)
     {
         $parentId   = $req->input('id');
-        $imagePath  = $parentId . '#' . time().uniqid();
+        $imageName  =  $parentId . '.' . time().uniqid();
+        $imagePath  = 'public/item_detail/' . $imageName;
+        $singularPath = array();
 
         try {
             //Create a new database record
@@ -213,20 +230,224 @@ class ItemManagement extends Controller
             $itemDetail->stock = $req->input('stock');
             $itemDetail->size = $req->input('size');
             $itemDetail->status = $req->input('status');
-            $itemDetail->images = $imagePath;
+            $itemDetail->images = $imageName;
             $itemDetail->save();
 
             //Store the file
             foreach($req->image as $image)
             {
-                echo $image->store($imagePath);
+                array_push($singularPath, $image->store($imagePath));
             }
 
-            return back()->with('success', 'Creating New Item Detail Success');
+            $return = ['error' => false, 'msg' => 'Successfully added a new item detail!', 'id' => $parentId];
+
+            return response()->json($return, 200);
+
+        }catch(\Exception $e) {
+
+            $return = ['error' => true, 'errors' => 'Storing into Database Failed (ERR: 211)', 'errors_debug' => $e->getMessage()];
+
+            return response()->json($return, 400);
+
+        }
+    }
+
+    function editItemAjax (Request $req)
+    {
+        $item = Item::with('item_category')->where('id', '=', $req->input('id'))->first()->toArray();
+        $categories = ItemCategory::all()->toArray();
+
+        $data = [
+            'id'            => $req->input('id'),
+            'item'          => $item,
+            'item_json'     => json_encode($item),
+            'categories'    => json_encode($categories)
+        ];
+        return view('admin.edit_item', $data);
+    }
+
+    function editItem (Request $req)
+    {
+        $rules = [
+            'itemName'      => 'required',
+            'itemPrice'     => 'required|numeric',
+            'category'      => 'required',
+            'sku'           => 'required',
+            'description'   => 'required',
+            'preorder'      => 'nullable'
+        ];
+
+        $validator = Validator::make($req->all(), $rules);
+
+        if($validator->fails())
+        {
+            $message = $validator->messages();
+
+            $return = ['error' => true, 'errors' => $message];
+
+            return response()->json($return, 400);
+        }else
+        {
+            try {
+                $item = Item::findOrFail($req->input('id'));
+
+                $item->name = $req->input('itemName');
+                $item->category_id = $req->input('category');
+                $item->price = $req->input('itemPrice');
+                $item->sku = $req->input('sku');
+                $item->description = $req->input('description');
+                $item->preorder = $req->input('preorder')==null?0:1;
+
+                $item->save();
+
+                return response()->json([
+                    'error' => false,
+                    'msg' => 'Editing Item Data Success',
+                    'id' => $req->input('id')
+                    ], 200);
+
+            }catch (\Exception $e) {
+                return response()->json([
+                    'error'     => false,
+                    'errors'    => 'Error inserting Into Database (Err: 443)',
+                    'errors_debug'    => $e->getMessage()
+                    ], 400);
+            }
+        }
+    }
+
+    function editItemDetailAjax (Request $req)
+    {
+        $id     = $req->input('id');
+        $field  = $req->input('field');
+        $value  = $req->input('value');
+
+        try
+        {
+            $itemDetail = ItemDetail::findOrFail($id);
+
+            switch($field)
+            {
+                case 'color':
+                {
+                    $itemDetail->color = $value;
+                }break;
+
+                case 'size':
+                {
+                    $itemDetail->size = $value;
+                }break;
+
+                case 'status':
+                {
+                    $itemDetail->status = $value;
+                }break;
+
+                case 'stock':
+                {
+                    $itemDetail->stock  = $value;
+                }break;
+            }
+
+            $itemDetail->save();
+
+            return response()->json([
+                'error' => false,
+                'msg'   => 'Success!'
+            ], 200);
 
         }catch(\Exception $e)
         {
-            return back()->withErrors($e->getMessage());
+            return response()->json([
+                'error'         => true,
+                'errors_debug'  => $e->getMessage(),
+                'errors'        => 'Error inputting into database (Err:442)'
+            ], 400);
+        }
+    }
+
+    function editItemDetailImageAjax (Request $req)
+    {
+        $path = $req->input('id');
+
+        try {
+            $data = ['files' => Storage::files('public/item_detail/' . $path), 'id' => $path];
+
+            return view('admin.image_view', $data);
+        }catch (\Exception $e)
+        {
+            return response()->json([
+                'error'         => true,
+                'errors_debug'  => $e->getMessage(),
+                'errors'        => 'Error getting image files (Err:441)'
+            ], 400);
+        }
+    }
+
+    function deleteItemDetailImage (Request $req)
+    {
+        $path = $req->input('id');
+
+        try {
+
+            foreach($path as $count => $single)
+            {
+                Storage::delete('public/item_detail/' . $single);
+            }
+
+            return response()->json([
+                'error' => false,
+                'msg'   => 'Deletion Complete'
+            ]);
+        }catch (\Exception $e)
+        {
+            return response()->json([
+                'error'         => true,
+                'errors_debug'  => $e->getMessage(),
+                'errors'        => 'Error deleting image files (Err:441)'
+            ], 400);
+        }
+    }
+
+    function addImageItemDetail (Request $req)
+    {
+        try {
+
+            $rules = [
+                'image'     => 'required',
+                'image.*'   => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            ];
+
+            $validator = Validator::make($req->all(), $rules);
+
+            if($validator->fails())
+            {
+                $message = $validator->messages();
+
+                $return = ['error' => true, 'errors' => $message];
+
+                return response()->json($return, 400);
+            }else {
+
+                $path = 'public/item_detail/' . $req->input('id');
+                $singularPath = array();
+
+                //Store the file
+                foreach ($req->image as $image) {
+                    array_push($singularPath, $image->store($path));
+                }
+
+                $return = ['error' => false, 'msg' => 'Successfully added a new item detail image!'];
+
+                return response()->json($return, 200);
+            }
+
+        }catch(\Exception $e) {
+
+            $return = ['error' => true, 'errors' => 'Storing into Database Failed (ERR: 111)', 'errors_debug' => $e->getMessage()];
+
+            return response()->json($return, 400);
+
         }
 
     }

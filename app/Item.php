@@ -16,4 +16,9 @@ class Item extends Model
     {
         return $this->hasMany('App\ItemDetail');
     }
+
+    function item_category ()
+    {
+        return $this->hasOne('App\ItemCategory', 'id', 'category_id');
+    }
 }

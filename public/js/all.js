@@ -146,6 +146,15 @@ function confirmDelete(e)
             {
                 $('#modal').modal('toggle');
                 toggleSuccess(data.msg);
+                if(data.next) {
+                    var e = {
+                        id: parseInt(data.next.id),
+                        category: data.next.next
+                    }
+
+                    console.log(e);
+                    loadNextCategory(e);
+                }
             }else
             {
                 $('#modal').modal('toggle');
@@ -256,14 +265,74 @@ function editItem (e) {
 
     const id = $(e).data('id');
 
+    $('#modal').modal('toggle');
+    $('.modal-title').html('Edit Item');
+    $('.modal-body').empty();
+    $('#ajax-loading').show();
 
-
-
-
+    $.ajax({
+        url: '/admin/edit_item_req',
+        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+        type: 'post',
+        data: {id:id},
+        success: function (data) {
+            $('.modal-body').html(data);
+            $('#ajax-loading').hide();
+        }
+    });
 }
 
-function editItemDetail () {
+function editItemDetail (e) {
 
+    var id              = $(e).data('id');
+    var field           = $(e).data('case');
+
+    if($(e).val())
+        var value       = $(e).val();
+    else
+        var value       = $(e).html();
+
+    $.ajax({
+        url: '/admin/edit_item_detail',
+        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+        type: 'post',
+        data: {id:id, field:field, value:value},
+        success: function (response) {
+            toggleSuccess(response.msg);
+        },error: function (response) {
+            toggleError(response.responseJSON.errors);
+            console.log(response.responseJSON.errors_debug);
+        }
+    });
+}
+
+function viewImagesDetail (e)
+{
+    var image_path = $(e).data("link");
+
+    $('#modal').modal('toggle');
+    $('.modal-title').html('Edit Item');
+    $('.modal-body').empty();
+    $('#ajax-loading').show();
+
+    $.ajax({
+        url: '/admin/edit_item_detail_image_req',
+        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+        type: 'post',
+        data: {id:image_path},
+        success: function (data) {
+            $('.modal-body').html(data);
+            $('#ajax-loading').hide();
+        },
+        error: function(data) {
+            $('#modal').modal('toggle');
+
+            console.log(data.responseText);
+
+            toggleError(data.responseJSON.errors);
+            console.log(data.responseJSON.errors_debug);
+        }
+    });
 }
 
 function seeTransactionDetail (e)
@@ -278,8 +347,6 @@ function seeTransactionDetail (e)
         success: function(data) {
 
             const transaction_details = JSON.parse(data);
-
-            // console.log(transaction_details);
 
             var html = '<h3 class="m-2 mb-4">User Information</h3>' +
                 '<table class="table">' +
@@ -316,8 +383,15 @@ function seeTransactionDetail (e)
 
 function loadNextCategory (e)
 {
-    const id = $(e).data('id');
-    const next = $(e).data('category');
+    if(!$(e).data('id'))
+        var id = e.id;
+    else
+        var id = $(e).data('id');
+
+    if(!$(e).data('category'))
+        var next = e.category;
+    else
+        var next = $(e).data('category');
 
     $.ajax({
         url:'/admin/category',
@@ -377,13 +451,37 @@ function loadNextCategory (e)
 
                     $.each(out.html, function(key, value){
 
+                        var status = {};
+
+                        if(value.status == 'available') {
+                            status.available = 'checked';
+                            status.preorder = '';
+                            status.hidden = '';
+                        }
+                        else if(value.status == 'preorder') {
+                            status.available = '';
+                            status.preorder = 'checked';
+                            status.hidden = '';
+                        }
+                        else{
+                            status.available = '';
+                            status.preorder = '';
+                            status.hidden = 'checked';
+                        }
+
                         html = '<tr>' +
                             '<td>'+ (key+1) +'</td>' +
-                            '<td>'+ value.color +'</td>' +
-                            '<td>'+ value.size +'</td>' +
-                            '<td>'+ value.images +'</td>' +
-                            '<td>'+ value.stock +'</td>' +
-                            '<td>'+ value.status +'</td>' +
+                            '<td data-case="color" data-id="'+ value.id +'" onblur="editItemDetail(this)" contenteditable>'+ value.color +'</td>' +
+                            '<td data-case="size" data-id="'+ value.id +'" onblur="editItemDetail(this)" contenteditable>'+ value.size +'</td>' +
+                            '<td>' +
+                            '   <button class="btn btn-primary btn-block" style="cursor: pointer;" data-link="'+ value.images +'" onclick="viewImagesDetail(this)">View Images</button>' +
+                            '</td>' +
+                            '<td data-case="stock" data-id="'+ value.id +'" onblur="editItemDetail(this)" contenteditable>'+ value.stock +'</td>' +
+                            '<td>'+
+                            '<input type="radio" name="status#'+ value.id +'" ' + status.available + ' data-case="status" data-id="'+ value.id +'" onclick="editItemDetail(this)" value="available"> Available <br>' +
+                            '<input type="radio" name="status#'+ value.id +'" ' + status.preorder + '  data-case="status" data-id="'+ value.id +'" onclick="editItemDetail(this)" value="preorder"> Preorder <br>' +
+                            '<input type="radio" name="status#'+ value.id +'" ' + status.hidden + '  data-case="status" data-id="'+ value.id +'" onclick="editItemDetail(this)" value="hidden"> Hidden <br>' +
+                            '</td>' +
                             '<td>' +
                             '<button class="btn btn-danger" onclick="deleteItemDetail(this)" data-id="'+ value.id +'" style="cursor:pointer">Delete</button>' +
                             '</td>' +
@@ -404,8 +502,7 @@ function toggleSuccess (data)
     setTimeout(function()
     {
         $('.notification-success').addClass('hidden');
-    }, 1500);
-    location.reload();
+    }, 2500);
 }
 
 function toggleError (data)

@@ -32,6 +32,27 @@ Route::middleware(['notifications', 'checkRole', 'suspended'])->group(function()
     Route::post('/update', 'UserController@update')->name('update');
 });
 
+/*
+ * Image Serving Route
+ */
+
+Route::get('storage/{folder}/{filename}', function ($folder, $filename)
+{
+    $path = storage_path('app/public/' . $folder . '/' . $filename);
+
+    if (!File::exists($path)) {
+        abort(404);
+    }
+
+    $file = File::get($path);
+    $type = File::mimeType($path);
+
+    $response = Response::make($file, 200);
+    $response->header("Content-Type", $type);
+
+    return $response;
+});
+
 Route::middleware(['admin'])->group(function()
 {
     Route::get('admin', 'admin\AdminController@dashboard')->name('admindashboard');
@@ -46,22 +67,37 @@ Route::middleware(['admin'])->group(function()
         Route::get('tickets', 'admin\AdminController@tickets')->name('tickets');
 
         /*
-         * Ajax
-         */
+         * Item Management
+         *
+             *
+             * Category
+             */
         Route::post('category', 'admin\ItemManagement@category');
         Route::post('delete_category', 'admin\ItemManagement@deleteCategory');
-        Route::post('delete_item', 'admin\ItemManagement@deleteItem');
             /*
-            * New Item
+            * Item
             */
         Route::post('new_item_req', 'admin\ItemManagement@newItemAjax');
         Route::post('new_item', 'admin\ItemManagement@newItem');
+        Route::post('edit_item_req', 'admin\ItemManagement@editItemAjax');
+        Route::get('edit_item_req', 'admin\ItemManagement@editItemAjax');
+        Route::post('edit_item', 'admin\ItemManagement@editItem');
+        Route::post('delete_item', 'admin\ItemManagement@deleteItem');
             /*
-            * New Item Detail
+            *  Item Detail
             */
         Route::post('new_item_detail_req', 'admin\ItemManagement@newItemDetailAjax');
         Route::post('new_item_detail', 'admin\ItemManagement@newItemDetail');
+        Route::post('edit_item_detail', 'admin\ItemManagement@editItemDetailAjax');
+        Route::post('edit_item_detail_image_req', 'admin\ItemManagement@editItemDetailImageAjax');
         Route::post('delete_item_detail', 'admin\ItemManagement@deleteItemDetail');
+        Route::post('delete_image', 'admin\ItemManagement@deleteItemDetailImage');
+        Route::post('add_image_item_detail', 'admin\ItemManagement@addImageItemDetail');
+        Route::get('add_image_item_detail', 'admin\ItemManagement@addImageItemDetail');
+
+        /*
+         * Account Management
+         */
         Route::post('userinfo', 'admin\UserManagementController@userinfo');
         Route::post('user_transactions', 'admin\UserManagementController@userTransactions');
         Route::post('user_transaction_detail', 'admin\UserManagementController@userTransactionDetails');
