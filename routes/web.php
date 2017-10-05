@@ -66,6 +66,8 @@ Route::middleware(['admin'])->group(function()
         Route::get('transaction', 'admin\AdminController@transactions')->name('transactions');
         Route::get('tickets', 'admin\AdminController@tickets')->name('tickets');
 
+        Route::post('confirm_prompt', 'admin\AdminController@prompt');
+
         /*
          * Item Management
          *
@@ -104,6 +106,12 @@ Route::middleware(['admin'])->group(function()
         Route::post('suspend', 'admin\UserManagementController@suspend');
         Route::post('delete_confirmation', 'admin\AdminController@confirmDelete');
         Route::post('remove', 'admin\UserManagementController@removeUser');
+
+        /*
+         * Transactions
+         */
+        Route::post('get_transactions', 'admin\TransactionController@getAll');
+        Route::post('confirm_payment', 'admin\TransactionController@confirmPayment');
     });
 });
 

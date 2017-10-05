@@ -46,13 +46,19 @@ class AdminController extends Controller
         return view('confirm', $data);
     }
 
+    public function prompt (Request $req)
+    {
+        $data = ['id' => $req->input('id'), 'type' => $req->input('type')];
+        return view('admin/prompt', $data);
+    }
+
     public function tickets ()
     {
-
+        return view('admin/tickets/tickets');
     }
 
     public function transactions ()
     {
-
+        return view('admin/transactions/transactions');
     }
 }

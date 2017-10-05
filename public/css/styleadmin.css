@@ -288,4 +288,46 @@ body {
   width: 100%;
 }
 
+/* Transactions */
+.tabs-wrapper {
+  height: 160px;
+}
+
+.tabs-wrapper .tab {
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: end;
+  align-items: flex-end;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  flex-direction: column;
+  margin-top: 20px;
+  transition: all .3s ease-in-out;
+}
+
+.tabs-wrapper .tab .tab-border {
+  margin-top: 10px;
+  width: 90%;
+  border-bottom: #000 solid 2px;
+  transition: all .3s ease-in-out;
+}
+
+.tabs-wrapper .tab .active {
+  border-bottom: #ccc solid 2px;
+}
+
+.tabs-wrapper .tab h3 {
+  font-size: 21px;
+  font-weight: 300;
+  cursor: pointer;
+}
+
+.tabs-wrapper .tab:hover > .tab-border {
+  border-bottom: #eee solid 2px;
+}
+
+/* Media */
+
 /*# sourceMappingURL=styleadmin.css.map */

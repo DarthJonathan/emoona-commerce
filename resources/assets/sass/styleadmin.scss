@@ -275,3 +275,46 @@ body{
     }
   }
 }
+
+/* Transactions */
+.tabs-wrapper
+{
+  height:160px;
+
+  .tab
+  {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    flex-direction: column;
+    margin-top: 20px;
+    transition: all .3s ease-in-out;
+
+    .tab-border
+    {
+      margin-top: 10px;
+      width:90%;
+      border-bottom: #000 solid 2px;
+      transition: all .3s ease-in-out;
+    }
+
+    .active
+    {
+      border-bottom: #ccc solid 2px;
+    }
+
+    h3
+    {
+      font-size: 21px;
+      font-weight: 300;
+      cursor: pointer;
+    }
+  }
+
+  .tab:hover > .tab-border
+  {
+    border-bottom: #eee solid 2px;
+  }
+}
+
+/* Media */

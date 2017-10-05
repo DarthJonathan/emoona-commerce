@@ -327,8 +327,6 @@ function viewImagesDetail (e)
         error: function(data) {
             $('#modal').modal('toggle');
 
-            console.log(data.responseText);
-
             toggleError(data.responseJSON.errors);
             console.log(data.responseJSON.errors_debug);
         }
@@ -513,4 +511,211 @@ function toggleError (data)
     {
         $('.notification-error').addClass('hidden');
     }, 2500);
+}
+
+/* Transactions */
+function changeTab(e)
+{
+    var id = $(e).data('id');
+
+    switch(id)
+    {
+        case 'wp':
+        {
+            $('.pc').hide();
+            $('.ws').hide();
+            $('.sc').hide();
+            $('.wp').show("slow");
+
+            $('.tab-border').removeClass("active");
+            $('.wp-link').addClass('active');
+        }break;
+
+        case 'pc':
+        {
+            $('.wp').hide();
+            $('.ws').hide();
+            $('.sc').hide();
+            $('.pc').show("slow");
+
+            $('.tab-border').removeClass("active");
+            $('.pc-link').addClass('active');
+        }break;
+
+        case 'ws':
+        {
+            $('.wp').hide();
+            $('.pc').hide();
+            $('.sc').hide();
+            $('.ws').show("slow");
+
+            $('.tab-border').removeClass("active");
+            $('.ws-link').addClass('active');
+        }break;
+
+        case 'sc':
+        {
+            $('.wp').hide();
+            $('.pc').hide();
+            $('.ws').hide();
+            $('.sc').show("slow");
+
+            $('.tab-border').removeClass("active");
+            $('.sc-link').addClass('active');
+        }break;
+    }
+}
+
+function loadTransactionDatas ()
+{
+    var wp = $('.wp-content');
+    var pc = $('.pc-content');
+    var ws = $('.ws-content');
+    var sc = $('.sc-content');
+
+    wp.empty();
+    pc.empty();
+    ws.empty();
+    sc.empty();
+
+    $.ajax({
+        url: '/admin/get_transactions',
+        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+        type: 'post',
+        success: function (res) {
+
+            $.each(res.transactions, function(key, value){
+
+                var date = value.created_at.substring(0,10).split('-');
+
+                if(value.transfer_proof == null)
+                {
+                    var transfer_proof = '<button class="btn btn-danger">Not Paid</button>'
+                }else{
+                    var transfer_proof = '<img src="'+ value.transfer_proof + '">'
+                }
+
+                switch(value.status)
+                {
+                    case 0 :
+                    {
+                        var html = '<tr>' +
+                            '<td>'+ value.id +'</td>'+
+                            '<td>'+ value.user.firstname + ' ' + value.user.lastname +'</td>'+
+                            '<td>'+ value.payment_type.name +'</td>'+
+                            '<td>'+ value.notes + '</td>'+
+                            '<td>'+ date[2] + ' - ' + date[1] + ' - ' + date[0] + '</td>'+
+                            '<td><button class="btn btn-primary">Send Mail</button></td>'+
+                        '</tr>';
+                        wp.append(html);
+                    }break;
+
+                    case 1 :
+                    {
+                        var html = '<tr>' +
+                            '<td>'+ value.id +'</td>'+
+                            '<td>'+ value.user.firstname + ' ' + value.user.lastname +'</td>'+
+                            '<td>'+ value.payment_type.name +'</td>'+
+                            '<td>'+ value.notes +'</td>'+
+                            '<td>'+ transfer_proof +'</td>'+
+                            '<td>'+ date[2] + ' - ' + date[1] + ' - ' + date[0] + '</td>'+
+                            '<td>' +
+                            '<button class="btn btn-primary mr-2">Send Mail</button>' +
+                            '<button class="btn btn-primary" onclick="confirmPayment(this)" data-id="' + value.id + '">Confirm Payment</button>' +
+                            '</td>'+
+                            '</tr>';
+                        pc.append(html);
+                    }break;
+
+                    case 2 :
+                    {
+                        var html = '<tr>' +
+                            '<td>'+ value.id +'</td>'+
+                            '<td>'+ value.user.firstname + ' ' + value.user.lastname +'</td>'+
+                            '<td>'+ value.payment_type.name +'</td>'+
+                            '<td>'+ value.notes +'</td>'+
+                            '<td>'+ transfer_proof +'</td>'+
+                            '<td>'+ value.shipping_codes +'</td>'+
+                            '<td>'+ date[2] + ' - ' + date[1] + ' - ' + date[0] + '</td>'+
+                            '<td>' +
+                            '<button class="btn btn-primary">Send Mail</button>' +
+                            '</td>'+
+                            '</tr>';
+                        ws.append(html);
+                    }break;
+
+                    case 3 :
+                    {
+                        var html = '<tr>' +
+                            '<td>'+ value.id +'</td>'+
+                            '<td>'+ value.user.firstname + ' ' + value.user.lastname +'</td>'+
+                            '<td>'+ value.payment_type.name +'</td>'+
+                            '<td>'+ value.notes +'</td>'+
+                            '<td>'+ transfer_proof +'</td>'+
+                            '<td>'+ value.shipping_codes +'</td>'+
+                            '<td>'+ date[2] + ' - ' + date[1] + ' - ' + date[0] + '</td>'+
+                            '<td><button class="btn btn-primary">Send Mail</button></td>'+
+                            '</tr>';
+                        sc.append(html);
+                    }break;
+                }
+
+            });
+        },
+        error: function (data) {
+            toggleError(data.responseJSON.errors);
+            console.log(data.responseJSON.errors_debug);
+        }
+    });
+}
+
+function confirmPayment(e)
+{
+    var id = $(e).data('id');
+
+    $('#modal').modal('toggle');
+    $('.modal-title').html('Confirm Payment?');
+    $('.modal-body').empty();
+    $('#ajax-loading').show();
+
+    $.ajax({
+        url: '/admin/confirm_prompt',
+        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+        type: 'POST',
+        data: {id: id, type: 'confirm_payment'},
+        success: function (data) {
+            $('.modal-body').html(data);
+            $('#ajax-loading').hide();
+        }
+    });
+}
+
+function confirmAction(e)
+{
+    var id = $(e).data('id');
+    var type = $(e).data('type');
+
+    $.ajax({
+        url: type,
+        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+        type: 'POST',
+        data: {id: id},
+        success: function (response) {
+            toggleSuccess(response.msg);
+            $('#modal').modal('toggle');
+
+            if(type == 'confirm_payment')
+                loadTransactionDatas();
+        },
+        error: function(data) {
+            toggleError(data.responseJSON.errors);
+            console.log(data.responseJSON.errors_debug);
+            $('#modal').modal('toggle');
+        }
+    });
+}
+
+function cancelAction()
+{
+    $('#modal').modal('toggle');
 }

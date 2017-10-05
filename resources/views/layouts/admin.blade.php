@@ -10,6 +10,7 @@
     <!-- CSS -->
     <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
     <link rel="stylesheet" href="{{ asset('css/styleadmin.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/pace-theme.css') }}">
     <!-- JS -->
     <script src="{{ asset('js/jquery-3.2.1.min.js') }}"></script>
     <script src="{{ asset('js/popper.js') }}"></script>
@@ -17,6 +18,7 @@
     <script src="{{ asset('js/bootstrap.js') }}"></script>
     <script src="{{ asset('js/all.js') }}"></script>
     <script src="{{ asset('js/jquery.form.min.js') }}"></script>
+    <script src="{{ asset('js/pace.min.js') }}"></script>
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -165,11 +167,11 @@
                 </center>
                     <div class="sidebarSectionHeader">NAVIGATION</div>
                     <ul class="sidebarSection">
-                        <a href="{{ route('admindashboard') }}"><li class="active"><img src="{{ asset('img/sidebar-icons/dashboard-icon.png') }}">Dashboard</li></a>
-                        <a href="{{ route('storeitems') }}"><li><img src="{{ asset('img/sidebar-icons/post-icon.png') }}">Store Items</li></a>
-                        <a href="{{ route('accounts') }}"><li><img src="{{ asset('img/sidebar-icons/media-icon.png') }}">Accounts</li></a>
-                        <a href="{{ route('transactions') }}"><li><img src="{{ asset('img/sidebar-icons/sales-icon.png') }}">Sales</li></a>
-                        <a href="{{ route('tickets') }}"><li><img src="{{ asset('img/sidebar-icons/report-icon.png') }}">Report</li></a>
+                        <a href="{{ route('admindashboard') }}"><li @yield('dashboard_active')><img src="{{ asset('img/sidebar-icons/dashboard-icon.png') }}">Dashboard</li></a>
+                        <a href="{{ route('storeitems') }}"><li @yield('items_active')><img src="{{ asset('img/sidebar-icons/post-icon.png') }}">Store Items</li></a>
+                        <a href="{{ route('accounts') }}"><li @yield('accounts_active')><img src="{{ asset('img/sidebar-icons/media-icon.png') }}">Accounts</li></a>
+                        <a href="{{ route('transactions') }}"><li @yield('transactions_active')><img src="{{ asset('img/sidebar-icons/sales-icon.png') }}">Sales</li></a>
+                        <a href="{{ route('tickets') }}"><li @yield('tickets_active')><img src="{{ asset('img/sidebar-icons/report-icon.png') }}">Report</li></a>
                     </ul>
 
                     <div class="sidebarSectionHeader">IMPORTANCE</div>

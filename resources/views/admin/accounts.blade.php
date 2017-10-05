@@ -1,6 +1,7 @@
 @extends('layouts.admin')
 
 @section('title', 'Account Management')
+@section('accounts_active', 'class=active')
 
 @section('content')
     <div class="container">

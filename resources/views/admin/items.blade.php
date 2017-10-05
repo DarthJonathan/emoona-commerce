@@ -1,6 +1,7 @@
 @extends('layouts.admin')
 
 @section('title', 'Item Management')
+@section('items_active', 'class=active')
 
 @section('content')
     <div class="container">
