@@ -605,7 +605,7 @@ function loadTransactionDatas ()
                             '<td>'+ value.payment_type.name +'</td>'+
                             '<td>'+ value.notes + '</td>'+
                             '<td>'+ date[2] + ' - ' + date[1] + ' - ' + date[0] + '</td>'+
-                            '<td><button class="btn btn-primary">Send Mail</button></td>'+
+                            '<td><button class="btn btn-primary" onclick="openTicket(this)" data-id="'+ value.id +'">Open Ticket</button></td>'+
                         '</tr>';
                         wp.append(html);
                     }break;
@@ -620,7 +620,7 @@ function loadTransactionDatas ()
                             '<td>'+ transfer_proof +'</td>'+
                             '<td>'+ date[2] + ' - ' + date[1] + ' - ' + date[0] + '</td>'+
                             '<td>' +
-                            '<button class="btn btn-primary mr-2">Send Mail</button>' +
+                            '<button class="btn btn-primary mr-2" onclick="openTicket(this)" data-id="'+ value.id +'">Open Ticket</button>' +
                             '<button class="btn btn-primary" onclick="confirmPayment(this)" data-id="' + value.id + '">Confirm Payment</button>' +
                             '</td>'+
                             '</tr>';
@@ -635,10 +635,10 @@ function loadTransactionDatas ()
                             '<td>'+ value.payment_type.name +'</td>'+
                             '<td>'+ value.notes +'</td>'+
                             '<td>'+ transfer_proof +'</td>'+
-                            '<td>'+ value.shipping_codes +'</td>'+
                             '<td>'+ date[2] + ' - ' + date[1] + ' - ' + date[0] + '</td>'+
                             '<td>' +
-                            '<button class="btn btn-primary">Send Mail</button>' +
+                            '<button class="btn btn-primary" onclick="addTrackingCode(this)" data-id="'+ value.id +'">Add Tracking Code</button>' +
+                            '<button class="btn btn-primary" onclick="openTicket(this)" data-id="'+ value.id +'">Open Ticket</button>' +
                             '</td>'+
                             '</tr>';
                         ws.append(html);
@@ -654,7 +654,7 @@ function loadTransactionDatas ()
                             '<td>'+ transfer_proof +'</td>'+
                             '<td>'+ value.shipping_codes +'</td>'+
                             '<td>'+ date[2] + ' - ' + date[1] + ' - ' + date[0] + '</td>'+
-                            '<td><button class="btn btn-primary">Send Mail</button></td>'+
+                            '<td><button class="btn btn-primary" onclick="openTicket(this)" data-id="'+ value.id +'">Open Ticket</button></td>'+
                             '</tr>';
                         sc.append(html);
                     }break;
@@ -718,5 +718,31 @@ function confirmAction(e)
 function cancelAction()
 {
     $('#modal').modal('toggle');
+}
+
+function openTicket(e)
+{
+    var id = $(e).data('id');
+
+    $('#modal').modal('toggle');
+    $('.modal-title').html('Confirm Payment?');
+    $('.modal-body').empty();
+    $('#ajax-loading').show();
+
+    $.ajax({
+        url: '/admin/open_ticket_req',
+        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+        type: 'POST',
+        data: {id: id, type: 'confirm_payment'},
+        success: function (data) {
+            $('.modal-body').html(data);
+            $('#ajax-loading').hide();
+        }
+    });
+}
+
+function addTrackingCode(e)
+{
+    
 }
 //# sourceMappingURL=all.js.map

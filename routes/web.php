@@ -112,6 +112,12 @@ Route::middleware(['admin'])->group(function()
          */
         Route::post('get_transactions', 'admin\TransactionController@getAll');
         Route::post('confirm_payment', 'admin\TransactionController@confirmPayment');
+
+        /*
+        *  Support
+        */
+        Route:post('open_ticket_req', 'admin\SupportController@openTicketAjax');
+        Route:post('open_ticket', 'admin\SupportController@openTicket');
     });
 });
 

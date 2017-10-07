@@ -4,7 +4,7 @@
 @section('transactions_active', 'class=active')
 
 @section('content')
-<div class="container">
+<div class="container-fluid">
     <div class="row">
         <div class="col-lg-12 tabs-wrapper row">
             <div class="col-lg-3 tab" data-id="wp" onclick="changeTab(this)">
@@ -77,7 +77,6 @@
                         <td>Payment Type</td>
                         <td>Notes</td>
                         <td>Payment Proof</td>
-                        <td>Shipping Codes</td>
                         <td>Transaction Date</td>
                         <td>Actions</td>
                     </tr>

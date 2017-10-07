@@ -4,7 +4,7 @@
 @section('items_active', 'class=active')
 
 @section('content')
-    <div class="container">
+    <div class="container-fluid">
 
         @if($errors->any() != null)
             <div class="alert alert-danger">
