@@ -82,7 +82,7 @@
                             Look Like You've Lost Your Way
                         </div>
                         <div class="button">
-                            <a href="{{ route('home') }}">
+                            <a href="{{ route('index') }}">
                                 <button
                                     class="btn btn-default"
                                     style="cursor:pointer"

@@ -12,4 +12,5 @@ elixir(function(mix) {
     mix.scripts([
         'main.js'
     ]);
+    mix.scripts('front.js');
 });

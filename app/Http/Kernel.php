@@ -59,6 +59,7 @@ class Kernel extends HttpKernel
         'notifications' => \App\Http\Middleware\UserNotifications::class,
         'admin' => \App\Http\Middleware\isAdmin::class,
         'checkRole' => \App\Http\Middleware\checkRole::class,
-        'suspended' => \App\Http\Middleware\isSuspended::class
+        'suspended' => \App\Http\Middleware\isSuspended::class,
+        'cart' => \App\Http\Middleware\Cart::class
     ];
 }

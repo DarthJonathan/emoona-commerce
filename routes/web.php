@@ -11,10 +11,27 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+/*
+ * Front Pages
+ */
+Route::middleware('cart')->group(function() {
 
+    Route::get('/', 'StoreController@home')->name('index');
+    Route::get('product/{gender}/', 'ProductController@viewCategoryGender');
+    Route::get('product/{gender}/{category_id}', 'ProductController@viewCategory');
+    Route::get('product/{gender}/{category_id}/{product_id}', 'ProductController@viewProduct');
+
+});
+
+/*
+ * Cart Routes
+ */
+Route::post('product/add_to_cart','CartController@addToCart');
+Route::get('product/content','CartController@getCartContent');
+
+/*
+ * Authentications
+ */
 Auth::routes();
 
 Route::get('/activate/{activation_code}', 'Auth\ActivateAccountController@activate');
@@ -23,9 +40,13 @@ Route::get('suspended', function()
     return view('suspended');
 });
 
+/*
+ * User Page
+ */
+
 Route::middleware(['notifications', 'checkRole', 'suspended'])->group(function()
 {
-    Route::get('/home', 'HomeController@index')->name('profile');
+    Route::get('/account', 'HomeController@index')->name('profile');
     Route::get('/notifications', 'UserController@notifications')->name('notification');
     Route::get('profile/edit', 'UserController@edit')->name('editprofile');
     Route::get('/resend_activation', 'UserController@resend')->name('resend');
@@ -33,25 +54,8 @@ Route::middleware(['notifications', 'checkRole', 'suspended'])->group(function()
 });
 
 /*
- * Image Serving Route
+ * Admin Routes
  */
-
-Route::get('storage/{folder}/{filename}', function ($folder, $filename)
-{
-    $path = storage_path('app/public/' . $folder . '/' . $filename);
-
-    if (!File::exists($path)) {
-        abort(404);
-    }
-
-    $file = File::get($path);
-    $type = File::mimeType($path);
-
-    $response = Response::make($file, 200);
-    $response->header("Content-Type", $type);
-
-    return $response;
-});
 
 Route::middleware(['admin'])->group(function()
 {
@@ -116,8 +120,30 @@ Route::middleware(['admin'])->group(function()
         /*
         *  Support
         */
-        Route:post('open_ticket_req', 'admin\SupportController@openTicketAjax');
-        Route:post('open_ticket', 'admin\SupportController@openTicket');
+        Route::post('open_ticket_req', 'admin\SupportController@openTicketAjax');
+        Route::post('open_ticket', 'admin\SupportController@openTicket');
+        Route::get('open_ticket', 'admin\SupportController@openTicket');
     });
 });
 
+
+/*
+ * Image Serving Route
+ */
+
+Route::get('storage/{folder}/{filename}', function ($folder, $filename)
+{
+    $path = storage_path('app/public/' . $folder . '/' . $filename);
+
+    if (!File::exists($path)) {
+        abort(404);
+    }
+
+    $file = File::get($path);
+    $type = File::mimeType($path);
+
+    $response = Response::make($file, 200);
+    $response->header("Content-Type", $type);
+
+    return $response;
+});
