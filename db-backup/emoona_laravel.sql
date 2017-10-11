@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Oct 06, 2017 at 05:49 AM
+-- Generation Time: Oct 11, 2017 at 06:16 PM
 -- Server version: 10.1.26-MariaDB
 -- PHP Version: 7.1.8
 
@@ -126,7 +126,7 @@ CREATE TABLE `item_detail` (
 --
 
 INSERT INTO `item_detail` (`id`, `item_id`, `color`, `size`, `images`, `stock`, `status`, `updated_at`, `created_at`) VALUES
-(34, 1, 'Black', 'L', '1.150703758259d3918e01d1a', 100, 'available', '2017-10-03', '2017-10-03');
+(34, 1, 'blue', 'L', '1.150703758259d3918e01d1a', 100, 'available', '2017-10-03', '2017-10-03');
 
 -- --------------------------------------------------------
 
@@ -241,6 +241,49 @@ CREATE TABLE `studio_category` (
   `description` text NOT NULL,
   `template` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tickets`
+--
+
+CREATE TABLE `tickets` (
+  `id` int(11) NOT NULL,
+  `title` varchar(200) NOT NULL,
+  `category` varchar(200) NOT NULL,
+  `created_at` date NOT NULL,
+  `updated_at` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tickets`
+--
+
+INSERT INTO `tickets` (`id`, `title`, `category`, `created_at`, `updated_at`) VALUES
+(2, 'Kentang', 'APel', '2017-10-11', '2017-10-11');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tickets_detail`
+--
+
+CREATE TABLE `tickets_detail` (
+  `id` int(11) NOT NULL,
+  `ticket_id` int(11) NOT NULL,
+  `text` text NOT NULL,
+  `additionals` text,
+  `created_at` date NOT NULL,
+  `updated_at` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tickets_detail`
+--
+
+INSERT INTO `tickets_detail` (`id`, `ticket_id`, `text`, `additionals`, `created_at`, `updated_at`) VALUES
+(1, 2, 'Dufan', NULL, '2017-10-11', '2017-10-11');
 
 -- --------------------------------------------------------
 
@@ -479,6 +522,18 @@ ALTER TABLE `studio_category`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `tickets`
+--
+ALTER TABLE `tickets`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tickets_detail`
+--
+ALTER TABLE `tickets_detail`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `transactions`
 --
 ALTER TABLE `transactions`
@@ -579,6 +634,16 @@ ALTER TABLE `sign_up_participant`
 --
 ALTER TABLE `studio_category`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `tickets`
+--
+ALTER TABLE `tickets`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `tickets_detail`
+--
+ALTER TABLE `tickets_detail`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `transactions`
 --

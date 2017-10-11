@@ -746,5 +746,21 @@ function openTicket(e)
 
 function addTrackingCode(e)
 {
-    
+    var id = $(e).data('id');
+
+    $('#modal').modal('toggle');
+    $('.modal-title').html('Add Tracking Code');
+    $('.modal-body').empty();
+    $('#ajax-loading').show();
+
+    $.ajax({
+        url: '/admin/add_tracking_code_req',
+        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+        type: 'POST',
+        data: {id: id},
+        success: function (data) {
+            $('.modal-body').html(data);
+            $('#ajax-loading').hide();
+        }
+    });
 }

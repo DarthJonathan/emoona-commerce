@@ -80,7 +80,7 @@ Route::middleware(['admin'])->group(function()
              */
         Route::post('category', 'admin\ItemManagement@category');
         Route::post('delete_category', 'admin\ItemManagement@deleteCategory');
-            /*
+           /*
             * Item
             */
         Route::post('new_item_req', 'admin\ItemManagement@newItemAjax');
@@ -89,7 +89,7 @@ Route::middleware(['admin'])->group(function()
         Route::get('edit_item_req', 'admin\ItemManagement@editItemAjax');
         Route::post('edit_item', 'admin\ItemManagement@editItem');
         Route::post('delete_item', 'admin\ItemManagement@deleteItem');
-            /*
+           /*
             *  Item Detail
             */
         Route::post('new_item_detail_req', 'admin\ItemManagement@newItemDetailAjax');
@@ -118,11 +118,12 @@ Route::middleware(['admin'])->group(function()
         Route::post('confirm_payment', 'admin\TransactionController@confirmPayment');
 
         /*
-        *  Support
-        */
+         *  Support
+         */
         Route::post('open_ticket_req', 'admin\SupportController@openTicketAjax');
         Route::post('open_ticket', 'admin\SupportController@openTicket');
-        Route::get('open_ticket', 'admin\SupportController@openTicket');
+        Route::post('add_tracking_code_req', 'admin\TransactionController@addTrackingCodeAjax');
+        Route::post('add_tracking_code', 'admin\TransactionController@addTrackingCode');
     });
 });
 

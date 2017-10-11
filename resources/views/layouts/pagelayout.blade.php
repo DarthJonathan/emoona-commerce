@@ -41,13 +41,13 @@
 <div class="navbar">
 <div class="navbar1">
     <ul class="my-2">
-    	<li><span>BAG</span>(0)</li>
-        <li><a href="{{ URL::to('/profile') }}">MY <span>ACCOUNT</span></a></li>
         <li>
-        	<div class="navbar-search">
-		<input type="text" id="searchbar" placeholder="Search.." >
-	</div><!--navbar-search-->
+            <div class="navbar-search">
+                <input type="text" id="searchbar" placeholder="Search.." >
+            </div><!--navbar-search-->
         </li>
+        <li><a href="{{ URL::to('/profile') }}">MY <span>ACCOUNT</span></a></li>
+    	<li><span>BAG</span>(0)</li>
     </ul>
 </div><!--navbar-1-->
 
