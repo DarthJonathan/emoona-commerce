@@ -4,6 +4,9 @@
 @section('dashboard_active', 'class=active')
 
 @section('content')
-    <h1>Ini dashboard</h1>
-    {{ Auth::user() }}
+    <pre>
+    <?php
+        print_r(Auth::User())
+    ?>
+    </pre>
 @endsection

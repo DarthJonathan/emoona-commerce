@@ -86,7 +86,6 @@ Route::middleware(['admin'])->group(function()
         Route::post('new_item_req', 'admin\ItemManagement@newItemAjax');
         Route::post('new_item', 'admin\ItemManagement@newItem');
         Route::post('edit_item_req', 'admin\ItemManagement@editItemAjax');
-        Route::get('edit_item_req', 'admin\ItemManagement@editItemAjax');
         Route::post('edit_item', 'admin\ItemManagement@editItem');
         Route::post('delete_item', 'admin\ItemManagement@deleteItem');
            /*
@@ -116,14 +115,17 @@ Route::middleware(['admin'])->group(function()
          */
         Route::post('get_transactions', 'admin\TransactionController@getAll');
         Route::post('confirm_payment', 'admin\TransactionController@confirmPayment');
+        Route::post('add_tracking_code_req', 'admin\TransactionController@addTrackingCodeAjax');
+        Route::post('add_tracking_code', 'admin\TransactionController@addTrackingCode');
 
         /*
          *  Support
          */
         Route::post('open_ticket_req', 'admin\SupportController@openTicketAjax');
         Route::post('open_ticket', 'admin\SupportController@openTicket');
-        Route::post('add_tracking_code_req', 'admin\TransactionController@addTrackingCodeAjax');
-        Route::post('add_tracking_code', 'admin\TransactionController@addTrackingCode');
+        Route::post('reply_ticket_req', 'admin\SupportController@replyTicketAjax');
+        Route::post('reply_ticket', 'admin\SupportController@replyTicket');
+        Route::post('get_tickets', 'admin\SupportController@getTickets');
     });
 });
 

@@ -764,4 +764,25 @@ function addTrackingCode(e)
         }
     });
 }
+
+function replyTicket(e)
+{
+    var id = $(e).data('id');
+    
+    $('#modal').modal('toggle');
+    $('.modal-title').html('Reply Ticket');
+    $('.modal-body').empty();
+    $('#ajax-loading').show();
+
+    $.ajax({
+        url: '/admin/reply_ticket_req',
+        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+        type: 'POST',
+        data: {id: id},
+        success: function (data) {
+            $('.modal-body').html(data);
+            $('#ajax-loading').hide();
+        }
+    });
+}
 //# sourceMappingURL=all.js.map

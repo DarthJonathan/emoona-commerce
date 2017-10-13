@@ -14,6 +14,6 @@ class Tickets extends Model
 
     function ticket_detail ()
     {
-        return $this->hasMany('App\TicketDetail');
+        return $this->hasMany('App\TicketDetails', 'ticket_id', 'id');
     }
 }

@@ -45,7 +45,7 @@ class SupportController extends Controller
                 $ticket_detail->ticket_id = $ticket->id;
                 $ticket_detail->text = $req->input('content');
 
-                $path = 'public/support_ticket/' . $req->input('user_id') . '%' . $req->input('category_id');
+                $path = 'public/support_ticket/' . $ticket->id;
 
                 if($img = $req->image)
                 {
@@ -60,6 +60,66 @@ class SupportController extends Controller
             }catch(\Exception $e)
             {
                 return response()->json(['error' => true, 'errors' => 'Failed Creating Support Ticket (Er: 513)', 'errors_debug' => $e->getMessage()], 400);
+            }
+        }
+    }
+
+    function getTickets ()
+    {
+        try {
+            $tickets = Tickets::with('ticket_detail')->get()->toArray();
+
+            return response()->json(['error' => false, 'tickets' => $tickets], 200);
+
+        }catch(\Exception $e) {
+
+            return response()->json(['error' => true, 'errors' => 'Failed Getting Tickets (Er: 510)', 'errors_debug' => $e->getMessage()], 400);
+
+        }
+    }
+
+    function replyTicketAjax (Request $req)
+    {
+        $data = ['id' => $req->input('id')];
+        return view('admin/tickets/reply_ticket', $data);
+    }
+
+    function replyTicket (Request $req)
+    {
+        $rules = [
+            'content'   => 'required',
+            'image'     => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+        ];
+
+        $validation = Validator::make($req->all(), $rules);
+
+        if($validation->fails())
+        {
+            return response()->json(['error' => true, 'errors' => $validation->messages()], 400);
+        }else
+        {
+            try {
+
+                $ticket_detail = new TicketDetails ();
+
+                $ticket_detail->text        = $req->content;
+                $ticket_detail->ticket_id   = $req->id;
+
+                $path = 'public/support_ticket/' . $req->id;
+
+                if($img = $req->image)
+                {
+                    $additional = $img->store($path);
+
+                    $ticket_detail-$additional = $additional;
+                }
+                $ticket_detail->save();
+
+                return response()->json(['error' => false, 'msg' => 'Success Replying Support Ticket!', 'id' => $req->id], 200);
+
+            }catch(\Exception $e)
+            {
+                return response()->json(['error' => true, 'errors' => 'Failed Replying Support Ticket (Er: 514)', 'errors_debug' => $e->getMessage()], 400);
             }
         }
     }
