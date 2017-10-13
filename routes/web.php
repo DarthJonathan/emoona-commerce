@@ -126,6 +126,7 @@ Route::middleware(['admin'])->group(function()
         Route::post('reply_ticket_req', 'admin\SupportController@replyTicketAjax');
         Route::post('reply_ticket', 'admin\SupportController@replyTicket');
         Route::post('get_tickets', 'admin\SupportController@getTickets');
+        Route::post('complete_ticket', 'admin\SupportController@completeTicket');
     });
 });
 

@@ -123,4 +123,19 @@ class SupportController extends Controller
             }
         }
     }
+
+    function completeTicket (Request $req)
+    {
+        try {
+
+            $ticket = Tickets::find($req->id);
+
+
+            return response()->json(['error' => false, 'msg' => 'Success Replying Support Ticket!', 'id' => $req->id], 200);
+
+        }catch(\Exception $e)
+        {
+            return response()->json(['error' => true, 'errors' => 'Failed Replying Support Ticket (Er: 514)', 'errors_debug' => $e->getMessage()], 400);
+        }
+    }
 }

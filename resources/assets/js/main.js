@@ -785,3 +785,22 @@ function replyTicket(e)
         }
     });
 }
+
+function markCompleted ()
+{
+    var id = $(e).data('id');
+
+    $.ajax({
+        url: '/admin/complete_ticket',
+        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+        type: 'POST',
+        data: {id: id},
+        success: function (response) {
+            toggleSuccess(response.msg);
+        },
+        error: function(data) {
+            toggleError(data.responseJSON.errors);
+            console.log(data.responseJSON.errors_debug);
+        }
+    });
+}

@@ -13,7 +13,8 @@
                             <td>No.</td>
                             <td>Title</td>
                             <td>Submitted</td>
-                            <td>Priority</td>
+                            <td>Category</td>
+                            <td>Completed</td>
                             <td>Actions</td>
                         </tr>
                     </thead>
@@ -68,9 +69,11 @@
                             "<td>" + (key+1) + "</td>" +
                             "<td>" + value.title + "</td>" +
                             "<td>" + value.created_at + "</td>" +
-                            "<td>" + 0 + "</td>" +
+                            "<td>" + value.category + "</td>" +
+                            "<td>" + value.completed + "</td>" +
                             "<td>" +
                             "<button class='btn-primary btn' onclick='openTicketDetail(this)' data-id='"+ value.id +"'>View</button>" +
+                            "<button class='btn-primary btn' onclick='markCompleted(this)' data-id='"+ value.id +"'>Completed</button>" +
                             "</td>" +
                             "</tr>";
 
