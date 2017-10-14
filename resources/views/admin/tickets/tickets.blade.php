@@ -55,6 +55,8 @@
         {
             var ticket = $('#tickets');
 
+            ticket.empty();
+
             $.ajax({
                 url: '/admin/get_tickets',
                 headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
@@ -68,11 +70,11 @@
                         var html = "<tr>" +
                             "<td>" + (key+1) + "</td>" +
                             "<td>" + value.title + "</td>" +
-                            "<td>" + value.created_at + "</td>" +
+                            "<td>" + makeDate(value.created_at) + "</td>" +
                             "<td>" + value.category + "</td>" +
-                            "<td>" + value.completed + "</td>" +
+                            "<td>" + makeDate(value.completed) + "</td>" +
                             "<td>" +
-                            "<button class='btn-primary btn' onclick='openTicketDetail(this)' data-id='"+ value.id +"'>View</button>" +
+                            "<button class='btn-primary btn mr-1' onclick='openTicketDetail(this)' data-id='"+ value.id +"'>View</button>" +
                             "<button class='btn-primary btn' onclick='markCompleted(this)' data-id='"+ value.id +"'>Completed</button>" +
                             "</td>" +
                             "</tr>";
@@ -130,7 +132,7 @@
 
                         var html = '<div class="card my-3">'+
                                         '<div class="card-header">' +
-                                            value.created_at +
+                                            makeDate(value.created_at) +
                                         '</div>' +
                                         '<div class="card-body float-right">' +
                                             value.text +

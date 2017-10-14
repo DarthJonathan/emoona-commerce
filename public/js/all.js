@@ -786,7 +786,7 @@ function replyTicket(e)
     });
 }
 
-function markCompleted ()
+function markCompleted (e)
 {
     var id = $(e).data('id');
 
@@ -797,16 +797,21 @@ function markCompleted ()
         data: {id: id},
         success: function (response) {
             toggleSuccess(response.msg);
-            $('#modal').modal('toggle');
-
-            if(type == 'confirm_payment')
-                loadTransactionDatas();
+            loadTickets();
         },
         error: function(data) {
             toggleError(data.responseJSON.errors);
             console.log(data.responseJSON.errors_debug);
-            $('#modal').modal('toggle');
         }
     });
+}
+
+function makeDate (e)
+{
+    var date = e.substring(0,10).split('-');
+
+    date = date[2] + '-' + date[1] + '-' + date[0];
+
+    return date;
 }
 //# sourceMappingURL=all.js.map

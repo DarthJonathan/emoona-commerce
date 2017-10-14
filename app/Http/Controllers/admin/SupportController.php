@@ -102,8 +102,8 @@ class SupportController extends Controller
 
                 $ticket_detail = new TicketDetails ();
 
-                $ticket_detail->text        = $req->content;
-                $ticket_detail->ticket_id   = $req->id;
+                $ticket_detail->text        = $req->input('content');
+                $ticket_detail->ticket_id   = $req->input('id');
 
                 $path = 'public/support_ticket/' . $req->id;
 
@@ -130,6 +130,9 @@ class SupportController extends Controller
 
             $ticket = Tickets::find($req->id);
 
+            $ticket->completed = date("Y-m-d H:i:s");
+
+            $ticket->save();
 
             return response()->json(['error' => false, 'msg' => 'Success Replying Support Ticket!', 'id' => $req->id], 200);
 

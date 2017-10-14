@@ -115,6 +115,9 @@
                 <a class="nav-link" href="#"> <img src="{{ asset('img/sidebar-icons/dashboard-icon.png') }}"><span>Dashboard</span></a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="#"> <img src="{{ asset('img/sidebar-icons/dashboard-icon.png') }}"><span>Web Configuration</span></a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="#"> <img src="{{ asset('img/sidebar-icons/post-icon.png') }}"><span>Post</span></a>
             </li>
             <li class="nav-item">
@@ -168,6 +171,7 @@
                     <div class="sidebarSectionHeader">NAVIGATION</div>
                     <ul class="sidebarSection">
                         <a href="{{ route('admindashboard') }}"><li @yield('dashboard_active')><img src="{{ asset('img/sidebar-icons/dashboard-icon.png') }}">Dashboard</li></a>
+                        <a href="{{ route('webconfig') }}"><li @yield('webconfig_active')><img src="{{ asset('img/sidebar-icons/dashboard-icon.png') }}">Web Configuration</li></a>
                         <a href="{{ route('storeitems') }}"><li @yield('items_active')><img src="{{ asset('img/sidebar-icons/post-icon.png') }}">Store Items</li></a>
                         <a href="{{ route('accounts') }}"><li @yield('accounts_active')><img src="{{ asset('img/sidebar-icons/media-icon.png') }}">Accounts</li></a>
                         <a href="{{ route('transactions') }}"><li @yield('transactions_active')><img src="{{ asset('img/sidebar-icons/sales-icon.png') }}">Sales</li></a>
