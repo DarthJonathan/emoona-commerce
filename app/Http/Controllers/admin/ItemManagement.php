@@ -289,7 +289,7 @@ class ItemManagement extends Controller
         }else
         {
             try {
-                $item = Item::findOrFail($req->input('id'));
+                $item = Item::find($req->input('id'));
 
                 $item->name = $req->input('itemName');
                 $item->category_id = $req->input('category');

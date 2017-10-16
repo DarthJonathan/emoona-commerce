@@ -743,7 +743,7 @@ rêverie douloureuse. Elle l'avait aimé, après tout.
 
 III
 
-Un matin, le père Rouault vint apporter à Charles le payement de
+Un matin, le père Rouault vint apporter à Charles le payment de
 sa jambe remise: soixante et quinze francs en pièces de quarante
 sous, et une dinde. Il avait appris son malheur, et l'en consola
 tant qu'il put.
@@ -11623,7 +11623,7 @@ madame Bovary quatre mille francs.»
 
 -- Qui vous inquiète, puisque vous toucherez dans six mois
 l'arriéré de votre baraque, et que je vous place l'échéance du
-dernier billet pour après le payement?
+dernier billet pour après le payment?
 
 Emma s'embarrassait un peu dans ses calculs, et les oreilles lui
 tintaient comme si des pièces d'or, s'éventrant de leurs sacs,

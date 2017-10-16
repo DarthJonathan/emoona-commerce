@@ -138,6 +138,12 @@
 
 						</div><!--descproductsize-->
 
+						<div class="desc-product-button">
+							<button type="button" class="btn" style="cursor: pointer" onclick="addToCart()"
+									@if($product['item_detail'] == null) disabled @endif
+							>ADD TO CART</button>
+						</div><!--desc-product-button-->
+
 					@else
 						<div class="desc-product-out">
 							OUT OF STOCK
@@ -153,12 +159,6 @@
 							</div><!--descproductout-->
 						</div><!--desc-product-out-->
 					@endif
-					
-					<div class="desc-product-button">
-						<button type="button" class="btn" style="cursor: pointer" onclick="addToCart()"
-						@if($product['item_detail'] == null) disabled @endif
-						>ADD TO CART</button>
-					</div><!--desc-product-button-->
 
 				</div><!--descproductwrapper-->
 			</div><!--col-md-6-->

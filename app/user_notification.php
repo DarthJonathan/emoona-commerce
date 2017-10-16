@@ -10,5 +10,4 @@ class user_notification extends Model
     protected $fillable = [
         'notification_name', 'notification_url'
     ];
-    public $timestamps = false;
 }

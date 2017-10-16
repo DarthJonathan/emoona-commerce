@@ -814,4 +814,43 @@ function makeDate (e)
 
     return date;
 }
+
+function clearCart ()
+{
+    $.ajax({
+        url: '/clear_cart',
+        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+        type: 'POST',
+        success: function (response) {
+            toggleSuccess(response.msg);
+            alert('Cart Cleared');
+            location.reload();
+        },
+        error: function(data) {
+            toggleError(data.responseJSON.errors);
+            console.log(data.responseJSON.errors_debug);
+        }
+    });
+}
+
+function removeItem(e)
+{
+    var id = $(e).data('id');
+
+    $.ajax({
+        url: '/remove_item',
+        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+        type: 'POST',
+        data: { id:id },
+        success: function (response) {
+            toggleSuccess(response.msg);
+            alert('Item Removed');
+            location.reload();
+        },
+        error: function(data) {
+            toggleError(data.responseJSON.errors);
+            console.log(data.responseJSON.errors_debug);
+        }
+    });
+}
 //# sourceMappingURL=all.js.map

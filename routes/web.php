@@ -14,20 +14,25 @@
 /*
  * Front Pages
  */
-Route::middleware('cart')->group(function() {
+Route::get('/', 'StoreController@home')->name('index');
+Route::get('product/{gender}/', 'ProductController@viewCategoryGender');
+Route::get('product/{gender}/{category_id}', 'ProductController@viewCategory');
+Route::get('product/{gender}/{category_id}/{product_id}', 'ProductController@viewProduct');
 
-    Route::get('/', 'StoreController@home')->name('index');
-    Route::get('product/{gender}/', 'ProductController@viewCategoryGender');
-    Route::get('product/{gender}/{category_id}', 'ProductController@viewCategory');
-    Route::get('product/{gender}/{category_id}/{product_id}', 'ProductController@viewProduct');
 
+Route::get('/email_test', function()
+{
+    $data = ['transaction_code' => 1, 'cart' => Cart::getContent()];
+    return view('emails.transaction', $data);
 });
 
 /*
  * Cart Routes
  */
 Route::post('product/add_to_cart','CartController@addToCart');
-Route::get('product/content','CartController@getCartContent');
+Route::get('cart','CartController@cart');
+Route::post('clear_cart','CartController@clearCart');
+Route::post('remove_item','CartController@removeItem');
 
 /*
  * Authentications
@@ -44,13 +49,24 @@ Route::get('suspended', function()
  * User Page
  */
 
-Route::middleware(['notifications', 'checkRole', 'suspended'])->group(function()
+Route::middleware(['notifications', 'checkRole', 'suspended', 'auth'])->group(function()
 {
     Route::get('/account', 'HomeController@index')->name('profile');
     Route::get('/notifications', 'UserController@notifications')->name('notification');
     Route::get('profile/edit', 'UserController@edit')->name('editprofile');
     Route::get('/resend_activation', 'UserController@resend')->name('resend');
     Route::post('/update', 'UserController@update')->name('update');
+
+    /*
+     * Checkout Transaction
+     */
+    Route::middleware('cart.check')->group(function() {
+        Route::get('checkout', 'TransactionController@checkoutCart');
+        Route::post('payment', 'TransactionController@payment');
+    });
+
+    Route::get('transactions/{id}', 'TransactionController@transactionDetail');
+    Route::get('verify_payment/{id}', 'TransactionController@verifyPayment');
 });
 
 /*
@@ -69,6 +85,7 @@ Route::middleware(['admin'])->group(function()
         Route::get('items', 'admin\AdminController@items')->name('storeitems');
         Route::get('transaction', 'admin\AdminController@transactions')->name('transactions');
         Route::get('tickets', 'admin\AdminController@tickets')->name('tickets');
+        Route::get('configuration', 'admin\AdminController@webConfiguration')->name('web_configuration');
 
         Route::post('confirm_prompt', 'admin\AdminController@prompt');
 

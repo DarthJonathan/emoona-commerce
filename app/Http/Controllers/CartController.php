@@ -11,23 +11,28 @@ class CartController extends Controller
     {
         try
         {
-            $id = Cart::add([
-                'id' => 2,
+            Cart::add([
+                'id' => $req->input('product_id'),
                 'name' => $req->input('product_name'),
                 'price' => $req->input('product_price'),
                 'quantity' => $req->input('quantity'),
                 'attributes' => [
-                    'product_id'        => $req->input('product_id'),
                     'product_detail_id' => $req->input('product_detail_id')
                 ]
             ]);
 
-            return response()->json(['error' => false, 'msg' => 'Item Added to Cart', 'id' => $id], 200);
+            return response()->json(['error' => false, 'msg' => 'Item Added to Cart'], 200);
 
         }catch(\Exception $e) {
 
             return response()->json(['error' => false, 'errors' => 'Adding Item to Cart Failed', 'errors_debug' => $e->getMessage()], 400);
         }
+    }
+
+    function cart ()
+    {
+        $data = ['contents' => Cart::getContent()];
+        return view('cart', $data);
     }
 
     function getCartContent ()
@@ -39,6 +44,15 @@ class CartController extends Controller
 
     function clearCart ()
     {
+        Cart::clear();
 
+        return response()->json(['error' => false, 'msg' => 'Cart Cleared'], 200);
+    }
+
+    function removeItem (Request $req)
+    {
+        Cart::remove($req->input('id'));
+
+        return response()->json(['error' => false, 'msg' => 'Item Removed'], 200);
     }
 }

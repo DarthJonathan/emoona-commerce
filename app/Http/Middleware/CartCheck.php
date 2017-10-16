@@ -3,8 +3,9 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Cart;
 
-class Cart
+class CartCheck
 {
     /**
      * Handle an incoming request.
@@ -15,6 +16,8 @@ class Cart
      */
     public function handle($request, Closure $next)
     {
+        if(Cart::isEmpty()) return redirect('/');
+
         return $next($request);
     }
 }

@@ -61,4 +61,9 @@ class AdminController extends Controller
     {
         return view('admin/transactions/transactions');
     }
+
+    public function webConfiguration ()
+    {
+        return view('admin/webconfig/main');
+    }
 }
