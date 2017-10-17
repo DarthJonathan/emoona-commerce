@@ -29,9 +29,4 @@ class Transactions extends Model
     {
         return $this->hasMany('App\TransactionDetails', 'transaction_id', 'id');
     }
-
-    function item ()
-    {
-        return $this->hasOne('item');
-    }
 }

@@ -66,7 +66,10 @@ Route::middleware(['notifications', 'checkRole', 'suspended', 'auth'])->group(fu
     });
 
     Route::get('transactions/{id}', 'TransactionController@transactionDetail');
-    Route::get('verify_payment/{id}', 'TransactionController@verifyPayment');
+    Route::post('verify_payment/{id}', 'TransactionController@verifyPayment');
+    Route::post('verify_payment_submit', 'TransactionController@verifyPaymentSubmit');
+    Route::post('view_payment_proof', 'TransactionController@viewPaymentProof');
+    Route::get('view_payment_proof', 'TransactionController@viewPaymentProof');
 });
 
 /*

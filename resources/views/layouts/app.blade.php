@@ -9,12 +9,20 @@
 
     <!-- CSS -->
     <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/slick.css') }}">
 
     <!-- JS -->
     <script src="{{ asset('js/jquery-3.2.1.min.js') }}"></script>
     <script src="{{ asset('js/popper.js') }}"></script>
     <script src="{{ asset('js/popper-utils.js') }}"></script>
     <script src="{{ asset('js/bootstrap.js') }}"></script>
+    <script src="{{ asset('js/instafeed.min.js') }}"></script>
+    <script src="{{ asset('js/instacustoms.js') }}"></script>
+    <script src="{{ asset('js/slick.min.js') }}"></script>
+    <script src="{{ asset('js/front.js') }}"></script>
+    <script src="{{ asset('js/jquery.form.min.js') }}"></script>
+    <script src="{{ asset('js/pace.min.js') }}"></script>
     <script src="{{ asset('js/all.js') }}"></script>
 
     <!-- CSRF Token -->
@@ -31,82 +39,131 @@
 
 </head>
 <body>
-
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">
-        Emoona Studio
-    </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+<div class="navbar">
+    <div class="navbar1">
+        <ul class="my-2">
+            <li>
+                <div class="navbar-search">
+                    <input type="text" id="searchbar" placeholder="Search.." >
+                </div><!--navbar-search-->
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
-            </li>
-        </ul>
-        <div class="form-inline my-2 my-lg-0">
-            @if(Auth::guest())
-                <a href="/register" class="nav-link">Register</a>
-                <a href="/login" class="nav-link">Login</a>
-            @else
-                <div class="dropdown">
-                    <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {{ Auth::user()->firstname }} {{ Auth::user()->lastname }}
-                        @if(count(\Illuminate\Support\Facades\Session::get('notifications')) > 0)
-                            <span class="badge badge-primary">
-                                {{ count(\Illuminate\Support\Facades\Session::get('notifications')) }}
-                            </span>
-                        @endif
-                    </button>
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="Notifications">
-                        <a class="dropdown-item" href="notifications">
-                            Notifications
+            <li><a href="{{ URL::to('/profile') }}">MY <span>ACCOUNT</span></a></li>
+            <li><span>BAG</span>(0)</li>
+            <li>
+                @if(!Auth::guest())
+                    <div class="dropdown">
+                        <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{ Auth::user()->firstname }} {{ Auth::user()->lastname }}
                             @if(count(\Illuminate\Support\Facades\Session::get('notifications')) > 0)
                                 <span class="badge badge-primary">
+                                {{ count(\Illuminate\Support\Facades\Session::get('notifications')) }}
+                            </span>
+                            @endif
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="Notifications">
+                            <a class="dropdown-item" href="notifications">
+                                Notifications
+                                @if(count(\Illuminate\Support\Facades\Session::get('notifications')) > 0)
+                                    <span class="badge badge-primary">
                                     {{ count(\Illuminate\Support\Facades\Session::get('notifications')) }}
                                 </span>
-                            @endif
-                        </a>
-                        <hr>
-                        <a class="dropdown-item" href="profile/edit">Edit Profile</a>
+                                @endif
+                            </a>
+                            <hr>
+                            <a class="dropdown-item" href="profile/edit">Edit Profile</a>
 
-                        <a href="{{ route('logout') }}" class="dropdown-item"
-                           onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                            Logout
-                        </a>
+                            <a href="{{ route('logout') }}" class="dropdown-item"
+                               onclick="event.preventDefault();
+                                        document.getElementById('logout-form').submit();"
+                            >
+                                Logout
+                            </a>
 
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                            {{ csrf_field() }}
-                        </form>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                {{ csrf_field() }}
+                            </form>
+                        </div>
                     </div>
+                @endif
+            </li>
+        </ul>
+    </div><!--navbar-1-->
+
+    <div class="navbar2">
+        <ul>
+            <li><a href="{{ URL::to('/studio') }}">STUDIO</a></li>
+            <li><a href="{{ URL::to('/store') }}">SHOP</a></li>
+            <li class="title"><a href="{{ URL::to('/') }}">E.MOON.A</a></li>
+            <li><a href="{{ URL::to('/social') }}">SOCIAL</a></li>
+            <li><a href="{{ URL::to('/about') }}">ABOUT</a></li>
+        </ul>
+    </div> <!--navbar2-->
+
+
+</div><!--navbar-->
+
+<div class="background">
+    @yield('bgpicture')
+</div><!--background-->
+
+{{--Modal--}}
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
+    <div class="center-box">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">&nbsp</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-            @endif
-        </div>
-    </div>
-</nav>
-<!-- Body -->
-<section class="body px-3 py-3">
-    @if( Session::has('message') )
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 m-auto">
-                    <div class="alert alert-primary">
-                        {{ Session::get('message') }}
-                    </div>
+                <div id="ajax-loading">
+                    <img id="loading-image" class="m-3" src="/img/ajax-loader.gif"/>
+                </div>
+                <div class="modal-body">
+
                 </div>
             </div>
         </div>
-    @endif
+    </div>
+</div>
 
+{{--Notification--}}
+<div class="notification-success notification hidden mt-3">
+    <div class="container">
+        <div class="col-lg-6 mx-auto">
+            <div class="alert alert-success alert-body-success">
+                Success!
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="notification-error notification hidden mt-3">
+    <div class="container">
+        <div class="col-lg-6 mx-auto mt-2">
+            <div class="alert alert-danger alert-body-error">
+                Success!
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="content pb-4">
     @yield('content')
-</section>
+</div>
+
+
+<div class="footer">
+
+    <ul>
+        <li>TERMS & CONDITIONS</li>
+        <li>RETURN & EXCHANGES</li>
+        <li>SHIPPING</li>
+        <li>CONTACT</li>
+    </ul>
+
+</div><!--footer-->
 
 </body>
 </html>

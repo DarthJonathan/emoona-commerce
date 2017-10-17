@@ -822,7 +822,7 @@ function clearCart ()
         headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
         type: 'POST',
         success: function (response) {
-            toggleSuccess(response.msg);
+            toggleSuccess (response.msg);
             alert('Cart Cleared');
             location.reload();
         },
@@ -850,6 +850,47 @@ function removeItem(e)
         error: function(data) {
             toggleError(data.responseJSON.errors);
             console.log(data.responseJSON.errors_debug);
+        }
+    });
+}
+
+function verifyPayment(e)
+{
+    var id = $(e).data('id');
+
+    $('#modal').modal('toggle');
+    $('.modal-title').html('Payment Verification Image');
+    $('.modal-body').empty();
+    $('#ajax-loading').show();
+
+    $.ajax({
+        url: '/verify_payment/' + id,
+        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+        type: 'POST',
+        success: function (data) {
+            $('.modal-body').html(data);
+            $('#ajax-loading').hide();
+        }
+    });
+}
+
+function viewPaymentProof(e)
+{
+    var id = $(e).data('id');
+
+    $('#modal').modal('toggle');
+    $('.modal-title').html('Payment Verification Image');
+    $('.modal-body').empty();
+    $('#ajax-loading').show();
+
+    $.ajax({
+        url: '/view_payment_proof/',
+        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+        type: 'POST',
+        data: {id:id},
+        success: function (data) {
+            $('.modal-body').html(data);
+            $('#ajax-loading').hide();
         }
     });
 }

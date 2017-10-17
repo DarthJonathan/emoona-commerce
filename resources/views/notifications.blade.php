@@ -2,6 +2,15 @@
 
 @section('title', 'Notifications')
 
+@section('bgpicture')
+    <div class="bgpic" style="background-image: url('{{ asset('img/bannerShop.jpg') }}');">
+
+        <div class="bgpic-caption">
+            NOTIFICATIONS
+        </div><!--bgpic-caption-->
+    </div><!--bgpic-->
+@endsection
+
 @section('content')
     <div class="container">
         <div class="row">

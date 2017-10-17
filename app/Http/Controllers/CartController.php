@@ -32,7 +32,7 @@ class CartController extends Controller
     function cart ()
     {
         $data = ['contents' => Cart::getContent()];
-        return view('cart', $data);
+        return view('transaction.cart', $data);
     }
 
     function getCartContent ()
