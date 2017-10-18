@@ -76,6 +76,7 @@ function suspendUser (e)
         data: { id:id },
         success: function(data) {
             toggleSuccess(data);
+            location.reload();
         }
     });
 }
@@ -594,7 +595,12 @@ function loadTransactionDatas ()
                 {
                     var transfer_proof = '<button class="btn btn-danger">Not Paid</button>'
                 }else{
-                    var transfer_proof = '<img src="'+ value.transfer_proof + '">'
+
+                    var proof = value.transfer_proof;
+
+                    proof = '/storage/payment_verification/' + proof.split('/')[2] + '/' + proof.split('/')[3];
+
+                    var transfer_proof = '<button class="btn btn-primary" data-link="'+ value.id +'" onclick="viewPaymentProofAdmin(this)">View Transfer Proof</button>';
                 }
 
                 switch(value.status)
@@ -885,6 +891,27 @@ function viewPaymentProof(e)
 
     $.ajax({
         url: '/view_payment_proof/',
+        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+        type: 'POST',
+        data: {id:id},
+        success: function (data) {
+            $('.modal-body').html(data);
+            $('#ajax-loading').hide();
+        }
+    });
+}
+
+function viewPaymentProofAdmin(e)
+{
+    var id = $(e).data('link');
+
+    $('#modal').modal('toggle');
+    $('.modal-title').html('Payment Verification Image');
+    $('.modal-body').empty();
+    $('#ajax-loading').show();
+
+    $.ajax({
+        url: '/admin/view_payment_proof/',
         headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
         type: 'POST',
         data: {id:id},

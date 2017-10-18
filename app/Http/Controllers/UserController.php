@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\user_info;
+use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -68,7 +69,7 @@ class UserController extends Controller
             'phone'     => 'required|numeric'
         );
 
-        $validation = $this->validate($req, $rules);
+        $validation = Validator::make($req->all(), $rules);
 
         if($validation->fails())
         {
@@ -97,8 +98,7 @@ class UserController extends Controller
             else
                 Session::flash('message', 'Update Failed');
 
-            return Redirect::to('home');
-
+            return Redirect::to('/');
         }
     }
 }

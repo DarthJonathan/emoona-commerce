@@ -2,6 +2,15 @@
 
 @section('title', 'Edit Profile')
 
+@section('bgpicture')
+    <div class="bgpic" style="background-image: url('{{ asset('img/bannerShop.jpg') }}');">
+
+        <div class="bgpic-caption">
+            EDIT PROFILE
+        </div><!--bgpic-caption-->
+    </div><!--bgpic-->
+@endsection
+
 @section('content')
     <div class="container">
         <div class="row">
@@ -100,7 +109,7 @@
                             </div>
                             <hr>
                             <div class="form-group mt-2 float-right">
-                                <input type="submit" value="Submit" class="btn btn-dark">
+                                <input type="submit" value="Submit" class="btn btn-dark" style="cursor: pointer">
                             </div>
                         </form>
                     </div>

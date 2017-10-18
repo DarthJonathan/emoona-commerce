@@ -153,6 +153,7 @@ class TransactionController extends Controller
 
                 //Write the transfer proof path
                 $transaction->transfer_proof = $saved_path;
+                $transaction->status = 1;
                 $transaction->save();
 
                 $return = ['error' => false, 'msg' => 'Payment Verification Image Uploaded!'];

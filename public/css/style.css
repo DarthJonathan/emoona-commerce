@@ -679,6 +679,14 @@ hr {
   .subsc-content-wrapper {
     padding: 4% 15% 4% 15%;
   }
+  .cart-container {
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+  }
+  .navbar-dropdown-account .form-group input {
+    width: 55vw;
+  }
 }
 
 .center-box {
@@ -719,5 +727,131 @@ hr {
 }
 
 /*-------------------------------------------------------*/
+/* Jeffry's Stuff */
+.dropdown-align-right {
+  right: 0;
+  left: auto;
+}
+
+.navbar-dropdown {
+  padding: 0;
+  border-radius: 0;
+  color: black;
+  background-color: #2d2d2d;
+}
+
+.navbar-dropdown-account {
+  padding: 15px;
+  color: white;
+}
+
+.navbar-dropdown-account .form-group input {
+  width: 20vw;
+}
+
+.form-group-password {
+  margin-bottom: 3px;
+}
+
+.btn-login {
+  background-color: #5c5c5c;
+  border: none;
+  color: white;
+  padding: 5px 15px 5px 15px;
+  text-align: center;
+  display: inline-block;
+  float: right;
+  cursor: pointer;
+}
+
+.btn-login:focus, .btn-login:active {
+  outline: none;
+}
+
+input.navbar-dropdown-input:focus {
+  outline: none;
+}
+
+/*--------------------------Bag--------------------------*/
+.item-image {
+  width: 80px;
+  height: 80px;
+  background-size: cover;
+  background-position: center top;
+}
+
+.item-description {
+  float: left;
+  color: white;
+}
+
+.item-edit a {
+  color: white !important;
+}
+
+.item-edit a:hover {
+  color: grey !important;
+}
+
+.cart-container {
+  height: 60vh;
+  width: 40vw;
+  overflow: hidden;
+}
+
+.cart-item-container {
+  width: 100%;
+  height: 80%;
+  overflow-y: auto;
+}
+
+.cart-item-container hr {
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+.cart-item {
+  /*background-color: green;*/
+  margin: 15px;
+}
+
+.cart-confirmation {
+  margin: 15px;
+  color: white;
+}
+
+.btn-checkout {
+  background-color: #5c5c5c;
+  border: none;
+  color: white;
+  padding: 5px 15px 5px 15px;
+  text-align: center;
+  display: inline-block;
+  float: right;
+  cursor: pointer;
+}
+
+.btn-checkout:focus, .btn-checkout:active {
+  outline: 0;
+}
+
+.link-register {
+  color: white;
+  text-decoration: underline !important;
+  -webkit-text-decoration-color: white;
+  text-decoration-color: white;
+  display: inline-block;
+  float: left;
+}
+
+.link-forgot {
+  margin-bottom: 15px;
+  display: inline-block;
+  width: 100%;
+}
+
+.cart-total {
+  color: white;
+}
 
 /*# sourceMappingURL=style.css.map */

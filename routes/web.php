@@ -69,7 +69,6 @@ Route::middleware(['notifications', 'checkRole', 'suspended', 'auth'])->group(fu
     Route::post('verify_payment/{id}', 'TransactionController@verifyPayment');
     Route::post('verify_payment_submit', 'TransactionController@verifyPaymentSubmit');
     Route::post('view_payment_proof', 'TransactionController@viewPaymentProof');
-    Route::get('view_payment_proof', 'TransactionController@viewPaymentProof');
 });
 
 /*
@@ -137,6 +136,7 @@ Route::middleware(['admin'])->group(function()
         Route::post('confirm_payment', 'admin\TransactionController@confirmPayment');
         Route::post('add_tracking_code_req', 'admin\TransactionController@addTrackingCodeAjax');
         Route::post('add_tracking_code', 'admin\TransactionController@addTrackingCode');
+        Route::post('view_payment_proof', 'TransactionController@viewPaymentProof');
 
         /*
          *  Support

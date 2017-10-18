@@ -67,12 +67,17 @@
 
                     $.each(data.tickets, function(key, value){
 
+                        if(value.completed == null)
+                            var completed = "Not Completed";
+                        else
+                            var completed = makeDate(value.completed);
+
                         var html = "<tr>" +
                             "<td>" + (key+1) + "</td>" +
                             "<td>" + value.title + "</td>" +
                             "<td>" + makeDate(value.created_at) + "</td>" +
                             "<td>" + value.category + "</td>" +
-                            "<td>" + makeDate(value.completed) + "</td>" +
+                            "<td>" + completed + "</td>" +
                             "<td>" +
                             "<button class='btn-primary btn mr-1' onclick='openTicketDetail(this)' data-id='"+ value.id +"'>View</button>" +
                             "<button class='btn-primary btn' onclick='markCompleted(this)' data-id='"+ value.id +"'>Completed</button>" +

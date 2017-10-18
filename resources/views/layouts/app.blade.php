@@ -47,10 +47,97 @@
                     <input type="text" id="searchbar" placeholder="Search.." >
                 </div><!--navbar-search-->
             </li>
-            <li><a href="{{ URL::to('/profile') }}">MY <span>ACCOUNT</span></a></li>
-            <li><span>BAG</span>(0)</li>
-            <li>
-                @if(!Auth::guest())
+            <li class="dropdown">
+                <a href="#" data-toggle="dropdown">
+                    <span>BAG</span>(0)
+                </a>
+                <div class="dropdown-menu dropdown-align-right navbar-dropdown ">
+                    <div class="cart-container">
+                        <div class="cart-item-container">
+                            <!-- cart item div -->
+                            <div class="cart-item row align-items-center">
+                                <div class="item-image col-lg-3" style= "background-image:url(
+                                {{ asset('img/f1.png') }}
+                                        );">
+                                </div>
+                                <div class="item-description col-lg-7">
+                                    <h4>ITEM NAME</h4>
+                                    <h5>Rp.999,999.00</h5>
+                                    <h6>1 pc(s)</h6>
+                                </div>
+                                <div class="item-edit col-lg-2">
+                                    <a href="#">Edit</a>
+                                </div>
+                            </div>
+
+                            <hr>
+
+                            <!-- test scroll -->
+                            <div class="cart-item row align-items-center">
+                                <div class="item-image col-lg-3" style= "background-image:url(
+                                {{ asset('img/f1.png') }}
+                                        );">
+                                </div>
+                                <div class="item-description col-lg-7">
+                                    <h4>ITEM NAME</h4>
+                                    <h5>Rp.999,999.00</h5>
+                                    <h6>1 pc(s)</h6>
+                                </div>
+                                <div class="item-edit col-lg-2">
+                                    <a href="#">Edit</a>
+                                </div>
+                            </div>
+
+                            <hr>
+
+                            <div class="cart-item row align-items-center">
+                                <div class="item-image col-lg-3" style= "background-image:url(
+                                {{ asset('img/f1.png') }}
+                                        );">
+                                </div>
+                                <div class="item-description col-lg-7">
+                                    <h4>ITEM NAME</h4>
+                                    <h5>Rp.999,999.00</h5>
+                                    <h6>1 pc(s)</h6>
+                                </div>
+                                <div class="item-edit col-lg-2">
+                                    <a href="#">Edit</a>
+                                </div>
+                            </div>
+
+                            <hr>
+
+                            <div class="cart-item row align-items-center">
+                                <div class="item-image col-lg-3" style= "background-image:url(
+                                {{ asset('img/f1.png') }}
+                                        );">
+                                </div>
+                                <div class="item-description col-lg-7">
+                                    <h4>ITEM NAME</h4>
+                                    <h5>Rp.999,999.00</h5>
+                                    <h6>1 pc(s)</h6>
+                                </div>
+                                <div class="item-edit col-lg-2">
+                                    <a href="#">Edit</a>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="cart-confirmation row align-items-center">
+                            <div class="col-lg-7">
+                                <h6>Total :</h6>
+                                <h5>Rp.999.999.999,00</h5>
+                            </div>
+                            <div class="col-lg-5">
+                                <button class="btn-checkout">Checkout</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        @if(!Auth::guest())
+                <li>
                     <div class="dropdown">
                         <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             {{ Auth::user()->firstname }} {{ Auth::user()->lastname }}
@@ -84,8 +171,29 @@
                             </form>
                         </div>
                     </div>
-                @endif
-            </li>
+                </li>
+            @else
+                <li class="dropdown">
+                    <a href="#" data-toggle="dropdown">
+                        MY <span>ACCOUNT</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-align-right navbar-dropdown navbar-dropdown-account">
+                        <form>
+                            <div class="form-group">
+                                <label for="input_email">EMAIL </label>
+                                <input type="text" id="input_email" class="navbar-dropdown-input">
+                            </div>
+                            <div class="form-group form-group-password">
+                                <label for="input_email">PASSWORD </label>
+                                <input type="password" id="input_email" class="navbar-dropdown-input">
+                            </div>
+                            <a href="#" class="link-forgot">FORGOT YOUR PASSWORD?</a>
+                            <input type="button" class="btn-login" value="LOGIN">
+                            <a href="#" class="link-register">REGISTER</a>
+                        </form>
+                    </div>
+                </li>
+            @endif
         </ul>
     </div><!--navbar-1-->
 
