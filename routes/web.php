@@ -93,6 +93,13 @@ Route::middleware(['admin'])->group(function()
         Route::post('confirm_prompt', 'admin\AdminController@prompt');
 
         /*
+         * Webconfiguration
+         */
+        Route::post('/webconfig/collections_card', 'admin\WebconfigController@collectionsCard');
+        Route::get('/webconfig/collections_card', 'admin\WebconfigController@collectionsCard');
+        
+
+        /*
          * Item Management
          *
              *

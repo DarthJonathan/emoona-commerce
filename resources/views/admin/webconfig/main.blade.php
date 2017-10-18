@@ -13,27 +13,56 @@
                     </div>
                     <div class="card-body row">
                         <div class="col-md-6">
+                            <form id="collections_card">
+
+                            {{ csrf_field() }}
+
                             <div class="card">
                                 <span class="card-header">Collections Card</span>
                                 <div class="card-body">
                                     <div class="form-group">
                                         <label for="woman_collection" class="col-form-label mb-2">Woman Collections</label>
-                                        <textarea  name="woman_collection" id="woman_collection" class="form-control"></textarea>
+                                        <textarea  name="woman_collection" id="woman_collection" class="form-control">{{ $settings[0]->value_1 }}</textarea>
                                     </div>
                                     <div class="form-group">
-                                        <label for="woman_collection" class="col-form-label mb-2">Man Collections</label>
-                                        <textarea  name="woman_collection" id="woman_collection" class="form-control"></textarea>
+                                        <label for="man_collection" class="col-form-label mb-2">Man Collections</label>
+                                        <textarea  name="man_collection" id="man_collection" class="form-control">{{ $settings[1]->value_1 }}</textarea>
                                     </div>
                                     <div class="form-group">
-                                        <label for="woman_collection" class="col-form-label mb-2">Accessories Collections</label>
-                                        <textarea  name="woman_collection" id="woman_collection" class="form-control"></textarea>
+                                        <label for="accessories_collection" class="col-form-label mb-2">Accessories Collections</label>
+                                        <textarea  name="accessories_collection" id="accessories_collection" class="form-control">{{ $settings[2]->value_1 }}</textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="button" class="btn btn-dark float-right" onclick="saveColletionsCard()">Save</button>
                                     </div>
                                 </div>
                             </div>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <script>
+        function saveColletionsCard ()
+        {
+            var options = {
+                url: '{{ action('admin\WebconfigController@collectionsCard') }}',
+                type: 'post',
+                success: function(response)
+                {
+                    toggleSuccess(response.msg);
+                    console.log(response);
+                },
+                error: function(response)
+                {
+                    toggleError(response.errors);
+                    console.log(response.errors_debug);
+                }
+            };
+
+            $("#collections_card").ajaxSubmit(options);
+        }
+    </script>
 @endsection

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\ItemDetail;
 use App\User;
+use App\Webconfig;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -64,6 +65,7 @@ class AdminController extends Controller
 
     public function webConfiguration ()
     {
-        return view('admin/webconfig/main');
+        $data = ['settings' => Webconfig::all()];
+        return view('admin/webconfig/main', $data);
     }
 }
