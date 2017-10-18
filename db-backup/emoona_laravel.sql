@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Oct 11, 2017 at 06:16 PM
+-- Generation Time: Oct 18, 2017 at 03:48 PM
 -- Server version: 10.1.26-MariaDB
 -- PHP Version: 7.1.8
 
@@ -126,7 +126,8 @@ CREATE TABLE `item_detail` (
 --
 
 INSERT INTO `item_detail` (`id`, `item_id`, `color`, `size`, `images`, `stock`, `status`, `updated_at`, `created_at`) VALUES
-(34, 1, 'blue', 'L', '1.150703758259d3918e01d1a', 100, 'available', '2017-10-03', '2017-10-03');
+(34, 1, 'blue', 'L', '1.150703758259d3918e01d1a', 100, 'available', '2017-10-03', '2017-10-03'),
+(35, 16, 'Black', 'L', '16.150798111359e1f73927cf8', 100, 'available', '2017-10-14', '2017-10-14');
 
 -- --------------------------------------------------------
 
@@ -252,6 +253,8 @@ CREATE TABLE `tickets` (
   `id` int(11) NOT NULL,
   `title` varchar(200) NOT NULL,
   `category` varchar(200) NOT NULL,
+  `priority` int(10) NOT NULL DEFAULT '0',
+  `completed` date DEFAULT NULL,
   `created_at` date NOT NULL,
   `updated_at` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -260,8 +263,10 @@ CREATE TABLE `tickets` (
 -- Dumping data for table `tickets`
 --
 
-INSERT INTO `tickets` (`id`, `title`, `category`, `created_at`, `updated_at`) VALUES
-(2, 'Kentang', 'APel', '2017-10-11', '2017-10-11');
+INSERT INTO `tickets` (`id`, `title`, `category`, `priority`, `completed`, `created_at`, `updated_at`) VALUES
+(2, 'Kentang', 'APel', 0, NULL, '2017-10-11', '2017-10-13'),
+(3, 'Sudah Dikirim', 'STUFF', 0, NULL, '2017-10-18', '2017-10-18'),
+(4, 'Sudah Dikirim', 'A', 0, NULL, '2017-10-18', '2017-10-18');
 
 -- --------------------------------------------------------
 
@@ -283,7 +288,34 @@ CREATE TABLE `tickets_detail` (
 --
 
 INSERT INTO `tickets_detail` (`id`, `ticket_id`, `text`, `additionals`, `created_at`, `updated_at`) VALUES
-(1, 2, 'Dufan', NULL, '2017-10-11', '2017-10-11');
+(1, 2, 'Dufan', NULL, '2017-10-11', '2017-10-11'),
+(2, 2, 'Kentang', NULL, '2017-10-12', '2017-10-12'),
+(3, 2, 'Kiki', NULL, '2017-10-12', '2017-10-12'),
+(4, 2, 'APEL', NULL, '2017-10-12', '2017-10-12'),
+(5, 2, 'BLA', NULL, '2017-10-12', '2017-10-12'),
+(6, 2, 'BLUE', NULL, '2017-10-12', '2017-10-12'),
+(7, 2, 'Kentang', NULL, '2017-10-12', '2017-10-12'),
+(8, 2, 'KULLITTTT', NULL, '2017-10-12', '2017-10-12'),
+(9, 2, 'Kentang', NULL, '2017-10-12', '2017-10-12'),
+(10, 2, 'Jeffry', NULL, '2017-10-12', '2017-10-12'),
+(11, 2, 'asdasdasdasd', NULL, '2017-10-12', '2017-10-12'),
+(12, 2, 'aaaaaaaa', NULL, '2017-10-12', '2017-10-12'),
+(13, 2, 'asdasdasdasd', NULL, '2017-10-12', '2017-10-12'),
+(14, 2, 'adlkfjhnisvgukvdnjkbfhs', NULL, '2017-10-12', '2017-10-12'),
+(15, 2, 'Ridzky', NULL, '2017-10-12', '2017-10-12'),
+(16, 2, 'asdasdasd', NULL, '2017-10-12', '2017-10-12'),
+(17, 2, 'aaaaaaa', NULL, '2017-10-12', '2017-10-12'),
+(18, 2, 'asdasdasdasdasd', NULL, '2017-10-12', '2017-10-12'),
+(19, 2, 'asdasdasdasdasdasdasdxxxxxxx', NULL, '2017-10-12', '2017-10-12'),
+(20, 2, 'xxxxxxxxxx', NULL, '2017-10-12', '2017-10-12'),
+(21, 2, 'zzzzzzzz', NULL, '2017-10-12', '2017-10-12'),
+(22, 2, 'yyyyyyyyyyy', NULL, '2017-10-12', '2017-10-12'),
+(23, 2, 'qqqqqqqqqqq', NULL, '2017-10-12', '2017-10-12'),
+(24, 2, 'DAVID', NULL, '2017-10-12', '2017-10-12'),
+(25, 3, 'SUDAH DI KRIM PAK', NULL, '2017-10-18', '2017-10-18'),
+(26, 4, 'Sudah DI kirm', NULL, '2017-10-18', '2017-10-18'),
+(27, 4, 'Siap', NULL, '2017-10-18', '2017-10-18'),
+(28, 3, 'KENTANG', NULL, '2017-10-18', '2017-10-18');
 
 -- --------------------------------------------------------
 
@@ -298,7 +330,7 @@ CREATE TABLE `transactions` (
   `status` int(11) NOT NULL,
   `notes` text,
   `transfer_proof` varchar(255) DEFAULT NULL,
-  `shipping_codes` varchar(255) NOT NULL,
+  `shipping_codes` varchar(255) DEFAULT NULL,
   `created_at` date NOT NULL,
   `finished_at` date DEFAULT NULL,
   `updated_at` date DEFAULT NULL
@@ -310,9 +342,12 @@ CREATE TABLE `transactions` (
 
 INSERT INTO `transactions` (`id`, `user_id`, `payment_type_id`, `status`, `notes`, `transfer_proof`, `shipping_codes`, `created_at`, `finished_at`, `updated_at`) VALUES
 (1, 22, 1, 0, 'asdasdasd', NULL, '', '2017-09-08', '0000-00-00', NULL),
-(2, 22, 1, 2, 'Kentnag', NULL, '', '2017-09-08', NULL, '2017-10-05'),
+(2, 22, 1, 3, 'Kentnag', NULL, 'LLLL', '2017-09-08', NULL, '2017-10-12'),
 (3, 22, 1, 2, 'Kentng Apel Dufan', '123123.jpg', '', '2017-10-05', NULL, NULL),
-(4, 22, 1, 3, 'Kentng Apel Dufan', '1231232.jpg', '', '2017-10-05', NULL, NULL);
+(4, 22, 1, 3, 'Kentng Apel Dufan', '1231232.jpg', 'UUUU', '2017-10-05', NULL, NULL),
+(10, 30, 1, 0, NULL, NULL, NULL, '2017-10-15', NULL, '2017-10-15'),
+(11, 30, 1, 3, NULL, 'public/payment_verification/11/OW3xDEABfkExBslxev3r82PDRO6ndPKjd9LwNKZ6.jpeg', 'KENTANGAPELDUFAN', '2017-10-15', NULL, '2017-10-18'),
+(12, 30, 1, 0, NULL, NULL, NULL, '2017-10-16', NULL, '2017-10-16');
 
 -- --------------------------------------------------------
 
@@ -325,15 +360,20 @@ CREATE TABLE `transaction_detail` (
   `transaction_id` int(11) NOT NULL,
   `item_id` int(11) NOT NULL,
   `item_detail_id` int(11) NOT NULL,
-  `quantity` int(11) NOT NULL
+  `quantity` int(11) NOT NULL,
+  `updated_at` date NOT NULL,
+  `created_at` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `transaction_detail`
 --
 
-INSERT INTO `transaction_detail` (`id`, `transaction_id`, `item_id`, `item_detail_id`, `quantity`) VALUES
-(1, 1, 1, 1, 20);
+INSERT INTO `transaction_detail` (`id`, `transaction_id`, `item_id`, `item_detail_id`, `quantity`, `updated_at`, `created_at`) VALUES
+(1, 1, 1, 1, 20, '0000-00-00', '0000-00-00'),
+(4, 11, 1, 34, 1, '2017-10-15', '2017-10-15'),
+(5, 12, 1, 34, 1, '2017-10-16', '2017-10-16'),
+(6, 12, 16, 35, 1, '2017-10-16', '2017-10-16');
 
 -- --------------------------------------------------------
 
@@ -360,8 +400,8 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `firstname`, `lastname`, `activation_code`, `email`, `password`, `last_login`, `remember_token`, `created_at`, `updated_at`) VALUES
 (22, 'Jonathan', 'Hosea', NULL, 'jonathan.hosea@me.com', '$2y$10$6Xd3Y7E.CcYAsSsDbGD82eWDg2tmh31F.TfRSYiGK923eMENkT4ti', '2017-09-11 05:01:07', 'xdDo0FeD9FTgaV5kYElMkTVHqdxZ2D4a7WUNSskAmZq3QnP5CPuL21Kcu6FU', '2017-09-05 12:46:09', '2017-09-05 16:15:17'),
-(24, 'Administrator', 'Admin', '150468752659afb5a698dc0', 'admin@admin.com', '$2y$10$awV4e.Kuz85DjE.jnx/Cz.EtIvxuYSZv8Wl0nDofqVcXkmPoOi5My', '2017-09-25 12:29:31', 'lQnd4NvVXHNH5KOGLdgk3jiibW5NxhZwCuz18sc2tcs3YQdWyLGNaeSU4CDX', '2017-09-05 18:45:26', '2017-09-05 18:45:26'),
-(30, 'Jonathan', 'Hosea', NULL, 'zonecaptain@gmail.com', '$2y$10$uYlrGR8aPoq0iHXxKIADCelP3b1BNop47qFapxNg.5MAfLbYmtmCe', '2017-09-25 12:37:43', 'fmNE3P41lDtsoathjJFnbKnKnbzyf31IceduvGHNwOVcDwfkEzCMeiI8EDX5', '2017-09-25 05:31:12', '2017-09-25 05:31:24');
+(24, 'Administrator', 'Admin', '150468752659afb5a698dc0', 'admin@admin.com', '$2y$10$awV4e.Kuz85DjE.jnx/Cz.EtIvxuYSZv8Wl0nDofqVcXkmPoOi5My', '2017-10-18 05:57:57', '4enGNpbvcoYOCHwhd6JxdQXHf6z8oPP96MASbKIDV5Oe5S28pFFXHO0rIDoP', '2017-09-05 18:45:26', '2017-09-05 18:45:26'),
+(30, 'Jonathan', 'Hosea', NULL, 'zonecaptain@gmail.com', '$2y$10$uYlrGR8aPoq0iHXxKIADCelP3b1BNop47qFapxNg.5MAfLbYmtmCe', '2017-10-18 05:55:33', 'IIJyPEaISlyzAW9ItBO7oGhGV4lH9OOONwI1pecpFG55e1jZFqdPlI8CSpVb', '2017-09-25 05:31:12', '2017-09-25 05:31:24');
 
 -- --------------------------------------------------------
 
@@ -410,9 +450,9 @@ CREATE TABLE `user_info` (
 --
 
 INSERT INTO `user_info` (`id`, `user_id`, `address`, `postcode`, `province`, `country`, `birthday`, `phone`, `gender`, `suspended`, `newsletter`, `picture`) VALUES
-(14, 22, 'Taman Pegangsaan Indah Blok D No 11', '14250', 'Jakarta', 'INA', '1997-04-03', '87875763570', 'male', 0, 0, NULL),
+(14, 22, 'Taman Pegangsaan Indah Blok D No 11', '14250', 'Jakarta', 'INA', '1997-04-03', '87875763570', 'male', 1, 0, NULL),
 (15, 24, NULL, NULL, NULL, NULL, '1997-04-03', NULL, NULL, NULL, 0, NULL),
-(20, 30, NULL, NULL, NULL, NULL, '1997-04-03', NULL, NULL, NULL, 0, NULL);
+(20, 30, 'Taman Pegangsaan Indah Blok D No 11', '14250', 'Jakarta', 'INA', '1997-04-03', '087875763570', 'male', NULL, 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -423,8 +463,20 @@ INSERT INTO `user_info` (`id`, `user_id`, `address`, `postcode`, `province`, `co
 CREATE TABLE `user_notification` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `notification_name` varchar(255) NOT NULL
+  `notification_name` varchar(255) NOT NULL,
+  `notification_url` text,
+  `created_at` date DEFAULT NULL,
+  `updated_at` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `user_notification`
+--
+
+INSERT INTO `user_notification` (`id`, `user_id`, `notification_name`, `notification_url`, `created_at`, `updated_at`) VALUES
+(3, 30, 'Transaction Number 10', '/transactions/10', '2017-10-15', '2017-10-15'),
+(4, 30, 'Transaction Number 11', '/transactions/11', '2017-10-15', '2017-10-15'),
+(5, 30, 'Transaction Number 12', '/transactions/12', '2017-10-16', '2017-10-16');
 
 -- --------------------------------------------------------
 
@@ -603,7 +655,7 @@ ALTER TABLE `item_category`
 -- AUTO_INCREMENT for table `item_detail`
 --
 ALTER TABLE `item_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 --
 -- AUTO_INCREMENT for table `item_studio`
 --
@@ -638,22 +690,22 @@ ALTER TABLE `studio_category`
 -- AUTO_INCREMENT for table `tickets`
 --
 ALTER TABLE `tickets`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `tickets_detail`
 --
 ALTER TABLE `tickets_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 --
 -- AUTO_INCREMENT for table `transactions`
 --
 ALTER TABLE `transactions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT for table `transaction_detail`
 --
 ALTER TABLE `transaction_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `users`
 --
@@ -673,7 +725,7 @@ ALTER TABLE `user_info`
 -- AUTO_INCREMENT for table `user_notification`
 --
 ALTER TABLE `user_notification`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `webconfig`
 --
