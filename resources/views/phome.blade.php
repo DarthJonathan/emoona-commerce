@@ -1,5 +1,5 @@
 
-@extends('layouts.pagelayout')
+@extends('layouts.app')
 
 @section('bgpicture')
 <div id="home-pic-con" class="bgpicHome">

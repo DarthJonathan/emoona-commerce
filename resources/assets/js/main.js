@@ -921,3 +921,49 @@ function viewPaymentProofAdmin(e)
         }
     });
 }
+
+function loadCart()
+{
+    var cart = $('.cart-item-container');
+    var bag = $('#bag-items');
+    var total = $('#total-price');
+
+    cart.empty();
+
+    $.ajax({
+        url: '/cart/contents_ajax/',
+        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+        type: 'POST',
+        success: function (data) {
+
+            console.log(data);
+
+            if(data.cart == "")
+            {
+                cart.append = "<div class='cart-empty'>" +
+                                "<h4>Cart Is Empty</h4>" +
+                              "</div>";
+            }else
+            {
+                $.each(data.cart, function(key, value)
+                {
+                    var html = '<div class="cart-item row align-items-center">' +
+                                    '<div class="item-image col-lg-3" style= "background-image:url(' + value.image + ')" >' +
+                                    '</div>' +
+                                    '<div class="item-description col-6">' +
+                                        '<h4>' + value.name + '</h4>' +
+                                        '<h5>Rp.' + value.price + '.00</h5>' +
+                                        '<span>' + value.quantity + ' pc(s)</span>' +
+                                    '</div>' +
+                                    '<div class="item-edit col-3">' +
+                                        '<a href="#" onclick="removeItem(this)" data-id="' + value.id + '">Remove</a>' +
+                                    '</div>' +
+                                '</div>' +
+
+                                '<hr>';
+                    cart.append(html);
+                });
+            }
+        }
+    });
+}

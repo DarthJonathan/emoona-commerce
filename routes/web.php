@@ -33,6 +33,7 @@ Route::post('product/add_to_cart','CartController@addToCart');
 Route::get('cart','CartController@cart');
 Route::post('clear_cart','CartController@clearCart');
 Route::post('remove_item','CartController@removeItem');
+Route::post('cart/contents_ajax','CartController@getCartContent');
 
 /*
  * Authentications

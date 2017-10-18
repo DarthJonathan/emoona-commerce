@@ -48,89 +48,24 @@
                 </div><!--navbar-search-->
             </li>
             <li class="dropdown">
-                <a href="#" data-toggle="dropdown">
-                    <span>BAG</span>(0)
+                <a href="#" data-toggle="dropdown" id="bag-items">
+                    <span>BAG</span>({{ Cart::getTotalQuantity() }})
                 </a>
                 <div class="dropdown-menu dropdown-align-right navbar-dropdown ">
                     <div class="cart-container">
                         <div class="cart-item-container">
-                            <!-- cart item div -->
-                            <div class="cart-item row align-items-center">
-                                <div class="item-image col-lg-3" style= "background-image:url(
-                                {{ asset('img/f1.png') }}
-                                        );">
-                                </div>
-                                <div class="item-description col-lg-7">
-                                    <h4>ITEM NAME</h4>
-                                    <h5>Rp.999,999.00</h5>
-                                    <h6>1 pc(s)</h6>
-                                </div>
-                                <div class="item-edit col-lg-2">
-                                    <a href="#">Edit</a>
-                                </div>
-                            </div>
 
-                            <hr>
-
-                            <!-- test scroll -->
-                            <div class="cart-item row align-items-center">
-                                <div class="item-image col-lg-3" style= "background-image:url(
-                                {{ asset('img/f1.png') }}
-                                        );">
-                                </div>
-                                <div class="item-description col-lg-7">
-                                    <h4>ITEM NAME</h4>
-                                    <h5>Rp.999,999.00</h5>
-                                    <h6>1 pc(s)</h6>
-                                </div>
-                                <div class="item-edit col-lg-2">
-                                    <a href="#">Edit</a>
-                                </div>
-                            </div>
-
-                            <hr>
-
-                            <div class="cart-item row align-items-center">
-                                <div class="item-image col-lg-3" style= "background-image:url(
-                                {{ asset('img/f1.png') }}
-                                        );">
-                                </div>
-                                <div class="item-description col-lg-7">
-                                    <h4>ITEM NAME</h4>
-                                    <h5>Rp.999,999.00</h5>
-                                    <h6>1 pc(s)</h6>
-                                </div>
-                                <div class="item-edit col-lg-2">
-                                    <a href="#">Edit</a>
-                                </div>
-                            </div>
-
-                            <hr>
-
-                            <div class="cart-item row align-items-center">
-                                <div class="item-image col-lg-3" style= "background-image:url(
-                                {{ asset('img/f1.png') }}
-                                        );">
-                                </div>
-                                <div class="item-description col-lg-7">
-                                    <h4>ITEM NAME</h4>
-                                    <h5>Rp.999,999.00</h5>
-                                    <h6>1 pc(s)</h6>
-                                </div>
-                                <div class="item-edit col-lg-2">
-                                    <a href="#">Edit</a>
-                                </div>
-                            </div>
-
+                        <!-- Loaded Via Ajax -->
+                            
                         </div>
 
                         <div class="cart-confirmation row align-items-center">
                             <div class="col-lg-7">
                                 <h6>Total :</h6>
-                                <h5>Rp.999.999.999,00</h5>
+                                <h5 id="total-price">Rp.{{ Cart::getTotal() }},00</h5>
                             </div>
                             <div class="col-lg-5">
-                                <button class="btn-checkout">Checkout</button>
+                                <a class="btn-checkout" href>Checkout</a>
                             </div>
                         </div>
                     </div>
@@ -148,7 +83,7 @@
                             @endif
                         </button>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="Notifications">
-                            <a class="dropdown-item" href="notifications">
+                            <a class="dropdown-item" href="{{ URL::to('notifications') }}">
                                 Notifications
                                 @if(count(\Illuminate\Support\Facades\Session::get('notifications')) > 0)
                                     <span class="badge badge-primary">
@@ -157,7 +92,7 @@
                                 @endif
                             </a>
                             <hr>
-                            <a class="dropdown-item" href="profile/edit">Edit Profile</a>
+                            <a class="dropdown-item" href="{{ URL::to('profile/edit') }}">Edit Profile</a>
 
                             <a href="{{ route('logout') }}" class="dropdown-item"
                                onclick="event.preventDefault();
@@ -178,18 +113,19 @@
                         MY <span>ACCOUNT</span>
                     </a>
                     <div class="dropdown-menu dropdown-align-right navbar-dropdown navbar-dropdown-account">
-                        <form>
+                        <form method="POST" action="{{ route('login') }}">
+                            {{ csrf_field() }}
                             <div class="form-group">
-                                <label for="input_email">EMAIL </label>
-                                <input type="text" id="input_email" class="navbar-dropdown-input">
+                                <label for="email">E-Mail </label>
+                                <input type="email" id="email" name="email" class="navbar-dropdown-input">
                             </div>
                             <div class="form-group form-group-password">
-                                <label for="input_email">PASSWORD </label>
-                                <input type="password" id="input_email" class="navbar-dropdown-input">
+                                <label for="password">Password </label>
+                                <input type="password" id="password" name="password" class="navbar-dropdown-input">
                             </div>
-                            <a href="#" class="link-forgot">FORGOT YOUR PASSWORD?</a>
-                            <input type="button" class="btn-login" value="LOGIN">
-                            <a href="#" class="link-register">REGISTER</a>
+                            <a href="{{ route('password.request') }}" class="link-forgot">Forgot Your Password?</a>
+                            <input type="submit" class="btn-login" value="LOGIN">
+                            <a href="{{ route('register') }}" class="link-register">REGISTER</a>
                         </form>
                     </div>
                 </li>
@@ -273,5 +209,11 @@
 
 </div><!--footer-->
 
+<script>
+    $(document).ready(function()
+    {
+        loadCart();
+    });
+</script>
 </body>
 </html>

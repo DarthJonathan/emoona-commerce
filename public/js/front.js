@@ -11,6 +11,7 @@ function addToCart()
         {
             console.log(response);
             toggleSuccess(response.msg);
+            loadCart();
         },
         error: function(response)
         {

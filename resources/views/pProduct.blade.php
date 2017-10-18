@@ -1,4 +1,4 @@
-@extends('layouts.pagelayout')
+@extends('layouts.app')
 
 @section('title', $product['name'])
 
@@ -42,6 +42,7 @@
 		<input type="hidden" name="product_id" value="{{ $product['id'] }}">
 		<input type="hidden" name="product_name" value="{{ $product['name'] }}">
 		<input type="hidden" name="product_price" value="{{ $product['price'] }}">
+		<input type="hidden" name="product_image" value="{{ $images[0] }}">
 
 		<div class="row">
 

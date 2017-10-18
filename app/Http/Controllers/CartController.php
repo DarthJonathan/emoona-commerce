@@ -17,7 +17,8 @@ class CartController extends Controller
                 'price' => $req->input('product_price'),
                 'quantity' => $req->input('quantity'),
                 'attributes' => [
-                    'product_detail_id' => $req->input('product_detail_id')
+                    'product_detail_id' => $req->input('product_detail_id'),
+                    'product_image'     => $req->product_image
                 ]
             ]);
 
@@ -37,9 +38,22 @@ class CartController extends Controller
 
     function getCartContent ()
     {
-        $content = Cart::getContent()->toJson();
+        if(Cart::isEmpty())
+            $content = null;
+        else
+        {
+            $content = Cart::getContent();
+            $quantity = Cart::getTotalQuantity();
+            $total = Cart::getTotal();
+        }
 
-        return response()->json(['error' => false, 'msg' => $content], 200);
+        return response()->json(
+            [
+                'error'     => false, 
+                'cart'      => $content,
+                'quantity'  => $quantity,
+                'total'     => $total
+            ], 200);
     }
 
     function clearCart ()

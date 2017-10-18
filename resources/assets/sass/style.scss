@@ -752,7 +752,12 @@ hr{
   outline: none;
 }
 
-input.navbar-dropdown-input:focus{
+.navbar-dropdown-input { 
+  border: 0;
+  padding: 5px;
+}
+
+.navbar-dropdown-input:focus{
   outline:none;
 }
 
@@ -767,6 +772,21 @@ input.navbar-dropdown-input:focus{
 .item-description{
   float:left;
   color: white;
+
+  h4 
+  {
+    font-size: 18px;
+  }
+
+  h5 
+  {
+    font-size: 16px;
+  }
+
+  span 
+  {
+    font-size: 14px;
+  }
 }
 .item-edit a{
   color: white !important;
@@ -777,8 +797,8 @@ input.navbar-dropdown-input:focus{
 }
 
 .cart-container{
-  height: 60vh;
-  width: 40vw;
+  height: 50vh;
+  width: 30vw;
   overflow: hidden;
 }
 
@@ -786,6 +806,21 @@ input.navbar-dropdown-input:focus{
   width: 100%;
   height:80%;
   overflow-y:auto;
+
+  .cart-empty
+  {
+    width:100%;
+    height:100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    h4 
+    {
+        color:white;
+    }
+  }
+
 }
 
 .cart-item-container hr{
@@ -802,17 +837,29 @@ input.navbar-dropdown-input:focus{
 .cart-confirmation{
   margin:15px;
   color: white;
+  font-family: inherit;
+
+  h5 
+  {
+    font-size: 16px;
+  }
 }
 
 .btn-checkout{
-  background-color: #5c5c5c;
+  background-color: rgb(92, 92, 92);
+  font-family: inherit;
   border: none;
   color: white;
-  padding: 5px 15px 5px 15px;
+  padding: 10px 15px 10px 15px;
   text-align: center;
   display: inline-block;
   float: right;
   cursor: pointer;
+  transition: all .3s ease-in-out;
+}
+
+.btn-checkout:hover{
+  background: rgba(92, 92, 92, 0.5);
 }
 
 .btn-checkout:focus, .btn-checkout:active{
@@ -821,13 +868,15 @@ input.navbar-dropdown-input:focus{
 
 .link-register{
   color: white;
-  text-decoration: underline !important;
   text-decoration-color: white;
   display: inline-block;
   float: left;
+  margin-top: 8px;
 }
 
 .link-forgot{
+  font-size: 12px;
+  font-family: inherit;
   margin-bottom: 15px;
   display: inline-block;
   width: 100%;
@@ -835,4 +884,14 @@ input.navbar-dropdown-input:focus{
 
 .cart-total{
   color: white;
+}
+
+.dropdown-menu
+{
+  background-color: rgb(25,25,25);
+
+  .dropdown-item
+  {
+    transition: all .3s ease-in-out;
+  }
 }
