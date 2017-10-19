@@ -65,7 +65,7 @@
                                 <h5 id="total-price">Rp.{{ Cart::getTotal() }},00</h5>
                             </div>
                             <div class="col-lg-5">
-                                <a class="btn-checkout" href>Checkout</a>
+                                <a class="btn-checkout" href="{{ URL::to('/checkout') }}">Checkout</a>
                             </div>
                         </div>
                     </div>

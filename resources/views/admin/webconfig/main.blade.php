@@ -12,7 +12,7 @@
                         <h4>Home Page</h4>
                     </div>
                     <div class="card-body row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <form id="collections_card">
 
                             {{ csrf_field() }}
@@ -38,6 +38,14 @@
                                 </div>
                             </div>
                             </form>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card">
+                                <span class="card-header">Freatured Products</span>
+                                <div class="card-body freatured-product">
+
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

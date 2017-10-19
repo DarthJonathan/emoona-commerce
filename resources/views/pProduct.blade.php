@@ -171,11 +171,6 @@
 
     var item_details = JSON.parse('<?php echo json_encode($product['item_detail']) ?>');
 
-    $(document).ready(function()
-	{
-	   console.log(item_details);
-	});
-
 	function colorClick(e)
 	{
         var id = $(e).data('id');

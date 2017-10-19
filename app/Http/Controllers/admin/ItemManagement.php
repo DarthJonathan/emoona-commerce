@@ -347,6 +347,14 @@ class ItemManagement extends Controller
                 {
                     $itemDetail->stock  = $value;
                 }break;
+
+                case 'featured':
+                {
+                    if($itemDetail->featured == 0)
+                        $itemDetail->featured = 1;
+                    else
+                        $itemDetail->featured = 0;
+                }
             }
 
             $itemDetail->save();

@@ -317,4 +317,19 @@ body{
   }
 }
 
+/* Web Configuration */
+.freatured-product
+{
+  height:100%;
+}
+
+.modal-body
+{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width:60vw;
+  max-height: 60vh;
+}
+
 /* Media */

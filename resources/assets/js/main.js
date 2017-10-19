@@ -468,6 +468,11 @@ function loadNextCategory (e)
                             status.hidden = 'checked';
                         }
 
+                        if(value.featured == 1)
+                            featured = 'checked';
+                        else
+                            featured = '';
+
                         html = '<tr>' +
                             '<td>'+ (key+1) +'</td>' +
                             '<td data-case="color" data-id="'+ value.id +'" onblur="editItemDetail(this)" contenteditable>'+ value.color +'</td>' +
@@ -480,6 +485,9 @@ function loadNextCategory (e)
                             '<input type="radio" name="status#'+ value.id +'" ' + status.available + ' data-case="status" data-id="'+ value.id +'" onclick="editItemDetail(this)" value="available"> Available <br>' +
                             '<input type="radio" name="status#'+ value.id +'" ' + status.preorder + '  data-case="status" data-id="'+ value.id +'" onclick="editItemDetail(this)" value="preorder"> Preorder <br>' +
                             '<input type="radio" name="status#'+ value.id +'" ' + status.hidden + '  data-case="status" data-id="'+ value.id +'" onclick="editItemDetail(this)" value="hidden"> Hidden <br>' +
+                            '</td>' +
+                            '<td>' +
+                            '<input type="checkbox" name="featured" id="featured" data-case="featured"  data-id="'+ value.id +'" onchange="editItemDetail(this)" ' + featured + ' > Yes' +
                             '</td>' +
                             '<td>' +
                             '<button class="btn btn-danger" onclick="deleteItemDetail(this)" data-id="'+ value.id +'" style="cursor:pointer">Delete</button>' +
@@ -821,44 +829,6 @@ function makeDate (e)
     return date;
 }
 
-function clearCart ()
-{
-    $.ajax({
-        url: '/clear_cart',
-        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
-        type: 'POST',
-        success: function (response) {
-            toggleSuccess (response.msg);
-            alert('Cart Cleared');
-            location.reload();
-        },
-        error: function(data) {
-            toggleError(data.responseJSON.errors);
-            console.log(data.responseJSON.errors_debug);
-        }
-    });
-}
-
-function removeItem(e)
-{
-    var id = $(e).data('id');
-
-    $.ajax({
-        url: '/remove_item',
-        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
-        type: 'POST',
-        data: { id:id },
-        success: function (response) {
-            toggleSuccess(response.msg);
-            alert('Item Removed');
-            location.reload();
-        },
-        error: function(data) {
-            toggleError(data.responseJSON.errors);
-            console.log(data.responseJSON.errors_debug);
-        }
-    });
-}
 
 function verifyPayment(e)
 {
@@ -922,48 +892,15 @@ function viewPaymentProofAdmin(e)
     });
 }
 
-function loadCart()
+function openAdditionals (e)
 {
-    var cart = $('.cart-item-container');
-    var bag = $('#bag-items');
-    var total = $('#total-price');
+    var id = $(e).data('link');
+    var img = id.split('/');
 
-    cart.empty();
+    $('#modal').modal('toggle');
+    $('.modal-title').html('View Additionals');
+    $('.modal-body').empty();
+    $('#ajax-loading').hide();
+    $('.modal-body').html('<a href="http://localhost:8000/storage/support_ticket/' + img[2] + '/' + img[3] + '"><img src="/storage/support_ticket/' + img[2] + '/' + img[3] + '" width="300px"></a>');
 
-    $.ajax({
-        url: '/cart/contents_ajax/',
-        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
-        type: 'POST',
-        success: function (data) {
-
-            console.log(data);
-
-            if(data.cart == "")
-            {
-                cart.append = "<div class='cart-empty'>" +
-                                "<h4>Cart Is Empty</h4>" +
-                              "</div>";
-            }else
-            {
-                $.each(data.cart, function(key, value)
-                {
-                    var html = '<div class="cart-item row align-items-center">' +
-                                    '<div class="item-image col-lg-3" style= "background-image:url(' + value.image + ')" >' +
-                                    '</div>' +
-                                    '<div class="item-description col-6">' +
-                                        '<h4>' + value.name + '</h4>' +
-                                        '<h5>Rp.' + value.price + '.00</h5>' +
-                                        '<span>' + value.quantity + ' pc(s)</span>' +
-                                    '</div>' +
-                                    '<div class="item-edit col-3">' +
-                                        '<a href="#" onclick="removeItem(this)" data-id="' + value.id + '">Remove</a>' +
-                                    '</div>' +
-                                '</div>' +
-
-                                '<hr>';
-                    cart.append(html);
-                });
-            }
-        }
-    });
 }

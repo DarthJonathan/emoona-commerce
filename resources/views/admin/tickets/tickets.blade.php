@@ -139,13 +139,13 @@
                                         '<div class="card-header">' +
                                             makeDate(value.created_at) +
                                         '</div>' +
-                                        '<div class="card-body float-right">' +
-                                            value.text +
+                                        '<div class="card-body">' +
+                                            '<p class="float-left">' + value.text + '</p>' +
+                                            '<button data-link="' + value.additionals + '" class="btn btn-primary float-right" onclick="openAdditionals(this)">Open Additionals</button>' +
                                         '</div>'+
                                     '</div>';
 
                         ticketDetail.append(html);
-
                     });
                 }
             });

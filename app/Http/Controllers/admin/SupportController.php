@@ -51,7 +51,7 @@ class SupportController extends Controller
                 {
                     $additional = $img->store($path);
 
-                    $ticket_detail-$additional = $additional;
+                    $ticket_detail->additionals = $additional;
                 }
                 $ticket_detail->save();
 
@@ -111,7 +111,7 @@ class SupportController extends Controller
                 {
                     $additional = $img->store($path);
 
-                    $ticket_detail-$additional = $additional;
+                    $ticket_detail->additionals = $additional;
                 }
                 $ticket_detail->save();
 

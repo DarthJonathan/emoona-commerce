@@ -34,6 +34,7 @@ Route::get('cart','CartController@cart');
 Route::post('clear_cart','CartController@clearCart');
 Route::post('remove_item','CartController@removeItem');
 Route::post('cart/contents_ajax','CartController@getCartContent');
+Route::get('cart/contents_ajax','CartController@getCartContent');
 
 /*
  * Authentications
@@ -96,7 +97,6 @@ Route::middleware(['admin'])->group(function()
          * Webconfiguration
          */
         Route::post('/webconfig/collections_card', 'admin\WebconfigController@collectionsCard');
-        Route::get('/webconfig/collections_card', 'admin\WebconfigController@collectionsCard');
         
 
         /*

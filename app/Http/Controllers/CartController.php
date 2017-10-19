@@ -38,22 +38,25 @@ class CartController extends Controller
 
     function getCartContent ()
     {
-        if(Cart::isEmpty())
+        if(Cart::isEmpty()) {
             $content = null;
+
+            return response()->json(['error' => false, 'cart' => null], 200);
+        }
         else
         {
             $content = Cart::getContent();
             $quantity = Cart::getTotalQuantity();
             $total = Cart::getTotal();
-        }
 
-        return response()->json(
-            [
-                'error'     => false, 
-                'cart'      => $content,
-                'quantity'  => $quantity,
-                'total'     => $total
-            ], 200);
+            return response()->json(
+                [
+                    'error'     => false,
+                    'cart'      => $content,
+                    'quantity'  => $quantity,
+                    'total'     => $total
+                ], 200);
+        }
     }
 
     function clearCart ()

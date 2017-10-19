@@ -88,6 +88,7 @@
                                     <td>Image</td>
                                     <td>Stock</td>
                                     <td>Status</td>
+                                    <td>Freatured</td>
                                     <td>Action</td>
                                 </tr>
                             </thead>
