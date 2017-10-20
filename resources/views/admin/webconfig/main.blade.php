@@ -42,8 +42,13 @@
                         <div class="col-md-8">
                             <div class="card">
                                 <span class="card-header">Freatured Products</span>
-                                <div class="card-body freatured-product">
-
+                                <div class="card-body">
+                                    <div class="featured-product">
+                                        {{--Freatued--}}
+                                    </div>
+                                    <div class="input-group mt-3 col-lg-12">
+                                        <button class="btn btn-primary float-right" onclick="removeFeatured()">Remove Featured</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -53,6 +58,11 @@
         </div>
     </div>
     <script>
+        $(document).ready(function()
+        {
+            loadFeatured();
+        });
+
         function saveColletionsCard ()
         {
             var options = {
@@ -71,6 +81,13 @@
             };
 
             $("#collections_card").ajaxSubmit(options);
+        }
+
+        function checkBox(e) {
+            var id = $(e).data('id');
+            var checkBoxes = $('#featured' + id);
+
+            checkBoxes.attr("checked", !checkBoxes.attr("checked"));
         }
     </script>
 @endsection

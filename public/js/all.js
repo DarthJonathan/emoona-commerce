@@ -904,4 +904,43 @@ function openAdditionals (e)
     $('.modal-body').html('<a href="http://localhost:8000/storage/support_ticket/' + img[2] + '/' + img[3] + '"><img src="/storage/support_ticket/' + img[2] + '/' + img[3] + '" width="300px"></a>');
 
 }
+
+function loadFeatured ()
+{
+    var featured = $('.featured-product');
+    featured.empty();
+
+    $.ajax({
+        url: '/admin/webconfig/get_featured/',
+        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+        type: 'POST',
+        success: function (data) {
+
+            $.each(data.featured, function(key, value){
+
+                var images = data.images[key][0];
+                images = images.split('/')[2] + '/' + images.split('/')[3];
+
+                var html = '<div class="single-featured col-md-4">' +
+                    '<img src="/storage/item_detail/' + images + '" data-id="' + value.id + '" onclick="checkBox(this)">' +
+                    '<input type="checkbox" name="featured#'+ value.id +'" id="featured'+ value.id +'" class="featured-items">' +
+                    '</div>';
+
+                featured.append(html);
+            });
+
+        },
+        error: function(response) {
+            console.log(response);
+            toggleError(response.responseJSON.errors);
+        }
+    });
+}
+
+function removeFeatured()
+{
+    var items = $('.featured-items');
+
+    console.log(items);
+}
 //# sourceMappingURL=all.js.map

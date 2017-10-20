@@ -1,4 +1,3 @@
-
 @extends('layouts.app')
 
 @section('bgpicture')
@@ -9,6 +8,8 @@
 	<div class="home-image bghom4"></div>
 </div>
 @endsection
+
+@section('title', 'Home')
 
 @section('content')
 <div class="content-wrapper">

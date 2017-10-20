@@ -344,6 +344,14 @@ body {
   max-height: 60vh;
 }
 
+.single-featured {
+  text-align: center;
+}
+
+.single-featured img {
+  max-width: 100%;
+}
+
 /* Media */
 
 /*# sourceMappingURL=styleadmin.css.map */

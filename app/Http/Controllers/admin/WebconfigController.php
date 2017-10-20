@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\ItemDetail;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Webconfig;
+use Storage;
 
 class WebconfigController extends Controller
 {
@@ -29,6 +31,30 @@ class WebconfigController extends Controller
         }catch(\Exception $e)
         {
             return response()->json(['error' => true, 'errors' => 'Error Updating Collections Texts', 'errors_debug' => $e->getMessage(),400]);
+        }
+    }
+
+    function getFeatured ()
+    {
+        try {
+            $featured = ItemDetail::where('featured', '=', 1)->get();
+            $images   = array();
+
+            foreach($featured as $single)
+            {
+                $files = Storage::files('public/item_detail/' . $single->images);
+                array_push($images, $files);
+            }
+
+            return response()->json([
+                    'error'     => false,
+                    'featured'  => $featured,
+                    'images'    => $images
+                ], 200);
+
+        }catch(\Exception $e)
+        {
+            return response()->json(['error' => true, 'errors' => $e->getMessage()], 400);
         }
     }
 }

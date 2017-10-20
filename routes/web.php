@@ -97,7 +97,7 @@ Route::middleware(['admin'])->group(function()
          * Webconfiguration
          */
         Route::post('/webconfig/collections_card', 'admin\WebconfigController@collectionsCard');
-        
+        Route::post('/webconfig/get_featured', 'admin\WebconfigController@getFeatured');
 
         /*
          * Item Management
