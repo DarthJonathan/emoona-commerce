@@ -18,7 +18,7 @@
     <script src="{{ asset('js/popper-utils.js') }}"></script>
     <script src="{{ asset('js/bootstrap.js') }}"></script>
     <script src="{{ asset('js/instafeed.min.js') }}"></script>
-    <script src="{{ asset('js/instacustoms.js') }}"></script>
+    <script src="{{ asset('js/script.js') }}"></script>
     <script src="{{ asset('js/slick.min.js') }}"></script>
     <script src="{{ asset('js/front.js') }}"></script>
     <script src="{{ asset('js/jquery.form.min.js') }}"></script>
@@ -146,9 +146,7 @@
 
 </div><!--navbar-->
 
-<div class="background">
-    @yield('bgpicture')
-</div><!--background-->
+
 
 {{--Modal--}}
 <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
@@ -193,10 +191,13 @@
     </div>
 </div>
 
-<div class="content pb-4">
+<div class="background">
+    @yield('bgpicture')
+</div><!--background-->
+
+<div class="content">
     @yield('content')
 </div>
-
 
 <div class="footer">
 

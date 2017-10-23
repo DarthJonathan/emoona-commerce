@@ -18,7 +18,7 @@
     <script src="{{ asset('js/popper-utils.js') }}"></script>
     <script src="{{ asset('js/bootstrap.js') }}"></script>
     <script src="{{ asset('js/instafeed.min.js') }}"></script>
-    <script src="{{ asset('js/instacustoms.js') }}"></script>
+    <script src="{{ asset('js/script.js') }}"></script>
     <script src="{{ asset('js/slick.min.js') }}"></script>
     <script src="{{ asset('js/front.js') }}"></script>
     <script src="{{ asset('js/jquery.form.min.js') }}"></script>

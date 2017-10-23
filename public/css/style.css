@@ -1,3 +1,13 @@
+/* ---------- Jona's Stuff -------------- */
+.notification {
+  position: fixed;
+  z-index: 10000;
+  width: 100%;
+  top: -100px;
+  transition: all .3s ease-in-out;
+}
+
+/* ------------ David's Stuff ------------*/
 body {
   padding: 0;
   margin: 0;
@@ -26,6 +36,21 @@ hr {
   height: 3px;
 }
 
+li {
+  display: inline-block;
+  list-style: none;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+}
+
+.content {
+  position: relative;
+  margin: 100px;
+}
+
 .col-md-4 {
   padding: 0;
 }
@@ -35,7 +60,6 @@ hr {
   padding: 0;
   margin: 0;
   position: fixed;
-  top: 0;
   z-index: 10;
   width: 100%;
 }
@@ -54,8 +78,7 @@ hr {
   flex-direction: column;
   display: -webkit-box;
   display: flex;
-  -webkit-box-pack: end;
-  justify-content: flex-end;
+  justify-content: space-around;
   text-align: center;
 }
 
@@ -68,17 +91,6 @@ hr {
   padding-right: 2.8rem;
   text-align: center;
   letter-spacing: 1px;
-}
-
-.navbar1 ul {
-  padding: 0;
-  margin: 0;
-  display: -webkit-box;
-  display: flex;
-  -webkit-box-pack: end;
-  justify-content: flex-end;
-  -webkit-box-align: center;
-  align-items: center;
 }
 
 .navbar1 span {
@@ -107,8 +119,6 @@ hr {
 
 .navbar2 ul {
   font-size: 14px;
-  margin: 0;
-  padding: 0;
 }
 
 .title {
@@ -146,11 +156,10 @@ hr {
 }
 
 .bgpic {
-  background-color: blue;
   background: no-repeat;
   background-size: cover;
-  background-origin: center;
-  height: 22vh;
+  background-position: center;
+  height: 23vh;
   width: 100%;
 }
 
@@ -160,7 +169,7 @@ hr {
   font-size: 32px;
   letter-spacing: 5px;
   position: relative;
-  top: 13vh;
+  top: 14vh;
   text-align: center;
   display: -webkit-box;
   display: flex;
@@ -169,15 +178,14 @@ hr {
 
 #home-pic-con .home-image {
   width: 100%;
-  height: 100vh;
+  height: 96vh;
   background: no-repeat;
   background-size: cover;
-  background-origin: center;
+  background-position: center;
 }
 
 #home-pic-con .bghom1 {
-  width: 100%;
-  background-image: url("../img/02home.jpg");
+  background-image: url("../img/02homea.jpg");
 }
 
 #home-pic-con .bghom2 {
@@ -192,7 +200,7 @@ hr {
 
 #home-pic-con .bghom4 {
   width: 100%;
-  background-image: url("../img/08home.jpg");
+  background-image: url("../img/05home.jpg");
 }
 
 /*----------------------FOOTER--------------------------*/
@@ -218,43 +226,28 @@ hr {
   font-family: EmoonaM;
 }
 
-.footer ul {
-  margin: 0;
-  padding: 0;
-}
-
 /*--------------------HOME.CONTENT1--------------------*/
 .home-content-1 {
   background-color: #eeeff0;
 }
 
 .wrapper-home-content-1 {
-  padding: 5% 8% 5% 8%;
-}
-
-.content {
-  margin-top: 5vh;
-  min-height: 60vh;
+  padding: 3% 8% 3% 8%;
 }
 
 .content-box {
-  width: 70%;
+  width: 100%;
+  padding-bottom: 25%;
   background-color: white;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
 }
 
-.content-box:after {
-  content: "";
-  display: block;
-  padding-bottom: 25%;
-}
-
 .cb1 {
   height: 100%;
   width: 100%;
-  background-image: url("../img/Woman Collections.jpg");
+  background-image: url("../img/Wcoll.jpg");
 }
 
 .cb2 {
@@ -321,7 +314,7 @@ hr {
 .content-banner {
   width: 100%;
   height: 25vh;
-  background-image: url("../img/conbanner.jpg");
+  background-image: url("../img/bannerFeatured.jpg");
   background-position: center;
   background-size: cover;
 }
@@ -354,19 +347,13 @@ hr {
 
 .wrapper-home-content-2 {
   padding: 4% 7% 4% 7%;
-  width: 100%;
   height: auto;
-  text-align: center;
-  display: -webkit-box;
-  display: flex;
-  justify-content: space-around;
-  font-size: 14px;
+  font-size: 15px;
 }
 
 .box-featured {
-  width: 230px;
-  height: 345px;
-  background-color: white;
+  width: 100%;
+  padding-bottom: 150%;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -374,7 +361,6 @@ hr {
 
 .box-featured-desc {
   padding-top: 10px;
-  text-align: left;
 }
 
 .box-featured-money {
@@ -414,7 +400,7 @@ hr {
 }
 
 .subsc-content-wrapper {
-  padding: 3% 27% 3% 27%;
+  padding: 3% 27% 5% 27%;
   text-align: center;
   display: -webkit-box;
   display: flex;
@@ -450,10 +436,20 @@ hr {
   outline: none;
 }
 
+#subsc-btn {
+  float: right;
+}
+
+#subsc-btn button {
+  background-color: black;
+  color: white;
+  font-size: 14px;
+  letter-spacing: 1px;
+}
+
 /*--------------------PRODUCTS-----------------------*/
 .product-page-wrapper {
-  padding: 9%;
-  padding-top: 0;
+  padding: 3% 9% 9% 9%;
 }
 
 .product-page-wrapper a {
@@ -648,14 +644,329 @@ hr {
   letter-spacing: 1px;
 }
 
-/*---------------------------------------------------*/
+/*----------------------pSHOP-------------------------*/
+.shop-page-wrapper {
+  padding: 3% 8% 2% 8%;
+}
+
+.shop-page-nav-wrapper {
+  text-align: center;
+  font-size: 15px;
+}
+
+.shop-page-nav-wrapper li {
+  padding: 0% 2% 0% 2%;
+}
+
+.shop-page-nav-wrapper a {
+  color: black;
+}
+
+.shop-page-nav-wrapper a:focus {
+  text-decoration: underline;
+}
+
+.wdropdown {
+  position: relative;
+  top: 2vh;
+  font-size: 14px;
+  display: none;
+  opacity: 0.3;
+}
+
+.mdropdown {
+  position: relative;
+  top: 2vh;
+  font-size: 14px;
+  display: none;
+  opacity: 0.3;
+}
+
+.odropdown {
+  position: relative;
+  top: 2vh;
+  font-size: 14px;
+  display: none;
+  opacity: 0.3;
+}
+
+.shop-page-shop {
+  padding: 4% 0% 4% 0%;
+  font-size: 15px;
+}
+
+.shop-picture-wrapper {
+  padding-bottom: 3%;
+}
+
+.shop-picture {
+  width: 100%;
+  padding-bottom: 145%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.ps1 {
+  background-image: url("../img/sp1.jpg");
+}
+
+.ps2 {
+  background-image: url("../img/sp2.jpg");
+}
+
+.ps3 {
+  background-image: url("../img/sp3.jpg");
+}
+
+.ps4 {
+  background-image: url("../img/sp4.jpg");
+}
+
+.ps5 {
+  background-image: url("../img/sp4.jpg");
+}
+
+.ps6 {
+  background-image: url("../img/sp1.jpg");
+}
+
+.ps7 {
+  background-image: url("../img/sp2.jpg");
+}
+
+.ps8 {
+  background-image: url("../img/sp3.jpg");
+}
+
+.shop-picture-desc {
+  padding-top: 4%;
+}
+
+/*----------------------pACCOUNT------------------------*/
+.account-page-wrapper {
+  padding: 2% 8% 4% 8%;
+}
+
+.account-page-wrapper hr {
+  height: 2px;
+  background-color: #70747a;
+}
+
+#acc-hr-top {
+  width: 45%;
+  text-align: center;
+}
+
+.acc-page-name {
+  text-align: center;
+  font-size: 18px;
+}
+
+.acc-page-information {
+  padding-right: 54%;
+}
+
+.acc-header {
+  font-family: emoonaM;
+  font-size: 20px;
+  padding-bottom: 2%;
+  letter-spacing: 2px;
+}
+
+.acc-info {
+  padding-bottom: 2%;
+}
+
+.acc-edit-info a {
+  color: grey;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.acc-edit-pass a {
+  color: grey;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.acc-edit-info {
+  padding-bottom: 5%;
+}
+
+.acc-icon-wrapper {
+  text-align: center;
+}
+
+.acc-icon-wrapper li {
+  padding: 0% 3% 0% 3%;
+}
+
+.acc-decor-down {
+  text-align: center;
+}
+
+.acc-decor-down h5 {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  font-size: 40px;
+}
+
+.acc-decor-down h5:before, h5:after {
+  position: absolute;
+  top: 75%;
+  overflow: hidden;
+  width: 20%;
+  height: 2px;
+  content: '\a0';
+  background-color: #70747a;
+}
+
+.acc-decor-down h5:before {
+  margin-left: -20%;
+  text-align: right;
+}
+
+/*----------------------pCHECKOUT---------------------*/
+.checkout-page-wrapper {
+  padding: 2% 8% 3% 8%;
+}
+
+.cout-page-header {
+  font-family: EmoonaM;
+  font-size: 20px;
+  padding-bottom: 3%;
+}
+
+.cout-page-total {
+  padding-top: 5%;
+}
+
+.cout-table {
+  width: 60%;
+}
+
+#cout-total-p {
+  background-color: lightgrey;
+}
+
+.cout-c-paymethod {
+  font-family: emoonaM;
+}
+
+.cout-payment {
+  padding-top: 2%;
+}
+
+#cout-paymethod {
+  width: 20%;
+}
+
+.cout-btn {
+  padding: 0% 0% 0% 2.2%;
+}
+
+.btn-confirm button {
+  color: white;
+  background-color: black;
+}
+
+/*--------------------pTermsCon-----------------------*/
+.tc-page-wrapper {
+  padding: 5% 20% 8% 20%;
+}
+
+.tc-page-content {
+  text-align: justify;
+}
+
+/*----------------------pAbout------------------------*/
+.about-page-wrapper {
+  padding: 2% 8% 5% 8%;
+}
+
+.about-page-header {
+  text-align: center;
+}
+
+.about-page-h-logo img {
+  width: 12%;
+}
+
+.about-page-h-desc {
+  padding: 0% 18% 0% 18%;
+}
+
+.about-page-owner {
+  padding-top: 2%;
+}
+
+.about-page-pic {
+  width: 100%;
+  padding-bottom: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.abp1 {
+  background-image: url("../img/abp1.jpg");
+}
+
+/*-----------------------pSocial-----------------------*/
+.social-page-wrapper {
+  padding: 3% 8% 2% 8%;
+}
+
+.social-page-header {
+  text-align: center;
+}
+
+.social-page-header-d {
+  font-size: 15px;
+  padding: 2% 10% 3% 10%;
+}
+
+.socialimg img {
+  margin-bottom: 10%;
+  width: 100%;
+}
+
+/*-----------------------pStudio----------------------*/
+.studio-page-wrapper {
+  padding: 2% 8% 3% 8%;
+}
+
+.studio-page-nav {
+  text-align: center;
+  font-size: 15px;
+}
+
+.studio-page-nav li {
+  padding: 1% 2% 2% 2%;
+}
+
+.studio-page-nav a {
+  text-decoration: none;
+  color: black;
+}
+
+.studio-link {
+  width: 100%;
+  padding-bottom: 13%;
+  margin-bottom: 3%;
+  background-image: url("../img/studiotest.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/*----------------------------------------------------*/
 @media screen and (max-width: 900px) {
   .footer li {
     font-size: 14px;
     padding: 0 1.5rem 0 1.5rem;
-  }
-  .content-box:after {
-    padding-bottom: 20%;
   }
   .text-content-box {
     padding-top: 5vh;
@@ -669,65 +980,22 @@ hr {
   .line-content-box-3 {
     font-size: 14px;
   }
-  .box-featured {
-    width: 150px;
-    height: 225px;
-  }
   .wrapper-home-content-2 {
     font-size: 12px;
   }
   .subsc-content-wrapper {
     padding: 4% 15% 4% 15%;
   }
-  .cart-container {
-    height: 100vh;
-    width: 100vw;
-    overflow: hidden;
-  }
-  .navbar-dropdown-account .form-group input {
-    width: 55vw;
-  }
-}
-
-.center-box {
-  width: 100%;
-  height: 100%;
-  display: -webkit-box;
-  display: flex;
-  -webkit-box-pack: center;
-  justify-content: center;
-  -webkit-box-align: center;
-  align-items: center;
-}
-
-.center-box .modal-dialog {
-  min-width: 45%;
-}
-
-.hidden {
-  -webkit-transform: translateY(-100px);
-  transform: translateY(-100px);
-  opacity: 0;
-  z-index: -100;
-  margin-bottom: -50px;
-}
-
-.notification {
-  transition: all .3s ease-in-out;
 }
 
 @media screen and (min-width: 901px) and (max-width: 1024px) {
-  .box-featured {
-    width: 200px;
-    height: 300px;
-  }
   .subsc-content-wrapper {
     padding: 5% 20% 5% 20%;
   }
 }
 
 /*-------------------------------------------------------*/
-/* Jeffry's Stuff */
+/* -------------- Jeffrys Stuff -------------------------*/
 .dropdown-align-right {
   right: 0;
   left: auto;
@@ -816,12 +1084,6 @@ hr {
   overflow: hidden;
 }
 
-.cart-item-container {
-  width: 100%;
-  height: 80%;
-  overflow-y: auto;
-}
-
 .cart-item-container .cart-empty {
   width: 100%;
   height: 100%;
@@ -835,6 +1097,12 @@ hr {
 
 .cart-item-container .cart-empty h4 {
   color: white;
+}
+
+.cart-item-container {
+  width: 100%;
+  height: 80%;
+  overflow-y: auto;
 }
 
 .cart-item-container hr {
@@ -859,9 +1127,9 @@ hr {
 
 .btn-checkout {
   background-color: #5c5c5c;
-  font-family: inherit;
   border: none;
   color: white;
+  font-family: inherit;
   padding: 10px 15px 10px 15px;
   text-align: center;
   display: inline-block;
@@ -897,6 +1165,140 @@ hr {
 
 .cart-total {
   color: white;
+}
+
+/*-------dedicated login & register------*/
+.link-forgot-dedicated {
+  color: black;
+}
+
+.link-forgot-dedicated:hover {
+  color: #5c5c5c;
+  text-decoration: none;
+}
+
+.link-forgot-dedicated:focus {
+  color: #5c5c5c;
+  text-decoration: none;
+}
+
+.container-field {
+  padding-left: 0;
+}
+
+.input-field {
+  border: none;
+  border-radius: 0;
+  border-bottom: solid 2px black;
+}
+
+.input-field:focus {
+  border-bottom: solid 2px #8a8a8a;
+}
+
+.btn-emoona-design {
+  border-radius: 0;
+  background-color: black;
+  border: 0;
+}
+
+.btn-emoona-design:hover {
+  background-color: #8a8a8a;
+}
+
+.btn-emoona-design:focus {
+  outline: none;
+  border: none;
+}
+
+/*----------------Suspended---------------------*/
+.page-suspended {
+  width: 100%;
+  height: 100%;
+  background-image: url("../img/background.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.container-suspended {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.container-suspended a {
+  color: black;
+  text-decoration: none;
+}
+
+.container-suspended a:hover {
+  color: #5c5c5c;
+}
+
+.container-suspended a:focus {
+  color: #5c5c5c;
+}
+
+/*----------------support ticket---------------------*/
+.combobox-category {
+  border: none;
+  border-bottom: solid 2px black;
+}
+
+.combobox-category:focus {
+  outline: none;
+  border-bottom: solid 2px #5c5c5c;
+}
+
+.input-textarea {
+  border-radius: 0;
+  border: solid 2px black;
+  resize: none;
+}
+
+.input-textarea:focus {
+  border: solid 2px #5c5c5c;
+}
+
+.section-all-tickets {
+  margin-top: 30px;
+}
+
+.section-title {
+  font-weight: bolder;
+  margin: 10px;
+}
+
+.collapse-ticket-header {
+  border-radius: 0;
+  border-color: white;
+  background-color: black;
+}
+
+.collapse-ticket-header a, a:hover, a:focus {
+  text-decoration: none;
+  color: white;
+}
+
+.collapse-ticket-content {
+  border-radius: 0;
+  background-color: white;
+  padding: 45px;
+}
+
+.box-username {
+  background-color: black;
+  padding: 2px;
+  color: white;
+}
+
+.box-message {
+  background-color: white;
+  border: solid 2px black;
+  margin-bottom: 30px;
 }
 
 .dropdown-menu {

@@ -12,8 +12,8 @@
 @section('title', 'Home')
 
 @section('content')
-<div class="content-wrapper">
-
+	<script src="{{ asset('js/instaHome.js') }}"></script>
+	<div class="content-wrapper">
 	<div class="home-content-1">
 		<div class="wrapper-home-content-1">
 		<div class="container">
@@ -218,7 +218,12 @@
 
 			<table class="subsc-tab-form stb2">
 				<tr>
-					<td colspan="2"><input type="text" placeholder="Email"></td>
+					<td colspan="2"><input type="text" placeholder="Email">
+
+					</td>
+					<td id="subsc-btn">
+						<button class="btn">SUBSCRIBE</button>
+					</td>
 				</tr>
 			</table>
 			</form>
