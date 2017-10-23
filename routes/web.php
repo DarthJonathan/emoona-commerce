@@ -15,16 +15,14 @@
  * Front Pages
  */
 Route::get('/', 'StoreController@home')->name('index');
+Route::get('/store', 'StoreController@store')->name('store');
+Route::get('/studio', 'StoreController@studio')->name('studio');
+Route::get('/social', 'StoreController@social')->name('social');
+Route::get('/about', 'StoreController@about')->name('about');
 Route::get('product/{gender}/', 'ProductController@viewCategoryGender');
 Route::get('product/{gender}/{category_id}', 'ProductController@viewCategory');
 Route::get('product/{gender}/{category_id}/{product_id}', 'ProductController@viewProduct');
 
-
-Route::get('/email_test', function()
-{
-    $data = ['transaction_code' => 1, 'cart' => Cart::getContent()];
-    return view('emails.transaction', $data);
-});
 
 /*
  * Cart Routes

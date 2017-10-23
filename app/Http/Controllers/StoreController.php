@@ -10,4 +10,24 @@ class StoreController extends Controller
     {
         return view('phome');
     }
+
+    function store ()
+    {
+        return view('pShop');
+    }
+
+    function studio ()
+    {
+        return view('pStudio');
+    }
+
+    function social ()
+    {
+        return view('pSocial');
+    }
+
+    function about ()
+    {
+        return view('pAbout');
+    }
 }

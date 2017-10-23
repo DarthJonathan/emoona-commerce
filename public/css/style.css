@@ -49,6 +49,8 @@ ul {
 .content {
   position: relative;
   margin: 100px;
+  top: 5vh;
+  min-height: 40vh;
 }
 
 .col-md-4 {
@@ -209,6 +211,7 @@ ul {
   width: 100%;
   background-color: black;
   color: white;
+  position: relative;
   display: -webkit-box;
   display: flex;
   -webkit-box-orient: vertical;
