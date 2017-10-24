@@ -19,10 +19,18 @@ Route::get('/store', 'StoreController@store')->name('store');
 Route::get('/studio', 'StoreController@studio')->name('studio');
 Route::get('/social', 'StoreController@social')->name('social');
 Route::get('/about', 'StoreController@about')->name('about');
+
+/*
+ * Products
+ */
 Route::get('product/{gender}/', 'ProductController@viewCategoryGender');
 Route::get('product/{gender}/{category_id}', 'ProductController@viewCategory');
 Route::get('product/{gender}/{category_id}/{product_id}', 'ProductController@viewProduct');
-
+    /*
+     * Ajax APIs
+     */
+    Route::post('products/front.page', 'ProductController@frontPage');
+    Route::post('products/category.products', 'ProductController@categoryProducts');
 
 /*
  * Cart Routes

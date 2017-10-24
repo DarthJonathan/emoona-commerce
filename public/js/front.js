@@ -76,7 +76,7 @@ function loadCart()
         type: 'POST',
         success: function (data) {
 
-            console.log(data);
+            // console.log(data);
 
             if(data.cart == null)
             {
@@ -113,13 +113,142 @@ function loadCart()
     });
 }
 
-function toggleSuccess (msg)
+function loadStore()
 {
-    alert(msg);
+    var store = $('.shop-page-shop');
+
+    store.empty();
+
+    $.ajax({
+        url: '/products/front.page',
+        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+        type: 'POST',
+        success: function (res) {
+
+            // console.log(res);
+
+            //Load Default Products, limited 30 products
+            $.each(res.products, function(key, value){
+
+                //Check if item detail is not available
+                if(value.item_detail == "")
+                    return true;
+
+                var image = res.images[key][0].split('/');
+                image = '/storage/item_detail/' + image[2] + '/' + image[3];
+
+                var html = '<div class="col-md-3 float-left mb-5" style="cursor: pointer" onclick="openProduct(this)" data-id="' + value.id + '" data-category="' + value.item_category.name + '" data-gender="'+ value.item_category.gender +'">' +
+                                    '<div class="shop-picture ps1"' +
+                                        'style="background-image: url(' + image + ')"' +
+                                    '>' +
+                                    '</div>' +
+                                '<div class="shop-picture-desc">' +
+                                    '<div class="shop-picture-name">' +
+                                        value.name +
+                                    '</div>' +
+                                    '<div class="shop-picture-price">' +
+                                        'IDR ' + value.price +
+                                    '</div>'+
+                                '</div>' +
+                            '</div>';
+
+                store.append(html);
+            });
+
+            var mcat = $('#mdropdowns');
+            var wcat = $('#wdropdowns');
+            var ocat = $('#odropdowns');
+
+            mcat.empty();
+            wcat.empty();
+            ocat.empty();
+
+            //Load Categories
+            $.each(res.categories, function(key, value){
+
+
+                switch(value.gender)
+                {
+                    case 'male' :
+                    {
+                        mcat.append('<li class="category-links" data-id="' + value.id + '" onclick="loadFromCategory(this)">' + value.name.toUpperCase() + '</li>');
+                    }break;
+
+                    case 'female' :
+                    {
+
+                    }break;
+
+                    case 'others' :
+                    {
+
+                    }break;
+                }
+            });
+        },
+        error: function (res) {
+            toggleError(res.errors);
+            console.log(res);
+        }
+    });
 }
 
-function toggleError (msg)
+function openProduct (e)
 {
-    alert(msg);
+    var link = '/product/' + $(e).data('gender') + '/' + $(e).data('category') + '/' + $(e).data('id');
+    window.location.href = link;
+}
+
+function loadFromCategory (e)
+{
+    var category_id = $(e).data('id');
+
+    var store = $('.shop-page-shop');
+
+    store.empty();
+
+    $.ajax({
+        url: '/products/category.products',
+        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+        type: 'POST',
+        data: {category_id: category_id},
+        success: function (res) {
+
+            console.log(res);
+
+            //Load Default Products, limited 30 products
+            $.each(res.products, function(key, value){
+
+                //Check if item detail is not available
+                if(value.item_detail == "")
+                    return true;
+
+                var image = res.images[key][0].split('/');
+                image = '/storage/item_detail/' + image[2] + '/' + image[3];
+
+                var html = '<div class="col-md-3 float-left mb-5" style="cursor: pointer" onclick="openProduct(this)" data-id="' + value.id + '" data-category="' + value.item_category.name + '" data-gender="'+ value.item_category.gender +'">' +
+                    '<div class="shop-picture ps1"' +
+                    'style="background-image: url(' + image + ')"' +
+                    '>' +
+                    '</div>' +
+                    '<div class="shop-picture-desc">' +
+                    '<div class="shop-picture-name">' +
+                    value.name +
+                    '</div>' +
+                    '<div class="shop-picture-price">' +
+                    'IDR ' + value.price +
+                    '</div>'+
+                    '</div>' +
+                    '</div>';
+
+                store.append(html);
+            });
+
+        },
+        error: function (res) {
+            toggleError(res.errors);
+            console.log(res);
+        }
+    });
 }
 //# sourceMappingURL=front.js.map

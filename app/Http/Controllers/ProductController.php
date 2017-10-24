@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\ItemCategory;
 use Illuminate\Http\Request;
 use App\Item;
 use Cart;
+use Storage;
 
 class ProductController extends Controller
 {
@@ -20,4 +22,68 @@ class ProductController extends Controller
         return view('pproduct', $data);
     }
 
+    function frontPage ()
+    {
+        try
+        {
+            $products           = Item::with('item_category', 'item_detail')->limit(30)->get();
+            $categories         = ItemCategory::all();
+            $product_images     = array();
+
+            foreach($products as $product)
+            {
+                foreach($product->item_detail as $detail)
+                {
+                    $path = $detail->images;
+
+                    $files = Storage::files('public/item_detail/' . $path);
+
+                    array_push($product_images, $files);
+                }
+            }
+
+            return response()->json([
+                'error'         => false,
+                'products'      => $products,
+                'images'        => $product_images,
+                'categories'    => $categories
+            ], 200);
+
+        }catch(\Exception $e)
+        {
+            return response()->json(['error' => true, 'errors' => 'Error getting products from database! (Err: 224)', 'errors_debug' => $e->getMessage()], 400);
+        }
+    }
+
+    function categoryProducts(Request $req)
+    {
+        $category_id = $req->category_id;
+
+        try {
+            $products = Item::with('item_category', 'item_detail')->where('category_id', '=', $category_id)->get();
+            $product_images = array();
+
+            foreach ($products as $product)
+            {
+                foreach ($product->item_detail as $detail)
+                {
+                    $path = $detail->images;
+
+                    $files = Storage::files('public/item_detail/' . $path);
+
+                    array_push($product_images, $files);
+                }
+            }
+
+            return response()->json([
+                'error'         => false,
+                'products'      => $products,
+                'images'        => $product_images
+            ], 200);
+
+        }catch(\Exception $e)
+        {
+            return response()->json(['error' => true, 'errors' => 'Error getting products from database! (Err: 225)', 'errors_debug' => $e->getMessage()], 400);
+        }
+    }
 }

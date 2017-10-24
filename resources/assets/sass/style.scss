@@ -4,11 +4,20 @@
   position: fixed;
   z-index: 10000;
   width:100%;
-  top:-100px;
+  top:70px;
   transition: all .3s ease-in-out;
 }
 
+.hidden {
+  transform: translateY(-100px);
+  opacity: 0;
+  z-index: -100;
+  margin-bottom: -50px;
+}
 
+.category-links {
+  cursor: pointer;
+}
 
 /* ------------ David's Stuff ------------*/
 body{
@@ -50,16 +59,13 @@ ul{
 
 .content {
   position: relative;
-  margin:100px;
   top:5vh;
-  min-height: 40vh;
+  height: auto;
 }
 
 .col-md-4{
   padding: 0;
 }
-
-
 
 
 /*--------------------NAVBAR--------------------------*/
@@ -222,6 +228,8 @@ ul{
   flex-direction: column;
   justify-content: space-around;
   text-align: center;
+  margin-top: 25px;
+  position: relative;
 }
 
 .footer li{
@@ -642,6 +650,7 @@ ul{
 /*----------------------pSHOP-------------------------*/
 .shop-page-wrapper{
   padding: 3% 8% 2% 8%;
+  height:auto;
 }
 
 .shop-page-nav-wrapper{
@@ -693,6 +702,8 @@ ul{
 .shop-page-shop{
   padding: 4% 0% 4% 0%;
   font-size: 15px;
+  height: auto;
+  overflow: auto;
 }
 
 .shop-picture-wrapper{
