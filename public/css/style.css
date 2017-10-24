@@ -838,7 +838,6 @@ ul {
   overflow: hidden;
   width: 20%;
   height: 2px;
-  content: '\a0';
   background-color: #70747a;
 }
 

@@ -1,4 +1,4 @@
-@extends('layouts.pagelayout')
+@extends('layouts.app')
 @section('bgpicture')
 <div class="bgpic" style="background-image: url('../img/bannerStudio.jpg');">
 	

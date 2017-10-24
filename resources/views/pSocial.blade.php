@@ -1,5 +1,5 @@
  <script src="{{ asset('js/instaSocial.js') }}"></script>
-@extends('layouts.pagelayout')
+@extends('layouts.app')
 
 @section('bgpicture')
 <div class="bgpic" style="background-image: url('../img/bannerSocial.jpg');">
