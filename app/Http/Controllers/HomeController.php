@@ -25,4 +25,28 @@ class HomeController extends Controller
     {
         return view('home');
     }
+
+    function termsAndCons ()
+    {
+
+        return view('pTermsCon');
+    }
+
+    function returnPolicy ()
+    {
+
+        return view('pTermsCon');
+    }
+
+    function shippingPolicy ()
+    {
+
+        return view('pTermsCon');
+    }
+
+    function contactUs ()
+    {
+
+        return view('pTermsCon');
+    }
 }

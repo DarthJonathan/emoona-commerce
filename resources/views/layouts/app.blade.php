@@ -48,9 +48,9 @@
                 </div><!--navbar-search-->
             </li>
             <li class="dropdown">
-                <a href="#" class="btn-cart" id="bag-items">
+                <p class="btn-cart" id="bag-items">
                     <span>BAG</span> ({{ Cart::getTotalQuantity() }})
-                </a>
+                </p>
             </li>
             @if(!Auth::guest())
                 <li>
@@ -199,10 +199,10 @@
 <div class="footer">
 
     <ul>
-        <li>TERMS & CONDITIONS</li>
-        <li>RETURN & EXCHANGES</li>
-        <li>SHIPPING</li>
-        <li>CONTACT</li>
+        <li onclick="openTnc()">TERMS & CONDITIONS</li>
+        <li onclick="openReturn()">RETURN & EXCHANGES</li>
+        <li onclick="openShipping()">SHIPPING</li>
+        <li onclick="openContact()">CONTACT</li>
     </ul>
 
 </div><!--footer-->
@@ -214,8 +214,8 @@
         $('.btn-cart, .cart-overlay').on('click', function () {
             $('.cart-container').toggleClass('cart-active');
 //            Experimental
-            //$('.cart-overlay').toggleClass('overlay-active'); //test
-            //$("body").toggleClass('body-disabled'); //test
+            $('.cart-overlay').toggleClass('overlay-active'); //test
+            $("body").toggleClass('body-disabled'); //test
         });
     });
 </script>

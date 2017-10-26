@@ -38,7 +38,7 @@
 							</div><!--line-content-box-1-->
 							<hr>
 							<div class="line-content-box-3">
-								Lorem ipsum dolor sit amet, consectetur adipisicing elit. 
+								{{ $datas['0']->value_1 }}
 							</div><!--line-content-box-1-->
 							</div><!--wrapper-center-->
 						</div><!--text-content-box-1-->
@@ -65,7 +65,7 @@
 							</div><!--line-content-box-1-->
 							<hr>
 							<div class="line-content-box-3">
-								Lorem ipsum dolor sit amet, consectetur adipisicing elit. 
+								{{ $datas['1']->value_1 }}
 							</div><!--line-content-box-1-->
 							</div><!--wrapper-center-->	
 						</div><!--text-content-box-4-->
@@ -92,7 +92,7 @@
 							</div><!--line-content-box-1-->
 							<hr>
 							<div class="line-content-box-3">
-								Lorem ipsum dolor sit amet, consectetur adipisicing elit. 
+								{{ $datas['2']->value_1 }}
 							</div><!--line-content-box-1-->
 							</div><!--wrapper-center-->	
 						</div><!--text-content-box-6-->

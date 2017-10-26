@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\TicketDetails;
 use App\Tickets;
+use App\user_notification;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -40,12 +41,25 @@ class SupportController extends Controller
 
                 $ticket->title      = $req->input('title');
                 $ticket->category   = $req->input('category');
+                $ticket->user_id    = $req->user_id;
 
                 $ticket->save();
 
                 $ticket_detail->ticket_id           = $ticket->id;
                 $ticket_detail->text                = $req->input('content');
                 $ticket_detail->replying_user_id    = Auth::id();
+
+                //Create new user Notification
+                $notification = new user_notification();
+
+                $notification->user_id                  = $req->user_id;
+                $notification->notification_name        = "New Support Ticket (" . $ticket->id . ")";
+                $notification->notification_url         = "/tickets";
+
+                $notification->save();
+
+                //TO:DO
+                //Mail The customer
 
                 $path = 'public/support_ticket/' . $ticket->id;
 

@@ -19,7 +19,10 @@ Route::get('/store', 'StoreController@store')->name('store');
 Route::get('/studio', 'StoreController@studio')->name('studio');
 Route::get('/social', 'StoreController@social')->name('social');
 Route::get('/about', 'StoreController@about')->name('about');
-Route::get('/terms.and.conditions', 'FrontController@termsAndCons')->name('tnc');
+Route::get('/tnc', 'HomeController@termsAndCons')->name('tnc');
+Route::get('/return', 'HomeController@returnPolicy')->name('return');
+Route::get('/shipping', 'HomeController@shippingPolicy')->name('shipping');
+Route::get('/contact', 'HomeController@contactUs')->name('contact');
 
 /*
  * Products
@@ -190,9 +193,9 @@ Route::middleware(['admin'])->group(function()
  * Image Serving Route
  */
 
-Route::get('storage/{folder}/{filename}', function ($folder, $filename)
-{
-    $path = storage_path('app/public/' . $folder . '/' . $filename);
+Route::get('storage/{path}', function($path){
+
+    $path = storage_path('app/public/' . $path);
 
     if (!File::exists($path)) {
         abort(404);
@@ -205,4 +208,5 @@ Route::get('storage/{folder}/{filename}', function ($folder, $filename)
     $response->header("Content-Type", $type);
 
     return $response;
-});
+
+})->where('path','.+');

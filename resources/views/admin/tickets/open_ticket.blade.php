@@ -4,8 +4,8 @@
 
             {{ csrf_field() }}
 
-            <input type="hidden" name="category_id" value="{{ $id }}">
-            <input type="hidden" name="" value="{{ $user_id }}">
+            <input type="hidden" name="transaction_id" value="{{ $id }}">
+            <input type="hidden" name="user_id" value="{{ $user_id }}">
 
             <div class="form-group row">
                 <label for="" class="col-sm-3 col-form-label">Title</label>
@@ -24,7 +24,7 @@
             <div class="form-group row">
                 <label for="inputPassword3" class="col-sm-3 col-form-label">Content</label>
                 <div class="col-sm-9">
-                    <textarea class="form-control" id="content" name="content" required></textarea>
+                    <textarea class="form-control" id="content" name="content" required>Transaction Number : {{ $id }}</textarea>
                 </div>
             </div>
 

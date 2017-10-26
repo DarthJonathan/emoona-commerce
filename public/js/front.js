@@ -125,7 +125,7 @@ function loadStore()
         type: 'POST',
         success: function (res) {
 
-            // console.log(res);
+            console.log(res);
 
             //Load Default Products, limited 30 products
             $.each(res.products, function(key, value){
@@ -350,5 +350,22 @@ function replyTicketUser(e)
 
     $("#replyTicketUser" + e).ajaxSubmit(options);
     return false;
+}
+
+function openTnc ()
+{
+    window.location.href = '/tnc';
+}
+function openReturn ()
+{
+    window.location.href = '/return';
+}
+function openShipping ()
+{
+    window.location.href = '/shipping';
+}
+function openContact ()
+{
+    window.location.href = '/contact';
 }
 //# sourceMappingURL=front.js.map

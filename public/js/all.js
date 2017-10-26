@@ -344,7 +344,7 @@ function seeTransactionDetail (e)
         type: 'POST',
         data: { id:id },
         success: function(data) {
-
+            $('#ajax-loading').hide();
             const transaction_details = JSON.parse(data);
 
             var html = '<h3 class="m-2 mb-4">User Information</h3>' +
@@ -846,6 +846,7 @@ function verifyPayment(e)
         success: function (data) {
             $('.modal-body').html(data);
             $('#ajax-loading').hide();
+            location.reload();
         }
     });
 }

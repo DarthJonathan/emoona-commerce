@@ -40,9 +40,9 @@ class UserManagementController extends Controller
         echo json_encode($transaction_details);
     }
 
-    public function suspend ()
+    public function suspend (Request $req)
     {
-        $id = 22;
+        $id = $req->id;
 
         $suspended = User::with('user_info')->where('id', '=', $id)->get()->toArray()[0]['user_info']['suspended'];
 

@@ -24,6 +24,10 @@
   cursor: pointer;
 }
 
+::-webkit-scrollbar {
+  display: none;
+}
+
 /* ------------ David's Stuff ------------*/
 body{
   padding: 0;
@@ -110,10 +114,12 @@ ul{
 
     li
     {
-      a
+      p
       {
         background-color: #191919;
         color:#fff;
+        margin:0;
+        cursor:pointer;
       }
     }
   }
@@ -225,7 +231,6 @@ ul{
   background:no-repeat;
   background-size:cover;
   background-position:center;
-
 }
 
 #home-pic-con .bghom1 {
@@ -256,17 +261,16 @@ ul{
   text-align: center;
   margin-top: 25px;
   clear: both;
+
+    li{
+      list-style: none;
+      display: inline-block;
+      padding:0 2rem 0 2rem;
+      font-size: 17px;
+      font-family: EmoonaM;
+      cursor: pointer;
+    }
 }
-
-.footer li{
-  list-style: none;
-  display: inline-block;
-  padding:0 2rem 0 2rem;
-  font-size: 17px;
-  font-family: EmoonaM;
-
-}
-
 
 /*--------------------HOME.CONTENT1--------------------*/
 .home-content-1{
@@ -1165,7 +1169,7 @@ ul{
   bottom: 0;
   z-index: 100000000;
   background-color: #2d2d2d;
-  transition: all 0.4s ease-in-out;
+  transition: all .4s ease-in-out;
 }
 
 .cart-active{
@@ -1177,13 +1181,15 @@ ul{
   width: 100vw;
   height: 100vh;
   position: fixed;
-  background: rgba(0, 0, 0, 0.75);
-  z-index: 7;
-  display: none;
+  opacity: 0;
+  transition: all .5s ease-in-out;
 }
 
 .overlay-active{
-  display: block;
+  opacity: 1;
+  z-index: 7;
+  background-color: rgba(0, 0, 0, 0.75);
+  transition: all .5s ease-in-out;
 }
 
 .cart-item-container .cart-empty {
@@ -1271,6 +1277,7 @@ ul{
 
 .body-disabled{
   overflow: hidden;
+  transition: all .5s ease-in-out;
 }
 
 /*-------dedicated login & register------*/

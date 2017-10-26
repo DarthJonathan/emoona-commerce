@@ -33,7 +33,7 @@
                                         @if($transaction['transfer_proof'] == null)
                                             <button class="btn btn-danger">Not Paid</button>
                                         @else
-                                            <img src="{{ $transaction['transfer_proof'] }}" alt="">
+                                            <img src="/storage/payment_verification/{{ explode('/',$transaction['transfer_proof'])[2] }}/{{ explode('/',$transaction['transfer_proof'])[3] }}" width="200px" alt="">
                                         @endif
                                     </td>
                                     <td>
@@ -47,7 +47,7 @@
                                             <button class="btn btn-primary">Finished</button>
                                         @endif
                                     </td>
-                                    <td>{{ $transaction['created'] }}</td>
+                                    <td>{{ $transaction['created_at'] }}</td>
                                     <td>
                                         <button
                                                 class="btn btn-secondary"
