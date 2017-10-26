@@ -19,6 +19,7 @@ Route::get('/store', 'StoreController@store')->name('store');
 Route::get('/studio', 'StoreController@studio')->name('studio');
 Route::get('/social', 'StoreController@social')->name('social');
 Route::get('/about', 'StoreController@about')->name('about');
+Route::get('/terms.and.conditions', 'FrontController@termsAndCons')->name('tnc');
 
 /*
  * Products
@@ -61,9 +62,11 @@ Route::middleware(['notifications', 'checkRole', 'suspended', 'auth'])->group(fu
 {
     Route::get('/account', 'HomeController@index')->name('profile');
     Route::get('/notifications', 'UserController@notifications')->name('notification');
-    Route::get('profile/edit', 'UserController@edit')->name('editprofile');
+    Route::get('profile/edit', 'UserController@edit')->name('edit.profile');
+    Route::get('/profile', 'StoreController@profile')->name('profile');
     Route::get('/resend_activation', 'UserController@resend')->name('resend');
     Route::post('/update', 'UserController@update')->name('update');
+    Route::get('/password.edit', 'UserController@editPassword')->name('edit.password');
 
     /*
      * Checkout Transaction
@@ -73,10 +76,28 @@ Route::middleware(['notifications', 'checkRole', 'suspended', 'auth'])->group(fu
         Route::post('payment', 'TransactionController@payment');
     });
 
+    Route::get('transfer.information', 'TransactionController@transferInformation');
     Route::get('transactions/{id}', 'TransactionController@transactionDetail');
     Route::post('verify_payment/{id}', 'TransactionController@verifyPayment');
     Route::post('verify_payment_submit', 'TransactionController@verifyPaymentSubmit');
     Route::post('view_payment_proof', 'TransactionController@viewPaymentProof');
+
+    Route::get('order.history', 'TransactionController@orderHistory');
+    Route::get('orders', 'TransactionController@pendingOrders');
+
+    /*
+     * User Tickets
+     */
+    Route::get('tickets', 'SupportController@allTickets');
+    Route::post('tickets', 'SupportController@getTickets');
+    Route::post('tickets/reply.ticket', 'SupportController@replyTicket');
+    Route::post('tickets/new.ticket', 'SupportController@newTicket');
+
+    /*
+     * Notifications
+     */
+    Route::get('notification/remove/{id}', 'UserController@removeNotification');
+
 });
 
 /*

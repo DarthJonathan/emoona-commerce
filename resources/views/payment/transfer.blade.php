@@ -14,20 +14,12 @@
 @section('content')
     <div class="container mt-5">
         <div class="row">
-            <div class="col-lg-12">
-                <div class="card text-center">
-                    <div class="card-header">
-                        Transfer Payment
-                    </div>
-                    <div class="card-body">
-                        <h4 class="card-title">Please Pay To</h4>
-                        <p class="card-text">LALALALALA a/n lalalalala</p>
-                        <a href="{{ URL::to('/verify/') }}" class="btn btn-primary">Verify Payment</a>
-                    </div>
-                    <div class="card-footer text-muted">
-                        7 Days
-                    </div>
-                </div>
+            <div class="col-lg-8 m-auto">
+                <h1 class="mb-5">Transfer Account Information</h1>
+                <p>Please pay to</p>
+                <h3 class="mt-1 mb-5"><span>5271254441</span> a/n Jonathan Hosea</h3>
+                <a onclick="printThis()" href="#" class="btn btn-dark mt-3">Print</a>
+                <a href="/" class="btn btn-dark mt-3">Home</a>
             </div>
         </div>
     </div>

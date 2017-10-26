@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Exceptions\PostTooLargeException;
 use Illuminate\Session\TokenMismatchException;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Handler extends ExceptionHandler
@@ -48,7 +49,7 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        if($exception instanceof NotFoundHttpException or $exception instanceof ModelNotFoundException)
+        if($exception instanceof NotFoundHttpException or $exception instanceof ModelNotFoundException or $exception instanceof MethodNotAllowedHttpException)
         {
             if($request->ajax()) {
                 return response()->json(['error' => true, 'msg' => 'Not Found'], 404);

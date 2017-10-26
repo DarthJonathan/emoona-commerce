@@ -16,7 +16,7 @@
 	<hr id="acc-hr-top">
 
 	<div class="acc-page-name">
-		Hi, Patricia	
+		Hi, {{ Auth::user()->firstname . ' ' . Auth::user()->lastname }}
 	</div><!--acc-page-name-->
 
 	<hr>
@@ -27,23 +27,23 @@
 			INFORMATIONS
 		</div><!--acc-informations-->
 		<div class="acc-info acc-name">
-			Patricia
+			{{ Auth::user()->firstname . ' ' . Auth::user()->lastname }}
 		</div><!--acc-name-->
 		<div class="acc-info acc-email">
-			Patricia@email.com
+			{{ Auth::user()->email }}
 		</div><!--acc-email-->
 		<div class="acc-info acc-address">
-			Jalan Anggrek Cakra No.1A, RT.4/RW.6, Kebon Jeruk, RT.1/RW.9, Kb. Jeruk, Kota Jakarta Barat, Daerah Khusus Ibukota Jakarta 11540
+			{{ Auth::user()->user_info->address }}
 		</div><!--acc-address-->
 		<div class="acc-info acc-edit-info">
-			<a href="">Edit Your Information</a>
+			<a href="{{ URL::to('profile/edit') }}">Edit Your Information</a>
 		</div>
 
 		<div class="acc-header acc-password">
 			PASSWORD
 		</div><!--headerpassword-->
 		<div class="acc-info acc-edit-pass">
-			<a href="">Edit Your Password</a>
+			<a href="{{ URL::to('password.edit') }}">Edit Your Password</a>
 		</div>
 	
 	</div><!--acc-page-information-->
@@ -51,18 +51,25 @@
 	<hr>
 		<div class="acc-icon-wrapper">
 		<ul>
-			<li>
+			<li style="cursor: pointer" onclick="orderHistory()">
 			<div class="acc-order ico-history">
 				<img src="{{ asset('img/history.png')}}" alt="">
 			</div><!--icon-history-->
 			Order History
 			</li>
 
-			<li>
+			<li style="cursor: pointer" onclick="orderTracking()">
 			<div class="acc-order ico-track">
 				<img src="{{ asset('img/track.png')}}" alt="">
 			</div><!--track-->
 			Order Status
+			</li>
+
+			<li style="cursor: pointer" onclick="viewTickets()">
+				<div class="acc-order ico-track">
+					<img src="{{ asset('img/track.png')}}" alt="">
+				</div><!--track-->
+				Support Tickets
 			</li>
 		</ul>
 	

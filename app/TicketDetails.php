@@ -16,4 +16,9 @@ class TicketDetails extends Model
     {
         return $this->hasOne('App\Tickets', 'id', 'ticket_id');
     }
+
+    function replying_user ()
+    {
+        return $this->hasOne('App\User', 'id', 'replying_user_id');
+    }
 }

@@ -30,4 +30,9 @@ class StoreController extends Controller
     {
         return view('pAbout');
     }
+
+    function profile()
+    {
+        return view('pAccount');
+    }
 }

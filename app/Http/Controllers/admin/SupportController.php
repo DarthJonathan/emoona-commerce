@@ -6,6 +6,7 @@ use App\TicketDetails;
 use App\Tickets;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Validator;
 
 class SupportController extends Controller
@@ -42,8 +43,9 @@ class SupportController extends Controller
 
                 $ticket->save();
 
-                $ticket_detail->ticket_id = $ticket->id;
-                $ticket_detail->text = $req->input('content');
+                $ticket_detail->ticket_id           = $ticket->id;
+                $ticket_detail->text                = $req->input('content');
+                $ticket_detail->replying_user_id    = Auth::id();
 
                 $path = 'public/support_ticket/' . $ticket->id;
 
@@ -102,8 +104,9 @@ class SupportController extends Controller
 
                 $ticket_detail = new TicketDetails ();
 
-                $ticket_detail->text        = $req->input('content');
-                $ticket_detail->ticket_id   = $req->input('id');
+                $ticket_detail->text                = $req->input('content');
+                $ticket_detail->ticket_id           = $req->input('id');
+                $ticket_detail->replying_user_id    = Auth::id();
 
                 $path = 'public/support_ticket/' . $req->id;
 

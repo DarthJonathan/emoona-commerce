@@ -48,7 +48,7 @@
                     <div class="col-md-4"> 
                     </div>
                     <div class="col-md-8 container-field">
-                        <a class="btn-link link-forgot-dedicated" href="{{ route('password.request') }} row">
+                        <a class="btn-link link-forgot-dedicated" href="{{ URL::to('password/reset') }}">
                             Forgot Your Password?
                         </a>
                     </div>

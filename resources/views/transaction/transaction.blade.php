@@ -22,7 +22,17 @@
                     </tr>
                     <tr>
                         <td>Status</td>
-                        <td>{{ $transaction->status }}</td>
+                        <td>
+                            @if($transaction->status == 0)
+                                <button class="btn btn-danger" style="cursor: pointer" onclick="viewTransfer()">Not Paid</button>
+                            @elseif($transaction->status == 1)
+                                <button class="btn btn-warning">Processing</button>
+                            @elseif($transaction->status == 2)
+                                <button class="btn btn-warning">Sent</button>
+                            @elseif($transaction->status == 3)
+                                <button class="btn btn-warning">Finished</button>
+                            @endif
+                        </td>
                     </tr>
                     <tr>
                         <td>Notes</td>
@@ -42,10 +52,10 @@
                     <tr>
                         <td>Shipping Code</td>
                         <td>
-                            @if($transaction->shipping_code == null)
+                            @if($transaction->shipping_codes == null)
                                 <button class="btn-danger btn">Not Shipped Yet</button>
                             @else
-                                {{ $transaction->shipping_code }}
+                                {{ $transaction->shipping_codes }}
                             @endif
                         </td>
                     </tr>

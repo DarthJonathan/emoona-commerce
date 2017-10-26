@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Middleware\UserNotifications;
 use App\User;
 use App\user_info;
+use App\user_notification;
 use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,7 +22,9 @@ class UserController extends Controller
 
     public function notifications ()
     {
-        return view('notifications');
+        $notifications = user_notification::where('user_id', '=', Auth::id())->get();
+        $data = ['notifications' => $notifications];
+        return view('notifications', $data);
     }
 
     public function edit ()
@@ -53,6 +57,15 @@ class UserController extends Controller
 
         Session::flash('message', 'Activation Code Sent, Please Check Your E-Mail');
         return Redirect::home();
+    }
+
+    function removeNotification ($id)
+    {
+        $notification = user_notification::find($id)->first();
+
+        $notification->delete();
+
+        return back();
     }
 
     public function update (Request $req)

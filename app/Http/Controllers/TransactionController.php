@@ -20,7 +20,7 @@ class TransactionController extends Controller
     {
         $data = ['cart' => Cart::getContent(), 'payment_type' => PaymentType::all()];
 
-        return view('transaction.checkout', $data);
+        return view('transaction.pCheckout', $data);
     }
 
     function payment (Request $req)
@@ -93,6 +93,11 @@ class TransactionController extends Controller
                 abort(404);
             }break;
         }
+    }
+
+    function transferInformation ()
+    {
+        return view('payment/transfer');
     }
 
     function transactionDetail ($id)
@@ -178,5 +183,23 @@ class TransactionController extends Controller
         $data = ['file' => $transaction->transfer_proof];
 
         return view('transaction.payment_proof', $data);
+    }
+
+    function orderHistory()
+    {
+        $orders = Transactions::with('transaction_detail', 'payment_type')->where('user_id','=', Auth::id())->get();
+
+        $data = ['orders' => $orders, 'title' => 'Order History'];
+
+        return view('order_history', $data);
+    }
+
+    function pendingOrders ()
+    {
+        $orders = Transactions::with('transaction_detail', 'payment_type')->where([['user_id','=', Auth::id()], ['status','<', '3']])->get();
+
+        $data = ['orders' => $orders, 'title' => 'Pending Orders'];
+
+        return view('order_history', $data);
     }
 }

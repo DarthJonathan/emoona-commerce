@@ -214,7 +214,7 @@ function loadFromCategory (e)
         data: {category_id: category_id},
         success: function (res) {
 
-            console.log(res);
+            // console.log(res);
 
             //Load Default Products, limited 30 products
             $.each(res.products, function(key, value){
@@ -250,5 +250,105 @@ function loadFromCategory (e)
             console.log(res);
         }
     });
+}
+
+function orderHistory()
+{
+    window.location.href = '/order.history';
+}
+
+function orderTracking()
+{
+    window.location.href = '/orders';
+}
+
+function viewOrder(e)
+{
+    var id = $(e).data('id');
+    window.location.href = '/transactions/' + id;
+}
+
+function viewTickets(e)
+{
+    var id = $(e).data('id');
+    window.location.href = '/tickets';
+}
+
+function viewTransfer ()
+{
+    window.location.href = '/transfer.information';
+}
+
+function printThis()
+{
+    window.print();
+}
+
+function reloadTicket(e)
+{
+    var ticket_field = $('.replies-field-' + e);
+    var reply = $('#reply' + e);
+
+    var html = '<div class="row">' +
+        '<div class="col-md-8"></div><div class="col-md-4 box-username"><center> You </center></div>'+
+        '<div class="col-md-12 box-message">'+
+         reply.val() +
+        '</div>'+
+        '</div>';
+
+    ticket_field.append(html);
+    reply.empty();
+}
+
+function newTicketUser()
+{
+    var options = {
+        url: '/tickets/new.ticket',
+        type: 'post',
+        success: function(response) {
+            toggleSuccess(response.msg);
+            location.reload();
+        },
+        error: function(response) {
+            console.log(response);
+            var errors = "";
+            $.each(response.responseJSON.errors,function(key, value)
+            {
+                errors += value + "<br>";
+            });
+
+            toggleError(errors);
+        }
+    };
+
+    $("#newTicketUser").ajaxSubmit(options);
+    return false;
+}
+
+function replyTicketUser(e)
+{
+    var options = {
+        url: '/tickets/reply.ticket',
+        type: 'post',
+        success: function(response) {
+            toggleSuccess(response.msg);
+            reloadTicket(e);
+        },
+        error: function(response) {
+
+            console.log(response);
+
+            var errors = "";
+            $.each(response.responseJSON.errors,function(key, value)
+            {
+                errors += value + "<br>";
+            });
+
+            toggleError(errors);
+        }
+    };
+
+    $("#replyTicketUser" + e).ajaxSubmit(options);
+    return false;
 }
 //# sourceMappingURL=front.js.map

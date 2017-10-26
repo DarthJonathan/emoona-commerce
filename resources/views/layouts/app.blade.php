@@ -48,52 +48,28 @@
                 </div><!--navbar-search-->
             </li>
             <li class="dropdown">
-                <a href="#" data-toggle="dropdown" id="bag-items">
-                    <span>BAG</span>({{ Cart::getTotalQuantity() }})
+                <a href="#" class="btn-cart" id="bag-items">
+                    <span>BAG</span> ({{ Cart::getTotalQuantity() }})
                 </a>
-                <div class="dropdown-menu dropdown-align-right navbar-dropdown ">
-                    <div class="cart-container">
-                        <div class="cart-item-container">
-
-                        <!-- Loaded Via Ajax -->
-                            
-                        </div>
-
-                        <div class="cart-confirmation row align-items-center">
-                            <div class="col-lg-7">
-                                <h6>Total :</h6>
-                                <h5 id="total-price">Rp.{{ Cart::getTotal() }},00</h5>
-                            </div>
-                            <div class="col-lg-5">
-                                <a class="btn-checkout" href="{{ URL::to('/checkout') }}">Checkout</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </li>
-        @if(!Auth::guest())
+            @if(!Auth::guest())
                 <li>
                     <div class="dropdown">
-                        <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            {{ Auth::user()->firstname }} {{ Auth::user()->lastname }}
+                        <a class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{ strtoupper(Auth::user()->firstname) }} {{ strtoupper(Auth::user()->lastname) }}
                             @if(count(\Illuminate\Support\Facades\Session::get('notifications')) > 0)
-                                <span class="badge badge-primary">
-                                {{ count(\Illuminate\Support\Facades\Session::get('notifications')) }}
-                            </span>
+                                ({{ count(\Illuminate\Support\Facades\Session::get('notifications')) }})
                             @endif
-                        </button>
+                        </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="Notifications">
                             <a class="dropdown-item" href="{{ URL::to('notifications') }}">
                                 Notifications
                                 @if(count(\Illuminate\Support\Facades\Session::get('notifications')) > 0)
-                                    <span class="badge badge-primary">
-                                    {{ count(\Illuminate\Support\Facades\Session::get('notifications')) }}
-                                </span>
+                                    ({{ count(\Illuminate\Support\Facades\Session::get('notifications')) }})
                                 @endif
                             </a>
+                            <a href="{{ URL::to('/profile') }}" class="dropdown-item">Profile</a>
                             <hr>
-                            <a class="dropdown-item" href="{{ URL::to('profile/edit') }}">Edit Profile</a>
-
                             <a href="{{ route('logout') }}" class="dropdown-item"
                                onclick="event.preventDefault();
                                         document.getElementById('logout-form').submit();"
@@ -146,7 +122,28 @@
 
 </div><!--navbar-->
 
+<!-- CART -->
+<div class="sidebar-cart">
+    <div class="cart-container">
+        <div class="cart-item-container">
 
+            <!-- Loaded Via Ajax -->
+
+        </div>
+
+        <div class="cart-confirmation row align-items-center">
+            <div class="col-lg-7">
+                <h6>Total :</h6>
+                <h5 id="total-price">Rp.{{ Cart::getTotal() }},00</h5>
+            </div>
+            <div class="col-lg-5">
+                <a class="btn-checkout" href="{{ URL::to('/checkout') }}">Checkout</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="cart-overlay"></div>
 
 {{--Modal--}}
 <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
@@ -214,6 +211,12 @@
     $(document).ready(function()
     {
         loadCart();
+        $('.btn-cart, .cart-overlay').on('click', function () {
+            $('.cart-container').toggleClass('cart-active');
+//            Experimental
+            //$('.cart-overlay').toggleClass('overlay-active'); //test
+            //$("body").toggleClass('body-disabled'); //test
+        });
     });
 </script>
 </body>

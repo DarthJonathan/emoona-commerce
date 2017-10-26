@@ -37,12 +37,14 @@
                                         @endif
                                     </td>
                                     <td>
-                                        @if($transaction['status'] == 1)
+                                        @if($transaction['status'] == 0)
                                             <button class="btn btn-danger">Not Paid</button>
-                                        @elseif($transaction['status'] == 2)
+                                        @elseif($transaction['status'] == 1)
                                             <button class="btn btn-warning">Paid</button>
-                                        @elseif($transaction['status'] == 3)
+                                        @elseif($transaction['status'] == 2)
                                             <button class="btn btn-primary">Delivered</button>
+                                        @elseif($transaction['status'] == 3)
+                                            <button class="btn btn-primary">Finished</button>
                                         @endif
                                     </td>
                                     <td>{{ $transaction['created'] }}</td>

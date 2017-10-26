@@ -30,12 +30,6 @@ class CartController extends Controller
         }
     }
 
-    function cart ()
-    {
-        $data = ['contents' => Cart::getContent()];
-        return view('transaction.cart', $data);
-    }
-
     function getCartContent ()
     {
         if(Cart::isEmpty()) {
