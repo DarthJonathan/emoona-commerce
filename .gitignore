@@ -3,3 +3,13 @@
 node_modules/
 \.idea/
 storage/
+
+public/css/style\.css\.map
+
+public/css/style404\.css\.map
+
+public/css/styleadmin\.css\.map
+
+public/css/userstyle\.css\.map
+
+public/js/front\.js\.map
