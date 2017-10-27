@@ -20,6 +20,4 @@ class ItemDetail extends Model
     {
         return $this->belongsTo('App\Item');
     }
-
-
 }

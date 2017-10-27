@@ -118,59 +118,25 @@
 		
 	<div class="content-featured">
 		<div class="wrapper-home-content-2">
-			
 			<div class="row">
 
-				<div class="col-md-3">
-					<div class="box-featured bf1">
-						
-					</div><!--box-featured-->
-					<div class="box-featured-desc">
-						THIS IS THE ITEM
-					</div><!--box-desc-->
-					<div class="box-featured-money">
-						$37
-					</div><!--box-money-->
-				</div><!--col-md-3-->
-
-				<div class="col-md-3">
-					<div class="box-featured bf2">
-						
-					</div><!--box-featured-->
-					<div class="box-featured-desc">
-						THIS IS THE ITEM
-					</div><!--box-desc-->
-					<div class="box-featured-money">
-						$37
-					</div><!--box-money-->
-				</div><!--col-md-3-->
-
-				<div class="col-md-3">
-					<div class="box-featured bf3">
-						
-					</div><!--box-featured-->
-					<div class="box-featured-desc">
-						THIS IS THE ITEM
-					</div><!--box-desc-->
-					<div class="box-featured-money">
-						$37
-					</div><!--box-money-->
-				</div><!--col-md-3-->
-
-				<div class="col-md-3">
-					<div class="box-featured bf4">
-						
-					</div><!--box-featured-->
-					<div class="box-featured-desc">
-						THIS IS THE ITEM
-					</div><!--box-desc-->
-					<div class="box-featured-money">
-						$37
-					</div><!--box-money-->
-				</div><!--col-md-3-->
+				@foreach($featured as $key => $feature)
+					<div class="col-md-3">
+						<div
+							class="box-featured bf1"
+							style="background-image: url('/storage/item_detail/{{ explode('/', $images[$key][0])[2] }}/{{ explode('/', $images[$key][0])[3] }}')"
+						>
+						</div><!--box-featured-->
+						<div class="box-featured-desc">
+							{{ $feature->item->name }}
+						</div><!--box-desc-->
+						<div class="box-featured-money">
+							IDR {{ $feature->item->price }}
+						</div><!--box-money-->
+					</div><!--col-md-3-->
+				@endforeach
 
 			</div><!--row-->
-			
 		</div><!--wrapper-home-content-2-->
 	</div><!--content-featured-->	
 
@@ -200,15 +166,16 @@
 	<div class="row">
 		<div class="col-lg-12">
 			<div class="subsc-text">
-			<br>[ we only deliver beneficial content, because life is too short	for spams ] <br>exclusive access to voucher codes . new arrival drop announcements <br> limited sale announcements . holiday giveaway . event invitations  
-		</div>
+			<br>
+				{!! $datas['3']->value_1 !!}
+			</div>
 		</div>	
 	</div>
 
 		<div class="row">
 		<div class="col-lg-12">
 
-		<form action="">
+		<form action="{{ URL::to('/newsletter/sign.up') }}">
 			<table border="0" class="subsc-tab-form">
 				<tr>
 					<td><input type="text" placeholder="First Name"></td>

@@ -25,6 +25,11 @@ Route::get('/shipping', 'HomeController@shippingPolicy')->name('shipping');
 Route::get('/contact', 'HomeController@contactUs')->name('contact');
 
 /*
+ * News Letter
+ */
+Route::post('/newsletter/sign.up', 'HomeController@signUpNewsletter');
+
+/*
  * Products
  */
 Route::get('product/{gender}/', 'ProductController@viewCategoryGender');

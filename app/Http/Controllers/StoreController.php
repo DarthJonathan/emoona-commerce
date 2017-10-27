@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use App\ItemDetail;
 use App\Webconfig;
+use Storage;
 use Illuminate\Http\Request;
 
 class StoreController extends Controller
 {
     function home ()
     {
-        $featured = ItemDetail::where('featured', '=', 1)->get();
+        $featured = ItemDetail::with('item')->where('featured', '=', 1)->get();
         $images   = array();
 
         foreach($featured as $single)

@@ -14,11 +14,8 @@
 <div class="tc-page-wrapper">
 
 	<div class="tc-page-content">
-		Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero optio saepe accusamus voluptatem deserunt autem pariatur asperiores perferendis fugiat! Pariatur illum at perspiciatis facilis eveniet, et rerum facere error non?
-		Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero optio saepe accusamus voluptatem deserunt autem pariatur asperiores perferendis fugiat! Pariatur illum at perspiciatis facilis eveniet, et rerum facere error non?
-		<br> <br>
-		Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero optio saepe accusamus voluptatem deserunt autem pariatur asperiores perferendis fugiat! Pariatur illum at perspiciatis facilis eveniet, et rerum facere error non?
 
+		{{ $webconfig[$link]->value_1 }}
 
 	</div>
 
