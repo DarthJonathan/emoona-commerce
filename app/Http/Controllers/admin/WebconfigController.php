@@ -57,4 +57,9 @@ class WebconfigController extends Controller
             return response()->json(['error' => true, 'errors' => $e->getMessage()], 400);
         }
     }
+
+    function removeFeatured (Request $req)
+    {
+
+    }
 }
