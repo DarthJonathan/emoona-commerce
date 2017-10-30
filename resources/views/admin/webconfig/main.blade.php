@@ -41,9 +41,9 @@
                         </div>
                         <div class="col-md-8">
                             <div class="card">
-                                <span class="card-header">Freatured Products</span>
+                                <span class="card-header">Featured Products</span>
                                 <div class="card-body">
-                                    <div class="featured-product">
+                                    <div class="featured-product row">
                                         {{--Freatued--}}
                                     </div>
                                     <div class="input-group mt-3 col-lg-12">

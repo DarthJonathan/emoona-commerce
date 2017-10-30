@@ -368,3 +368,12 @@ function openContact ()
 {
     window.location.href = '/contact';
 }
+
+function viewProduct(e)
+{
+    var id = $(e).data('id');
+    var gender = $(e).data('gender');
+    var category = $(e).data('category');
+
+    window.location.href = '/product/' + gender + '/' + category + '/' + id;
+}

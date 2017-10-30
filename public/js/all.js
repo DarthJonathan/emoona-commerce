@@ -941,7 +941,33 @@ function loadFeatured ()
 function removeFeatured()
 {
     var items = $('.featured-items');
+    var items_id = [];
 
-    console.log(items);
+    $.each(items, function(key, value){
+
+        var id = $(value).attr('id').split('featured')[1];
+
+        items_id.push(id);
+    });
+
+    $.ajax({
+        url: '/admin/webconfig/remove.featured/',
+        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+        type: 'POST',
+        data:{items: items_id},
+        success: function (data) {
+
+            $.each(items_id, function(key, value)
+            {
+                $('#featured' + value).remove();
+            });
+
+            toggleSuccess(data.msg);
+        },
+        error: function(response) {
+            console.log(response);
+            toggleError(response.responseJSON.errors);
+        }
+    });
 }
 //# sourceMappingURL=all.js.map

@@ -133,6 +133,7 @@ Route::middleware(['admin'])->group(function()
          */
         Route::post('/webconfig/collections_card', 'admin\WebconfigController@collectionsCard');
         Route::post('/webconfig/get_featured', 'admin\WebconfigController@getFeatured');
+        Route::post('/webconfig/remove.featured', 'admin\WebconfigController@removeFeatured');
 
         /*
          * Item Management

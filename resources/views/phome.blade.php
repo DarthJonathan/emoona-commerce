@@ -121,7 +121,7 @@
 			<div class="row">
 
 				@foreach($featured as $key => $feature)
-					<div class="col-md-3">
+					<div class="col-md-3" style="cursor:pointer;" onclick="viewProduct(this)" data-id="{{ $feature->item->id }}" data-gender="{{ $feature->getCategory()->gender }}" data-category="{{ $feature->getCategory()->name }}">
 						<div
 							class="box-featured bf1"
 							style="background-image: url('/storage/item_detail/{{ explode('/', $images[$key][0])[2] }}/{{ explode('/', $images[$key][0])[3] }}')"
@@ -189,7 +189,7 @@
 
 					</td>
 					<td id="subsc-btn">
-						<button class="btn">SUBSCRIBE</button>
+						<button class="btn" style="cursor:pointer;">SUBSCRIBE</button>
 					</td>
 				</tr>
 			</table>
