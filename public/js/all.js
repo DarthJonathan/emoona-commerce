@@ -923,7 +923,7 @@ function loadFeatured ()
                 images = images.split('/')[2] + '/' + images.split('/')[3];
 
                 var html = '<div class="single-featured col-md-4">' +
-                    '<img src="/storage/item_detail/' + images + '" data-id="' + value.id + '" onclick="checkBox(this)">' +
+                    '<img src="/storage/item_detail/' + images + '" data-id="' + value.id + '" onclick="checkBox(this)" id="featuredimg' + value.id +'">' +
                     '<input type="checkbox" name="featured#'+ value.id +'" id="featured'+ value.id +'" class="featured-items">' +
                     '</div>';
 
@@ -944,11 +944,13 @@ function removeFeatured()
     var items_id = [];
 
     $.each(items, function(key, value){
-
-        var id = $(value).attr('id').split('featured')[1];
-
-        items_id.push(id);
+        if($(value).is(':checked')) {
+            var id = $(value).attr('id').split('featured')[1];
+            items_id.push(id);
+        }
     });
+
+    console.log(items_id);
 
     $.ajax({
         url: '/admin/webconfig/remove.featured/',
@@ -960,6 +962,7 @@ function removeFeatured()
             $.each(items_id, function(key, value)
             {
                 $('#featured' + value).remove();
+                $('#featuredimg' + value).remove();
             });
 
             toggleSuccess(data.msg);
@@ -969,5 +972,140 @@ function removeFeatured()
             toggleError(response.responseJSON.errors);
         }
     });
+}
+
+function saveThis(e)
+{
+    var what = $(e).data('what');
+    var data = "";
+
+    switch(what)
+    {
+        case 'about':
+        {
+            data = tinyMCE.get('about').getContent()
+        }break;
+
+        case 'tnc':
+        {
+            data = tinyMCE.get('tnc').getContent()
+        }break;
+
+        case 'return':
+        {
+            data = tinyMCE.get('return').getContent()
+        }break;
+
+        case 'shipping':
+        {
+            data = tinyMCE.get('shipping').getContent()
+        }break;
+
+        case 'contact' :
+        {
+            data = tinyMCE.get('contact').getContent()
+        }break;
+    }
+
+    $.ajax({
+        url: '/admin/webconfig/edit.texts/',
+        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+        type: 'POST',
+        data:{data: data, what: what},
+        success: function (data) {
+            toggleSuccess(data.msg);
+            // console.log(data);
+        },
+        error: function(response) {
+            console.log(response);
+            // console.log(response.responseText);
+            toggleError(response.responseJSON.errors);
+        }
+    });
+}
+
+function uploadNew ()
+{
+    $('#modal').modal('toggle');
+    $('.modal-title').html('New Slider Image');
+    $('.modal-body').empty();
+    $('#ajax-loading').show();
+
+    $.ajax({
+        url: '/admin/webconfig/add_slider_ajax/',
+        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+        type: 'POST',
+        success: function (data) {
+            $('#ajax-loading').hide();
+            $('.modal-body').html(data);
+        },
+        error: function(response) {
+            $('#modal').modal('toggle');
+            toggleError(response.responseJSON.errors);
+            console.log(response.responseText);0
+        }
+    });
+}
+
+function removeImage()
+{
+    var items = $('.slide-items');
+    var items_id = [];
+    var item_remove = [];
+
+    $.each(items, function(key, value){
+        if($(value).is(':checked')) {
+            var id      = $(value).val();
+            var remove  = $(value).attr('id').split('slide')[1];
+            items_id.push(id);
+            item_remove.push(remove);
+        }
+    });
+
+    if(items_id.length == 0)
+    {
+        toggleError("Please select an item");
+        return false;
+    }
+
+    $.ajax({
+        url: '/admin/webconfig/remove.slider/',
+        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+        type: 'POST',
+        data:{items: items_id},
+        success: function (data) {
+
+            $.each(item_remove, function(key, value)
+            {
+                $('.slide-' + value).remove();
+            });
+
+            toggleSuccess(data.msg);
+        },
+        error: function(response) {
+            console.log(response);
+            console.log(response.responseText);
+            toggleError(response.responseJSON.errors);
+        }
+    });
+}
+
+function changeImage()
+{
+    var options = {
+        url: '/webconfig/change_collections',
+        type: 'POST',
+        success: function(response)
+        {
+            toggleSuccess(response.msg);
+        },
+        error: function(response)
+        {
+            toggleError(JSON.stringify(response.responseJSON.errors));
+            console.log(response.responseJSON.errors_debug);
+        }
+    };
+
+    $("#changeCollection").ajaxSubmit(options);
 }
 //# sourceMappingURL=all.js.map

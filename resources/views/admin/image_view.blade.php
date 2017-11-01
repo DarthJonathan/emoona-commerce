@@ -1,3 +1,4 @@
+<div class="container">
 <div class="row">
     <div class="col-lg-12">
         <div class="image-scroller">
@@ -27,9 +28,7 @@
         <button class="btn btn-primary btn-block" onclick="deleteSelected()">Delete Selected</button>
     </div>
 </div>
-<br>
-<form action="" id="addImageItemDetail">
-<div class="row">
+<form action="" class="row mt-3" id="addImageItemDetail">
     <div class="col-lg-6">
         <div class="input-group">
                 <label class="input-group-btn mb-2 mb-sm-0 mr-0">
@@ -44,7 +43,6 @@
     </div>
     <div class="col-lg-6">
         <button class="btn btn-primary btn-block" type="button" id="submit">Add New</button>
-    </div>
     </div>
 </form>
 <script>
@@ -126,3 +124,4 @@
         checkBoxes.attr("checked", !checkBoxes.attr("checked"));
     }
 </script>
+</div>

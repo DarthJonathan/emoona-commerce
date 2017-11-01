@@ -134,6 +134,11 @@ Route::middleware(['admin'])->group(function()
         Route::post('/webconfig/collections_card', 'admin\WebconfigController@collectionsCard');
         Route::post('/webconfig/get_featured', 'admin\WebconfigController@getFeatured');
         Route::post('/webconfig/remove.featured', 'admin\WebconfigController@removeFeatured');
+        Route::post('/webconfig/edit.texts', 'admin\WebconfigController@editTexts');
+        Route::post('/webconfig/remove.slider', 'admin\WebconfigController@removeSlider');
+        Route::post('/webconfig/add_slider_ajax', 'admin\WebconfigController@addSlider');
+        Route::post('/webconfig/add_slider', 'admin\WebconfigController@storeSliderImage');
+        Route::post('/webconfig/change_collections', 'admin\WebconfigController@changeCollectionImages');
 
         /*
          * Item Management

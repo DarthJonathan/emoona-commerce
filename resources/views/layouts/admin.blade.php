@@ -19,6 +19,9 @@
     <script src="{{ asset('js/all.js') }}"></script>
     <script src="{{ asset('js/jquery.form.min.js') }}"></script>
     <script src="{{ asset('js/pace.min.js') }}"></script>
+    {{--Tiny MCE--}}
+    <script src="https://cloud.tinymce.com/stable/tinymce.min.js"></script>
+    <script>tinymce.init({ selector:'textarea' });</script>
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -42,6 +45,7 @@
         </ul>
 
         <ul class="navbar-nav">
+        <!-- sample only, delete later
             <li class="nav-item dropdown">
                 <a class="nav-link" href="#" id="mailsDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <img src="{{ asset('img/mail-icon.png') }}" width="20px" height="auto">
@@ -52,13 +56,13 @@
                     @endif
                 </a>
 
-                <!-- sample only, delete later-->
                 <div class="dropdown-menu dropdown-menu-right mr-3" aria-labelledby="mailsDropdown">
                     <a class="dropdown-item" href="#">do A</a>
                     <a class="dropdown-item" href="#">do B</a>
                     <a class="dropdown-item" href="#">do C</a>
                 </div>
             </li>
+            -->
 
             <li class="nav-item dropdown">
                 <a class="nav-link" href="#" id="accountDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -178,12 +182,14 @@
                         <a href="{{ route('tickets') }}"><li @yield('tickets_active')><img src="{{ asset('img/sidebar-icons/report-icon.png') }}">Report</li></a>
                     </ul>
 
+                <!-- Not used
                     <div class="sidebarSectionHeader">IMPORTANCE</div>
                     <ul class="sidebarImportance">
                         <li><div class="importanceBubble"></div><span>Important</span></li>
                         <li><div class="importanceBubble"></div><span>Warning</span></li>
                         <li><div class="importanceBubble"></div><span>Information</span></li>
                     </ul>
+                -->
             
             </div>
         </div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\ItemDetail;
 use App\User;
+use Storage;
 use App\Webconfig;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -65,7 +66,15 @@ class AdminController extends Controller
 
     public function webConfiguration ()
     {
-        $data = ['settings' => Webconfig::all()];
+        $slider     = Storage::files('public/img/home-slider');
+        $collection = Storage::files('public/img/home-collections');
+
+        $data = [
+            'settings' => Webconfig::all(),
+            'slider'        => $slider,
+            'collections'   => $collection
+        ];
+
         return view('admin/webconfig/main', $data);
     }
 }

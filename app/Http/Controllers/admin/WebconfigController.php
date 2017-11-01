@@ -6,6 +6,7 @@ use App\ItemDetail;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Webconfig;
+use Validator;
 use Storage;
 
 class WebconfigController extends Controller
@@ -60,6 +61,161 @@ class WebconfigController extends Controller
 
     function removeFeatured (Request $req)
     {
+        $items = $req->items;
 
+        foreach($items as $item)
+        {
+            $item = ItemDetail::find($item);
+
+            $item->featured = 0;
+
+            $item->save();
+        }
+
+        return response()->json(['msg' => 'Removing Featured Completed' ],200);
+    }
+
+    function editTexts (Request $req)
+    {
+        switch($req->what)
+        {
+            case 'about':
+            {
+                $config = Webconfig::find(9);
+                $config->value_1 = $req->data;
+            }break;
+
+            case 'tnc':
+            {
+                $config = Webconfig::find(5);
+                $config->value_1 = $req->data;
+            }break;
+
+            case 'return':
+            {
+                $config = Webconfig::find(6);
+                $config->value_1 = $req->data;
+            }break;
+
+            case 'shipping':
+            {
+                $config = Webconfig::find(7);
+                $config->value_1 = $req->data;
+            }break;
+
+            case 'contact' :
+            {
+                $config = Webconfig::find(8);
+                $config->value_1 = $req->data;
+            }break;
+        }
+
+        $config->save();
+
+        return response()->json(['msg' => 'Changes Saved'], 200);
+    }
+
+    function removeSlider(Request $req)
+    {
+        $images = $req->items;
+
+        foreach($images as $image)
+        {
+            Storage::delete('public/img/home-slider/' . $image );
+        }
+
+        return response()->json(['msg' => 'Changes Saved'], 200);
+    }
+
+    function addSlider ()
+    {
+        return view('admin.webconfig.new_image_slider');
+    }
+
+    function storeSliderImage(Request $req)
+    {
+        $rules = [
+            'image'         => 'required',
+            'image.*'       => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+        ];
+
+        $valid = Validator::make($req->all(), $rules);
+
+        if($valid->fails())
+        {
+            $message = $valid->messages();
+
+            $return = ['error' => true, 'errors' => $message];
+
+            return response()->json($return, 400);
+        }else
+        {
+            $path = 'public/img/home-slider/';
+
+            try
+            {
+                $images = $req->image;
+
+                foreach($images as $image) {
+                    $image->store($path);
+                }
+
+                $return = ['error' => false, 'msg' => 'Adding Slider Image Success!'];
+
+                return response()->json($return, 200);
+
+            }catch(\Exception $e)
+            {
+                $return = ['error' => true, 'errors' => 'Adding Slider Image Failed! (ERR: 90)', 'errors_debug' => $e->getMessage()];
+
+                return response()->json($return, 400);
+            }
+        }
+    }
+
+    function changeCollectionImages (Request $req)
+    {
+        $rules = [
+            'image0'       => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image1'       => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image2'       => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+        ];
+
+        $validation = Validator::make($req->all(), $rules);
+
+        if($validation->fails())
+        {
+            $message = $validation->messages();
+            $return = ['error' => true, 'errors' => $message];
+            return response()->json($return, 400);
+        }else
+        {
+            try
+            {
+                if($req->image0 != null)
+                {
+                    //TO:DO resize image here
+                    $req->image0->store('')
+                }
+
+                if($req->image1 != null)
+                {
+
+                }
+
+                if($req->image2 != null)
+                {
+
+                }
+
+                $return = ['error' => false, 'msg' => 'Changing Collection Image Success!'];
+                return response()->json($return, 200);
+
+            }catch(\Exception $e)
+            {
+                $return = ['error' => true, 'errors' => 'Changing Collections Image Failed! (ERR: 91)', 'errors_debug' => $e->getMessage()];
+                return response()->json($return, 400);
+            }
+        }
     }
 }

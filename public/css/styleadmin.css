@@ -356,6 +356,25 @@ body {
   margin: auto;
 }
 
+.single-slide {
+  text-align: center;
+}
+
+.single-slide img {
+  max-width: 100%;
+}
+
+.collection-image {
+  text-align: center;
+}
+
+.collection-image img {
+  max-width: 90%;
+  height: 180px;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
 /* Media */
 
 /*# sourceMappingURL=styleadmin.css.map */

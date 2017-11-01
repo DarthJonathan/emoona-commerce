@@ -2,10 +2,11 @@
 
 @section('bgpicture')
 <div id="home-pic-con" class="bgpicHome">
-	<div class="home-image bghom1"></div>
-	<div class="home-image bghom2"></div>
-	<div class="home-image bghom3"></div>
-	<div class="home-image bghom4"></div>
+    @foreach($slider as $key => $slide)
+	<div class="home-image bghom{{ ($key+1) }}"
+         style="background-image: url('/storage/img/home-slider/{{ explode("/", $slide)[3] }}')"
+    ></div>
+    @endforeach
 </div>
 @endsection
 
@@ -20,8 +21,9 @@
 			<div class="row">
 				
 				<div class="col-md-4">
-					<div class="content-box cb1">
-						
+					<div class="content-box cb1"
+                         style="background-image: url('/storage/img/home-collections/{{ explode("/", $collections[0])[3] }}')"
+                    >
 					</div>
 				
 				</div><!--col-->
@@ -47,8 +49,9 @@
 				</div><!--col-->
 
 				<div class="col-md-4">
-					<div class="content-box cb3">
-							
+					<div class="content-box cb3"
+                         style="background-image: url('/storage/img/home-collections/{{ explode("/", $collections[1])[3] }}')"
+                    >
 					</div>
 				
 				</div><!--col-->
@@ -74,8 +77,9 @@
 				</div><!--col-->
 
 				<div class="col-md-4">
-					<div class="content-box cb5">
-						
+					<div class="content-box cb5"
+                         style="background-image: url('/storage/img/home-collections/{{ explode("/", $collections[2])[3] }}')"
+                    >
 					</div>
 				
 				</div><!--col-->
@@ -175,7 +179,7 @@
 		<div class="row">
 		<div class="col-lg-12">
 
-		<form action="{{ URL::to('/newsletter/sign.up') }}">
+		<form action="{{ URL::to('/newsletter/sign.up') }}" id="signUpNewsletter">
 			<table border="0" class="subsc-tab-form">
 				<tr>
 					<td><input type="text" placeholder="First Name"></td>

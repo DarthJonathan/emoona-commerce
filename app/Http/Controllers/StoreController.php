@@ -6,13 +6,20 @@ use App\ItemDetail;
 use App\Webconfig;
 use Storage;
 use Illuminate\Http\Request;
+use File;
 
 class StoreController extends Controller
 {
     function home ()
     {
-        $featured = ItemDetail::with('item')->where('featured', '=', 1)->get();
-        $images   = array();
+        $featured   = ItemDetail::with('item')->where('featured', '=', 1)->get();
+        $images     = array();
+        $slider     = Storage::files('public/img/home-slider');
+        $collection = Storage::files('public/img/home-collections');
+
+        //Deprecated
+//        $slider     = File::allFiles(public_path('img\home-slider'));
+//        $collection = File::allFiles(public_path('img\home-collections'));
 
         foreach($featured as $single)
         {
@@ -22,8 +29,14 @@ class StoreController extends Controller
 
         $webconfig = Webconfig::all();
 
+        $data = [
+            'datas'         => $webconfig,
+            'featured'      => $featured,
+            'images'        => $images,
+            'slider'        => $slider,
+            'collections'   => $collection
+        ];
 
-        $data = ['datas' => $webconfig, 'featured' => $featured, 'images' => $images];
         return view('phome',$data);
     }
 
@@ -44,7 +57,11 @@ class StoreController extends Controller
 
     function about ()
     {
-        return view('pAbout');
+        $webconfig = Webconfig::all();
+
+        $data = ['webconfig' => $webconfig];
+
+        return view('pAbout', $data);
     }
 
     function profile()
