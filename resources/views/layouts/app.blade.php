@@ -88,7 +88,7 @@
                     <a href="#" data-toggle="dropdown">
                         MY <span>ACCOUNT</span>
                     </a>
-                    <div class="dropdown-menu dropdown-align-right navbar-dropdown navbar-dropdown-account">
+                    <div class="dropdown-menu dropdown-align-right navbar-dropdown navbar-dropdown-account account-login-dropdown">
                         <form method="POST" action="{{ route('login') }}">
                             {{ csrf_field() }}
                             <div class="form-group">
@@ -109,7 +109,7 @@
         </ul>
     </div><!--navbar-1-->
 
-    <div class="navbar2">
+    <div class="navbar2 navbar-desktop">
         <ul>
             <li><a href="{{ URL::to('/studio') }}">STUDIO</a></li>
             <li><a href="{{ URL::to('/store') }}">SHOP</a></li>
@@ -119,6 +119,35 @@
         </ul>
     </div> <!--navbar2-->
 
+    {{--Mobile Navbar--}}
+        {{-- Toggler--}}
+        <button class="navbar-toggler navbar-light" type="button" onclick="openMobileNav()">
+            <div class="hamburger d-flex flex-column justify-content-around text-center">
+                <div class="hamburger__patty"></div>
+                <div class="hamburger__patty"></div>
+                <div class="hamburger__patty"></div>
+            </div>
+        </button>
+        {{--The Nav--}}
+        <div class="mobile-nav">
+            <div class="mobile-nav-collapse">
+                <a class="navbar-brand" href="{{ URL::to('/') }}">E.MOON.A</a>
+                <ul>
+                    <li class="nav-item">
+                        <a href="{{ URL::to('/studio') }}">STUDIO</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ URL::to('/store') }}">SHOP</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ URL::to('/social') }}">SOCIAL</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ URL::to('/about') }}">ABOUT</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
 
 </div><!--navbar-->
 

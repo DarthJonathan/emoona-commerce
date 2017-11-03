@@ -179,17 +179,17 @@
 		<div class="row">
 		<div class="col-lg-12">
 
-		<form action="{{ URL::to('/newsletter/sign.up') }}" id="signUpNewsletter">
+		<form action="{{ URL::to('/newsletter/sign.up') }}" method="post" id="signUpNewsletter">
 			<table border="0" class="subsc-tab-form">
 				<tr>
-					<td><input type="text" placeholder="First Name"></td>
-					<td><input type="text" placeholder="Last Name"></td>
+					<td><input type="text" name="firstname" placeholder="First Name"></td>
+					<td><input type="text" name="lastname" placeholder="Last Name"></td>
 				</tr>
 			</table>
 
 			<table class="subsc-tab-form stb2">
 				<tr>
-					<td colspan="2"><input type="text" placeholder="Email">
+					<td colspan="2"><input type="text" name="email" placeholder="Email">
 
 					</td>
 					<td id="subsc-btn">

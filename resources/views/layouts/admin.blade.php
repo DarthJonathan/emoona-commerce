@@ -177,6 +177,7 @@
                         <a href="{{ route('admindashboard') }}"><li @yield('dashboard_active')><img src="{{ asset('img/sidebar-icons/dashboard-icon.png') }}">Dashboard</li></a>
                         <a href="{{ route('web_configuration') }}"><li @yield('webconfig_active')><img src="{{ asset('img/sidebar-icons/dashboard-icon.png') }}">Web Configuration</li></a>
                         <a href="{{ route('storeitems') }}"><li @yield('items_active')><img src="{{ asset('img/sidebar-icons/post-icon.png') }}">Store Items</li></a>
+                        <a href="{{ route('newsletter') }}"><li @yield('newsletter_active')><img src="{{ asset('img/sidebar-icons/post-icon.png') }}">Newsletter</li></a>
                         <a href="{{ route('accounts') }}"><li @yield('accounts_active')><img src="{{ asset('img/sidebar-icons/media-icon.png') }}">Accounts</li></a>
                         <a href="{{ route('transactions') }}"><li @yield('transactions_active')><img src="{{ asset('img/sidebar-icons/sales-icon.png') }}">Sales</li></a>
                         <a href="{{ route('tickets') }}"><li @yield('tickets_active')><img src="{{ asset('img/sidebar-icons/report-icon.png') }}">Report</li></a>

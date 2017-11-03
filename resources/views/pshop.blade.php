@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Shop')
+
 @section('bgpicture')
 <div class="bgpic" style="background-image: url('../img/bannerShop.jpg');">
 	

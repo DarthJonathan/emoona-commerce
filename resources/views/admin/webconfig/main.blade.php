@@ -63,7 +63,7 @@
                                 <div class="card">
                                     <span class="card-header">Collection Images</span>
                                     <div class="card-body">
-                                        <form class="collection-image row" action="{{ action('admin\WebconfigController@changeCollectionImages') }}" id="changeCollection" enctype="multipart/form-data">
+                                        <form class="collection-image row" method="POST" action="{{ action('admin\WebconfigController@changeCollectionImages') }}" id="changeCollection" enctype="multipart/form-data">
                                             {{ csrf_field() }}
                                             @foreach($collections as $key => $collection)
                                                 <div class="col-lg-4">
@@ -79,7 +79,7 @@
                                                 </div>
                                             @endforeach
                                         <div class="input-group mt-3 col-lg-12">
-                                            <button class="btn btn-primary float-right" onclick="changeImage()">Save</button>
+                                            <button class="btn btn-primary float-right" type="button" onclick="changeImage()">Save</button>
                                         </div>
                                         </form>
                                     </div>

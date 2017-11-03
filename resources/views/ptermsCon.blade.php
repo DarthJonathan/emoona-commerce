@@ -1,10 +1,12 @@
 @extends('layouts.app')
 
+@section('title', $page_title)
+
 @section('bgpicture')
 <div class="bgpic" style="background-image: url('../img/bannerTC.jpg');">
 	
 	<div class="bgpic-caption">
-		TERMS & CONDITIONS
+		{!! strtoupper($page_title) !!}
 	</div><!--bgpic-caption-->
 </div><!--bgpic-->
 @endsection
@@ -15,7 +17,7 @@
 
 	<div class="tc-page-content">
 
-		{{ $webconfig[$link]->value_1 }}
+		{!! $webconfig[$link]->value_1 !!}
 
 	</div>
 

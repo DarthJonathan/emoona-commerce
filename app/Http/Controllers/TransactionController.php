@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Middleware\UserNotifications;
+use App\ItemDetail;
 use App\PaymentType;
 use App\TransactionDetails;
 use App\Transactions;
@@ -48,6 +49,11 @@ class TransactionController extends Controller
             $trans_detail->quantity         = $item->quantity;
 
             $trans_detail->save();
+
+            //Decrease the stock
+            $item_detail = ItemDetail::find($trans_detail->item_detail_id);
+            $item_detail->stock = $item_detail->stock - 1;
+            $item_detail->save();
         }
 
         //Make a new User Notification to pay

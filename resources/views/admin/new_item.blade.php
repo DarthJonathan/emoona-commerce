@@ -74,7 +74,7 @@
 </div>
 
 <script>
-    const categories = JSON.parse('{!! $categories !!}');
+    var categories = JSON.parse('{!! $categories !!}');
 
     $(document).ready(function()
     {

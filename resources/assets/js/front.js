@@ -131,8 +131,9 @@ function loadStore()
             $.each(res.products, function(key, value){
 
                 //Check if item detail is not available
-                if(value.item_detail == "")
-                    return true;
+                if(value.item_detail.length == 0) {
+                    return;
+                }
 
                 var image = res.images[key][0].split('/');
                 image = '/storage/item_detail/' + image[2] + '/' + image[3];
@@ -176,12 +177,12 @@ function loadStore()
 
                     case 'female' :
                     {
-
+                        wcat.append('<li class="category-links" data-id="' + value.id + '" onclick="loadFromCategory(this)">' + value.name.toUpperCase() + '</li>');
                     }break;
 
                     case 'others' :
                     {
-
+                        ocat.append('<li class="category-links" data-id="' + value.id + '" onclick="loadFromCategory(this)">' + value.name.toUpperCase() + '</li>');
                     }break;
                 }
             });
@@ -376,4 +377,11 @@ function viewProduct(e)
     var category = $(e).data('category');
 
     window.location.href = '/product/' + gender + '/' + category + '/' + id;
+}
+
+function openMobileNav ()
+{
+    $('.mobile-nav-collapse').toggleClass('showNav');
+    $('.navbar-toggler').toggleClass('togglerShow');
+    $('.hamburger').toggleClass('hamburger--close');
 }

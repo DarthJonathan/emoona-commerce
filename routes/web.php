@@ -125,6 +125,7 @@ Route::middleware(['admin'])->group(function()
         Route::get('transaction', 'admin\AdminController@transactions')->name('transactions');
         Route::get('tickets', 'admin\AdminController@tickets')->name('tickets');
         Route::get('configuration', 'admin\AdminController@webConfiguration')->name('web_configuration');
+        Route::get('newsletter', 'admin\AdminController@newsletter')->name('newsletter');
 
         Route::post('confirm_prompt', 'admin\AdminController@prompt');
 
@@ -148,9 +149,13 @@ Route::middleware(['admin'])->group(function()
              */
         Route::post('category', 'admin\ItemManagement@category');
         Route::post('delete_category', 'admin\ItemManagement@deleteCategory');
-           /*
-            * Item
-            */
+        Route::post('edit_category','admin\ItemManagement@editCategory');
+        Route::post('edit_category_req','admin\ItemManagement@editCategoryAjax');
+        Route::post('new_category','admin\ItemManagement@newCategory');
+        Route::post('new_category_req','admin\ItemManagement@newCategoryAjax');
+        /*
+         * Item
+         */
         Route::post('new_item_req', 'admin\ItemManagement@newItemAjax');
         Route::post('new_item', 'admin\ItemManagement@newItem');
         Route::post('edit_item_req', 'admin\ItemManagement@editItemAjax');
@@ -196,6 +201,12 @@ Route::middleware(['admin'])->group(function()
         Route::post('reply_ticket', 'admin\SupportController@replyTicket');
         Route::post('get_tickets', 'admin\SupportController@getTickets');
         Route::post('complete_ticket', 'admin\SupportController@completeTicket');
+
+        /*
+         * Newsletter
+         */
+        Route::get('newsletter/new.newsletter', 'admin\NewsletterController@newNewsletter');
+        Route::post('newsletter/view.content', 'admin\NewsletterController@viewContent');
     });
 });
 

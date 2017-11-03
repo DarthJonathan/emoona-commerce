@@ -1093,11 +1093,16 @@ function removeImage()
 function changeImage()
 {
     var options = {
-        url: '/webconfig/change_collections',
+        url: '/admin/webconfig/change_collections',
         type: 'POST',
         success: function(response)
         {
             toggleSuccess(response.msg);
+            setTimeout(
+                function()
+                {
+                    location.reload();
+                }, 2500);
         },
         error: function(response)
         {
@@ -1107,4 +1112,66 @@ function changeImage()
     };
 
     $("#changeCollection").ajaxSubmit(options);
+}
+
+function viewMailContent(e)
+{
+    var id = $(e).data('id');
+
+    $('#modal').modal('toggle');
+    $('.modal-title').html('Newsletter Content');
+    $('.modal-body').empty();
+    $('#ajax-loading').show();
+
+    $.ajax({
+        url: '/admin/newsletter/view.content',
+        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+        type: 'POST',
+        data: {id: id},
+        success: function (data) {
+            $('#ajax-loading').hide();
+            $('.modal-body').html(data);
+        },
+        error: function(response) {
+            $('#modal').modal('toggle');
+            console.log(response.responseText);
+            toggleError(response.responseJSON.errors);
+        }
+    });
+}
+
+/*
+    Cesa's Work
+ */
+function editCategory (e)
+{
+    const id = $(e).data('id');
+    $('.modal-title').empty();
+    $('#modal').modal('toggle');
+
+    $.ajax({
+        url: '/admin/edit_category_req',
+        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+        type: 'POST',
+        data: {id: id, type: 'category'},
+        success: function(data){
+            $('.modal-body').html(data);
+            $('#ajax-loading').hide();
+        }
+    });
+}
+
+function newCategory () {
+    $('#modal').modal('toggle');
+    $('.modal-title').html('New Category');
+
+    $.ajax({
+        url: '/admin/new_category_req',
+        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+        type: 'post',
+        success: function (data) {
+            $('.modal-body').html(data);
+            $('#ajax-loading').hide();
+        }
+    });
 }

@@ -68,8 +68,11 @@ class ItemManagement extends Controller
         else
         {
             try {
-                ItemCategory::where('id', '=', $category_id)->first()->delete();
-                $return = ['error' => false, 'msg' => 'Deleting category completed'];
+                $category = ItemCategory::where('id', '=', $category_id)->first();
+                $gender = $category->gender;
+                $category->delete();
+
+                $return = ['error' => false, 'msg' => 'Deleting category completed', 'next' => ['id' => $gender, 'next' => 1]];
 
                 return response()->json($return, 200);
             } catch (\Exception $e) {
@@ -103,7 +106,7 @@ class ItemManagement extends Controller
                 }
             }
 
-            $return = ['error' => false, 'msg' => 'Deleting item completed', 'next' => json_encode(['id' => $item_id, 'next' => 2])];
+            $return = ['error' => false, 'msg' => 'Deleting item completed', 'next' => ['id' => $item_id, 'next' => 2]];
 
             return response()->json($return, 200);
         } catch (\Exception $e)
@@ -458,5 +461,67 @@ class ItemManagement extends Controller
 
         }
 
+    }
+
+    //Cesa's Work
+    function editCategory (Request $req)
+    {
+        //tinggal di ambil data dr input form trus save db
+        $data = [
+            'name' => $req->input('categoryName'),
+            'description' => $req->input('categoryDescription'),
+            'gender' => $req->input('gender')
+        ];
+
+        $item = ItemCategory::findOrFail($req->input('id'));
+        $item->name = $data['name'];
+        $item->description = $data['description'];
+        $item->gender = $data['gender'];
+        $item->save();
+
+        return back();
+    }
+
+    function editCategoryAjax (Request $req)
+    {
+        $category_id = $req->input('id');
+
+        try {
+
+            $itemCategory = ItemCategory::find($category_id);
+            $data = [
+                'category' => $itemCategory
+            ];
+
+            return view('admin.edit_category', $data);
+
+
+        } catch (Exception $e) {
+            $return = ['error' => true, 'msg' => $e->getMessage()];
+
+            return response()->json($return, 400);
+        }
+    }
+
+    function newCategoryAjax (Request $req)
+    {
+        return view('admin.new_category');
+    }
+
+    function newCategory (Request $req)
+    {
+        $data = [
+            'name' => $req->input('categoryName'),
+            'description' => $req->input('categoryDescription'),
+            'gender' => $req->input('gender')
+        ];
+
+        $category = new ItemCategory();
+        $category->name = $data['name'];
+        $category->description = $data['description'];
+        $category->gender = $data['gender'];
+        $category->save();
+
+        return back();
     }
 }

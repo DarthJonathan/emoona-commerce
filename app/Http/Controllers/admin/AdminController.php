@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\ItemDetail;
+use App\Newsletter;
 use App\User;
 use Storage;
 use App\Webconfig;
@@ -76,5 +77,12 @@ class AdminController extends Controller
         ];
 
         return view('admin/webconfig/main', $data);
+    }
+
+    public function newsletter ()
+    {
+        $newsletters = Newsletter::limit(30)->get();
+        $data = ['newsletters' => $newsletters];
+        return view('admin.newsletter.home', $data);
     }
 }

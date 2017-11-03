@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\ItemCategory;
+use App\ItemDetail;
 use Illuminate\Http\Request;
 use App\Item;
 use Cart;
@@ -30,7 +31,7 @@ class ProductController extends Controller
             $categories         = ItemCategory::all();
             $product_images     = array();
 
-            foreach($products as $product)
+            foreach($products as $count => $product)
             {
                 foreach($product->item_detail as $detail)
                 {
@@ -38,7 +39,7 @@ class ProductController extends Controller
 
                     $files = Storage::files('public/item_detail/' . $path);
 
-                    array_push($product_images, $files);
+                    $product_images[$count] = $files;
                 }
             }
 
