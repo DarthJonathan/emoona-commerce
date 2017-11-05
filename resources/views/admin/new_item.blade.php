@@ -20,11 +20,12 @@
             </div>
 
             <div class="form-group row">
-                <label for="gender" class="col-sm-3 col-form-label">Gender</label>
+                <label for="gender" class="col-sm-3 col-form-label">Parent Category</label>
                 <div class="form-group col-sm-9 mb-0">
                     <select class="form-control" id="gender" name="gender" required>
                         <option value="male">Male</option>
                         <option value="female">Female</option>
+                        <option value="others">Others</option>
                     </select>
                 </div>
             </div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\ItemDetail;
 use App\Newsletter;
+use App\PaymentType;
 use App\User;
 use Storage;
 use App\Webconfig;
@@ -69,11 +70,13 @@ class AdminController extends Controller
     {
         $slider     = Storage::files('public/img/home-slider');
         $collection = Storage::files('public/img/home-collections');
+        $payment    = PaymentType::all();
 
         $data = [
-            'settings' => Webconfig::all(),
+            'settings'      => Webconfig::all(),
             'slider'        => $slider,
-            'collections'   => $collection
+            'collections'   => $collection,
+            'payment'       => $payment
         ];
 
         return view('admin/webconfig/main', $data);

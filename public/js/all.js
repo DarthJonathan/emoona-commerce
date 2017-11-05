@@ -401,6 +401,7 @@ function loadNextCategory (e)
 
             const out = JSON.parse(data);
             var html = "";
+            $('#itemsTable').DataTable().clear();
 
             switch(out.category)
             {
@@ -473,33 +474,110 @@ function loadNextCategory (e)
                         else
                             featured = '';
 
-                        html = '<tr>' +
-                            '<td>'+ (key+1) +'</td>' +
-                            '<td data-case="color" data-id="'+ value.id +'" onblur="editItemDetail(this)" contenteditable>'+ value.color +'</td>' +
-                            '<td data-case="size" data-id="'+ value.id +'" onblur="editItemDetail(this)" contenteditable>'+ value.size +'</td>' +
-                            '<td>' +
-                            '   <button class="btn btn-primary btn-block" style="cursor: pointer;" data-link="'+ value.images +'" onclick="viewImagesDetail(this)">View Images</button>' +
-                            '</td>' +
-                            '<td data-case="stock" data-id="'+ value.id +'" onblur="editItemDetail(this)" contenteditable>'+ value.stock +'</td>' +
-                            '<td>'+
-                            '<input type="radio" name="status#'+ value.id +'" ' + status.available + ' data-case="status" data-id="'+ value.id +'" onclick="editItemDetail(this)" value="available"> Available <br>' +
-                            '<input type="radio" name="status#'+ value.id +'" ' + status.preorder + '  data-case="status" data-id="'+ value.id +'" onclick="editItemDetail(this)" value="preorder"> Preorder <br>' +
-                            '<input type="radio" name="status#'+ value.id +'" ' + status.hidden + '  data-case="status" data-id="'+ value.id +'" onclick="editItemDetail(this)" value="hidden"> Hidden <br>' +
-                            '</td>' +
-                            '<td>' +
-                            '<input type="checkbox" name="featured" id="featured" data-case="featured"  data-id="'+ value.id +'" onchange="editItemDetail(this)" ' + featured + ' > Yes' +
-                            '</td>' +
-                            '<td>' +
-                            '<button class="btn btn-danger" onclick="deleteItemDetail(this)" data-id="'+ value.id +'" style="cursor:pointer">Delete</button>' +
-                            '</td>' +
-                            '</tr>';
+                        //Deprecaeated
 
-                        $('.items-list').append(html);
+                        // html = '<tr>' +
+                        //     '<td>'+ (key+1) +'</td>' +
+                        //     '<td data-case="color" data-id="'+ value.id +'" onblur="editItemDetail(this)" contenteditable>'+ value.color +'</td>' +
+                        //     '<td data-case="size" data-id="'+ value.id +'" onblur="editItemDetail(this)" contenteditable>'+ value.size +'</td>' +
+                        //     '<td>' +
+                        //     '   <button class="btn btn-primary btn-block" style="cursor: pointer;" data-link="'+ value.images +'" onclick="viewImagesDetail(this)">View Images</button>' +
+                        //     '</td>' +
+                        //     '<td data-case="stock" data-id="'+ value.id +'" onblur="editItemDetail(this)" contenteditable>'+ value.stock +'</td>' +
+                        //     '<td>'+
+                        //     '<input type="radio" name="status#'+ value.id +'" ' + status.available + ' data-case="status" data-id="'+ value.id +'" onclick="editItemDetail(this)" value="available"> Available <br>' +
+                        //     '<input type="radio" name="status#'+ value.id +'" ' + status.preorder + '  data-case="status" data-id="'+ value.id +'" onclick="editItemDetail(this)" value="preorder"> Preorder <br>' +
+                        //     '<input type="radio" name="status#'+ value.id +'" ' + status.hidden + '  data-case="status" data-id="'+ value.id +'" onclick="editItemDetail(this)" value="hidden"> Hidden <br>' +
+                        //     '</td>' +
+                        //     '<td>' +
+                        //     '<input type="checkbox" name="featured" id="featured" data-case="featured"  data-id="'+ value.id +'" onchange="editItemDetail(this)" ' + featured + ' > Yes' +
+                        //     '</td>' +
+                        //     '<td>' +
+                        //     '<button class="btn btn-dark" onclick="saleStatus(this)" data-id="'+ value.id +'" style="cursor:pointer">Sale Status</button>' +
+                        //     '<button class="btn btn-danger" onclick="deleteItemDetail(this)" data-id="'+ value.id +'" style="cursor:pointer">Delete</button>' +
+                        //     '</td>' +
+                        //     '</tr>';
+
+                        // $('.items-list').append(html);
+
+                        itemTable.row.add( [
+                            '<td>'+ (key+1) +'</td>',
+                            '<td data-case="color" data-id="'+ value.id +'" onblur="editItemDetail(this)" contenteditable>'+ value.color +'</td>',
+                            '<td data-case="size" data-id="'+ value.id +'" onblur="editItemDetail(this)" contenteditable>'+ value.size +'</td>',
+                            '<td><button class="btn btn-primary btn-block" style="cursor: pointer;" data-link="'+ value.images +'" onclick="viewImagesDetail(this)">View Images</button></td>',
+                            '<td data-case="stock" data-id="'+ value.id +'" onblur="editItemDetail(this)" contenteditable>'+ value.stock +'</td>',
+                            '<td><input type="radio" name="status#'+ value.id +'" ' + status.available + ' data-case="status" data-id="'+ value.id +'" onclick="editItemDetail(this)" value="available"> Available <br><input type="radio" name="status#'+ value.id +'" ' + status.preorder + '  data-case="status" data-id="'+ value.id +'" onclick="editItemDetail(this)" value="preorder"> Preorder <br><input type="radio" name="status#'+ value.id +'" ' + status.hidden + '  data-case="status" data-id="'+ value.id +'" onclick="editItemDetail(this)" value="hidden"> Hidden <br></td>',
+                            '<td><input type="checkbox" name="featured" id="featured" data-case="featured"  data-id="'+ value.id +'" onchange="editItemDetail(this)" ' + featured + ' > Yes </td>',
+                            '<td><button class="btn btn-dark" onclick="saleStatus(this)" data-id="'+ value.id +'" style="cursor:pointer">Sale Status</button><button class="btn btn-danger" onclick="deleteItemDetail(this)" data-id="'+ value.id +'" style="cursor:pointer">Delete</button></td>'
+                        ] ).draw( false );
                     });
                 }break
             }
         }
     });
+}
+
+function saleStatus (e)
+{
+    var id = $(e).data('id');
+
+    $('#modal').modal('toggle');
+    $('.modal-title').html('Payment Verification Image');
+    $('.modal-body').empty();
+    $('#ajax-loading').show();
+
+    $.ajax({
+        url: '/admin/items/sales_status',
+        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+        type: 'POST',
+        data: {id:id},
+        success: function (data) {
+            $('.modal-body').html(data);
+            $('#ajax-loading').hide();
+        }
+    });
+}
+
+function saveSale()
+{
+    var options = {
+        url: '/admin/items/save_sales',
+        type: 'POST',
+        success: function(response)
+        {
+            toggleSuccess(response.msg);
+            $('#modal').modal('toggle');
+        },
+        error: function(response)
+        {
+            console.log(response.responseText);
+            toggleError(JSON.stringify(response.responseJSON.errors));
+            $('#modal').modal('toggle');
+        }
+    };
+
+    $("#addSale").ajaxSubmit(options);
+}
+
+function removeSale ()
+{
+    var options = {
+        url: '/admin/items/remove_sale',
+        type: 'POST',
+        success: function(response)
+        {
+            toggleSuccess(response.msg);
+            $('#modal').modal('toggle');
+        },
+        error: function(response)
+        {
+            console.log(response.responseText);
+            toggleError(JSON.stringify(response.responseJSON.errors));
+            $('#modal').modal('toggle');
+        }
+    };
+
+    $("#addSale").ajaxSubmit(options);
 }
 
 function toggleSuccess (data)
@@ -624,6 +702,7 @@ function loadTransactionDatas ()
                             '<td><button class="btn btn-primary" onclick="openTicket(this)" data-id="'+ value.id +'" data-user-id="' + value.user_id + '">Open Ticket</button></td>'+
                         '</tr>';
                         wp.append(html);
+                        $('#wpTable').DataTable();
                     }break;
 
                     case 1 :
@@ -641,6 +720,7 @@ function loadTransactionDatas ()
                             '</td>'+
                             '</tr>';
                         pc.append(html);
+                        $('#pcTable').DataTable();
                     }break;
 
                     case 2 :
@@ -658,6 +738,7 @@ function loadTransactionDatas ()
                             '</td>'+
                             '</tr>';
                         ws.append(html);
+                        $('#wsTable').DataTable();
                     }break;
 
                     case 3 :
@@ -673,6 +754,7 @@ function loadTransactionDatas ()
                             '<td><button class="btn btn-primary" onclick="openTicket(this)" data-id="'+ value.id +'" data-user-id="' + value.user_id + '">Open Ticket</button></td>'+
                             '</tr>';
                         sc.append(html);
+                        $('#scTable').DataTable();
                     }break;
                 }
 
@@ -846,7 +928,6 @@ function verifyPayment(e)
         success: function (data) {
             $('.modal-body').html(data);
             $('#ajax-loading').hide();
-            location.reload();
         }
     });
 }
@@ -861,7 +942,7 @@ function viewPaymentProof(e)
     $('#ajax-loading').show();
 
     $.ajax({
-        url: '/view_payment_proof/',
+        url: '/view_payment_proof',
         headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
         type: 'POST',
         data: {id:id},
@@ -882,7 +963,7 @@ function viewPaymentProofAdmin(e)
     $('#ajax-loading').show();
 
     $.ajax({
-        url: '/admin/view_payment_proof/',
+        url: '/admin/view_payment_proof',
         headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
         type: 'POST',
         data: {id:id},
@@ -912,8 +993,8 @@ function loadFeatured ()
     featured.empty();
 
     $.ajax({
-        url: '/admin/webconfig/get_featured/',
-        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+        url: '/admin/webconfig/get_featured',
+        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
         type: 'POST',
         success: function (data) {
 
@@ -932,7 +1013,7 @@ function loadFeatured ()
 
         },
         error: function(response) {
-            console.log(response);
+            console.log(response.responseJSON);
             toggleError(response.responseJSON.errors);
         }
     });
@@ -953,8 +1034,8 @@ function removeFeatured()
     console.log(items_id);
 
     $.ajax({
-        url: '/admin/webconfig/remove.featured/',
-        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+        url: '/admin/webconfig/remove.featured',
+        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
         type: 'POST',
         data:{items: items_id},
         success: function (data) {
@@ -1008,7 +1089,7 @@ function saveThis(e)
     }
 
     $.ajax({
-        url: '/admin/webconfig/edit.texts/',
+        url: '/admin/webconfig/edit.texts',
         headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
         type: 'POST',
         data:{data: data, what: what},
@@ -1032,7 +1113,7 @@ function uploadNew ()
     $('#ajax-loading').show();
 
     $.ajax({
-        url: '/admin/webconfig/add_slider_ajax/',
+        url: '/admin/webconfig/add_slider_ajax',
         headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
         type: 'POST',
         success: function (data) {
@@ -1069,7 +1150,7 @@ function removeImage()
     }
 
     $.ajax({
-        url: '/admin/webconfig/remove.slider/',
+        url: '/admin/webconfig/remove.slider',
         headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
         type: 'POST',
         data:{items: items_id},
@@ -1140,6 +1221,24 @@ function viewMailContent(e)
     });
 }
 
+function saveTransferText ()
+{
+    var value = data = tinyMCE.get('value_transfer').getContent();
+
+    $.ajax({
+        url: '/admin/webconfig/update_transfer_text',
+        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+        data: {value: value},
+        type: 'POST',
+        success: function (data) {
+            toggleSuccess(data.msg);
+        },
+        error: function (response) {
+            toggleError(response.responseJSON.errors);
+        }
+    });
+}
+
 /*
     Cesa's Work
  */
@@ -1168,7 +1267,7 @@ function newCategory () {
     $.ajax({
         url: '/admin/new_category_req',
         headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
-        type: 'post',
+        type: 'POST',
         success: function (data) {
             $('.modal-body').html(data);
             $('#ajax-loading').hide();

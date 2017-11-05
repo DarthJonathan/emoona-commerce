@@ -18,6 +18,7 @@
 
         <div class="row">
             <div class="col-lg-12">
+                <h3>Store Items</h3>
                 <div class="jumbotron">
                     <button
                         class="btn btn-primary"
@@ -40,7 +41,8 @@
                     <div class="category-wrapper noscroll-bar">
                         <div class="list-group list-group-flush category-one">
                             <a onclick="loadNextCategory(this)" style="cursor:pointer" data-id="male" data-category="1" class="list-group-item list-group-item-action">Male</a>
-                            <a onclick="loadNextCategory(this)" style="cursor:pointer" data-id="Female" data-category="1" class="list-group-item list-group-item-action">Female</a>
+                            <a onclick="loadNextCategory(this)" style="cursor:pointer" data-id="female" data-category="1" class="list-group-item list-group-item-action">Female</a>
+                            <a onclick="loadNextCategory(this)" style="cursor:pointer" data-id="others" data-category="1" class="list-group-item list-group-item-action">Others</a>
                        </div>
                     </div>
                 </div>
@@ -79,7 +81,7 @@
                         Item Details
                     </div>
                     <div class="card-body">
-                        <table class="table">
+                        <table class="table" id="itemsTable">
                             <thead>
                                 <tr>
                                     <td>No.</td>
@@ -101,4 +103,11 @@
             </div>
         </div>
     </div>
+    <script>
+        var itemTable;
+
+        $(document).ready(function(){
+            itemTable = $('#itemsTable').DataTable();
+        });
+    </script>
 @endsection

@@ -1482,6 +1482,28 @@ ul {
   min-width: 320px !important;
 }
 
+/* John's Work */
+.center-box {
+  width: 100%;
+  height: 100%;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+}
+
+.image-proof {
+  width: 100%;
+  text-align: center;
+}
+
+.image-proof img {
+  max-width: 100%;
+  margin: auto;
+}
+
 /* Medias */
 /*----------------------------------------------------*/
 @media screen and (max-width: 900px) {

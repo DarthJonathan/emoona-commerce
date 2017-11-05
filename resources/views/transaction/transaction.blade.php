@@ -34,10 +34,10 @@
                             @endif
                         </td>
                     </tr>
-                    <tr>
-                        <td>Notes</td>
-                        <td>{{ $transaction->notes }}</td>
-                    </tr>
+                    {{--<tr>--}}
+                        {{--<td>Notes</td>--}}
+                        {{--<td>{{ $transaction->notes }}</td>--}}
+                    {{--</tr>--}}
                     <tr>
                         <td>Transfer Proof</td>
                         <td>
@@ -60,14 +60,15 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>Created At</td>
-                        <td>{{ $transaction->created_at }}</td>
+                        <td>Transaction Date</td>
+                        <td>{{ \Carbon\Carbon::parse($transaction->created_at)->format('D, d M Y') }}</td>
                     </tr>
                 </table>
                 <table class="table mt-5">
                     <thead>
                         <tr>
                             <td>Item Id</td>
+                            <td>Item Name</td>
                             <td>Item Color</td>
                             <td>Item Size</td>
                             <td>Quantity</td>
@@ -77,6 +78,7 @@
                         @foreach($transaction_detail as $detail)
                             <tr>
                                 <td>{{ $detail->id }}</td>
+                                <td>{{ $detail->item->name }}</td>
                                 <td>{{ $detail->item_detail->color }}</td>
                                 <td>{{ $detail->item_detail->size }}</td>
                                 <td>{{ $detail->quantity }}</td>

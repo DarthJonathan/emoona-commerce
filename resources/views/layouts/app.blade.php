@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('css/slick.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/pace-theme.css') }}">
 
     <!-- JS -->
     <script src="{{ asset('js/jquery-3.2.1.min.js') }}"></script>
@@ -42,11 +43,12 @@
 <div class="navbar">
     <div class="navbar1">
         <ul class="my-2">
-            <li>
-                <div class="navbar-search">
-                    <input type="text" id="searchbar" placeholder="Search.." >
-                </div><!--navbar-search-->
-            </li>
+            {{--Searchbar Deprecated--}}
+            {{--<li>--}}
+                {{--<div class="navbar-search">--}}
+                    {{--<input type="text" id="searchbar" placeholder="Search.." >--}}
+                {{--</div><!--navbar-search-->--}}
+            {{--</li>--}}
             <li class="dropdown">
                 <p class="btn-cart" id="bag-items">
                     <span>BAG</span> ({{ Cart::getTotalQuantity() }})
@@ -200,7 +202,7 @@
 <div class="notification-success notification hidden mt-3">
     <div class="container">
         <div class="col-lg-6 mx-auto">
-            <div class="alert alert-success alert-body-success">
+            <div class="alert alert-light alert-body-success">
                 Success!
             </div>
         </div>
@@ -210,8 +212,8 @@
 <div class="notification-error notification hidden mt-3">
     <div class="container">
         <div class="col-lg-6 mx-auto mt-2">
-            <div class="alert alert-danger alert-body-error">
-                Success!
+            <div class="alert alert-dark alert-body-error">
+                Error!
             </div>
         </div>
     </div>
@@ -239,12 +241,23 @@
 <script>
     $(document).ready(function()
     {
+        @if($errors->all())
+            @foreach($errors->all() as $error)
+                toggleError('{!! $error !!}');
+            @endforeach
+        @endif
+
+        @if(!empty($success))
+            @foreach($success->all() as $succ)
+                toggleSuccess('{!! $succ !!}');
+            @endforeach
+        @endif
+
         loadCart();
         $('.btn-cart, .cart-overlay').on('click', function () {
             $('.cart-container').toggleClass('cart-active');
-//            Experimental
-            $('.cart-overlay').toggleClass('overlay-active'); //test
-            $("body").toggleClass('body-disabled'); //test
+            $('.cart-overlay').toggleClass('overlay-active');
+            $("body").toggleClass('body-disabled');
         });
     });
 </script>

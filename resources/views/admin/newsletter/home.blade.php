@@ -53,7 +53,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <h4>Past Newsletters</h4>
-                <table class="table">
+                <table class="table" id="newsletterTable">
                     <thead>
                         <tr>
                             <th>Title</th>
@@ -84,13 +84,10 @@
             </div>
         </div>
     </div>
-
     <script>
-        $(document).ready(function(){
-            @if($errors->all())
-                toggleError('{{ $errors->first() }}');
-            @endif
+        $(document).ready(function()
+        {
+            $('#newsletterTable').DataTable();
         });
     </script>
-
 @endsection

@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\ItemCategory;
+use App\Discount;
 
 class ItemDetail extends Model
 {
@@ -27,5 +28,15 @@ class ItemDetail extends Model
         $category = $this->item()->first()->category_id;
         $category = ItemCategory::find($category);
         return $category;
+    }
+
+    function getDiscount()
+    {
+        $discount = Discount::where('item_detail_id', '=', $this->id)->first();
+
+        if($discount == null)
+            return 0;
+        else
+            return $discount->amount;
     }
 }

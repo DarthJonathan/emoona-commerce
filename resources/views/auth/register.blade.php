@@ -92,7 +92,7 @@
                     <label for="password-confirm" class="col-md-4 control-label">Confirm Password</label>
 
                     <div class="col-md-8 container-field">
-                        <input id="password-confirm" type="password" class="form-control account-field" name="password_confirmation" required>
+                        <input id="password-confirm" type="password" class="form-control input-field" name="password_confirmation" required>
                     </div>
                 </div>
 

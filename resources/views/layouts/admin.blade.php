@@ -23,6 +23,10 @@
     <script src="https://cloud.tinymce.com/stable/tinymce.min.js"></script>
     <script>tinymce.init({ selector:'textarea' });</script>
 
+    {{--DataTables--}}
+    <link rel="stylesheet" type="text/css" href="{{ asset('third-party/datatables/datatables.min.css') }}"/>
+    <script type="text/javascript" src="{{ asset('third-party/datatables/datatables.min.js') }}"></script>
+
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -162,13 +166,14 @@
                     <div class="sidebarLogo">
                         <img src="{{ asset('img/logo.png') }}" width="50%" height="auto">
                     </div>
-                    
-                    <form class="searchBox">
-                        <div class="input-group sidebarSearch">
-                            <input class="form-control" type="text" placeholder="Search">
-                            <button class="input-group-addon"><img src="{{ asset('img/search-icon.png') }}" width="20px"></button>
-                        </div>
-                    </form>
+
+                    {{--Depreceated--}}
+                    {{--<form class="searchBox">--}}
+                        {{--<div class="input-group sidebarSearch">--}}
+                            {{--<input class="form-control" type="text" placeholder="Search">--}}
+                            {{--<button class="input-group-addon"><img src="{{ asset('img/search-icon.png') }}" width="20px"></button>--}}
+                        {{--</div>--}}
+                    {{--</form>--}}
                         
                     
                 </center>
@@ -240,7 +245,7 @@
 <div class="notification-success notification hidden mt-3">
     <div class="container">
         <div class="col-lg-6 mx-auto">
-            <div class="alert alert-success alert-body-success">
+            <div class="alert alert-light alert-body-success">
                 Success!
             </div>
         </div>
@@ -250,8 +255,8 @@
 <div class="notification-error notification hidden mt-3">
     <div class="container">
         <div class="col-lg-6 mx-auto mt-2">
-            <div class="alert alert-danger alert-body-error">
-                Success!
+            <div class="alert alert-dark alert-body-error">
+                Error!
             </div>
         </div>
     </div>

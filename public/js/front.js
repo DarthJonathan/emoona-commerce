@@ -71,12 +71,12 @@ function loadCart()
     cart.empty();
 
     $.ajax({
-        url: '/cart/contents_ajax/',
+        url: '/cart/contents_ajax',
         headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
         type: 'POST',
         success: function (data) {
 
-            // console.log(data);
+            console.log(data);
 
             if(data.cart == null)
             {
@@ -384,5 +384,50 @@ function openMobileNav ()
     $('.mobile-nav-collapse').toggleClass('showNav');
     $('.navbar-toggler').toggleClass('togglerShow');
     $('.hamburger').toggleClass('hamburger--close');
+}
+
+function loadSale ()
+{
+    var store = $('.shop-page-shop');
+    store.empty();
+
+    $.ajax({
+        url: '/products/on.sale',
+        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+        type: 'POST',
+        success: function (res) {
+
+            // console.log(res);
+
+            //Load Default Products, limited 30 products
+            $.each(res.products, function(key, value){
+
+                var image = res.images[key][0].split('/');
+                image = '/storage/item_detail/' + image[2] + '/' + image[3];
+
+                var html = '<div class="col-md-3 float-left mb-5" style="cursor: pointer" onclick="openProduct(this)" data-id="' + value.item.item.id + '" data-category="' + value.category.name + '" data-gender="'+ value.category.gender +'">' +
+                    '<div class="shop-picture ps1"' +
+                    'style="background-image: url(' + image + ')"' +
+                    '>' +
+                    '</div>' +
+                    '<div class="shop-picture-desc">' +
+                    '<div class="shop-picture-name">' +
+                    value.item.item.name +
+                    '</div>' +
+                    '<div class="shop-picture-price">' +
+                    'IDR ' + value.item.item.price +
+                    '</div>'+
+                    '</div>' +
+                    '</div>';
+
+                store.append(html);
+            });
+
+        },
+        error: function (res) {
+            toggleError(res.errors);
+            console.log(res.responseText);
+        }
+    });
 }
 //# sourceMappingURL=front.js.map

@@ -69,6 +69,9 @@
                 <div class="form-group row">
                     <div class="col-md-4"></div>
                     <div class="col-md-8 container-field">
+                        <a href="{{ URL::to('register') }}" class="btn btn-primary btn-emoona-design">
+                            Register
+                        </a>
                         <button type="submit" class="btn btn-primary btn-emoona-design">
                             Login
                         </button>

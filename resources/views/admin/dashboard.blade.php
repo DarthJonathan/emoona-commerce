@@ -4,9 +4,14 @@
 @section('dashboard_active', 'class=active')
 
 @section('content')
-    <pre>
-    <?php
-        print_r(Auth::User())
-    ?>
-    </pre>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+
+            </div>
+            <div class="col-lg-6">
+
+            </div>
+        </div>
+    </div>
 @endsection

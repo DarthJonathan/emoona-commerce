@@ -191,16 +191,18 @@ class User extends Authenticatable
             foreach (User::getNotificationTable() as $notif) {
                 $notif_name = $notif['notification_name'];
                 $notif_url = $notif['notification_url'];
-                $notifications[$notif_name] = $notif_url;
+                $notifications[$notif_name] = [$notif_url, $notif['id']];
             }
         }else{
             foreach (User::getNotificationTable() as $notif) {
                 $notif_name = $notif['notification_name'];
                 $notif_url = $notif['notification_url'];
-                $notifications[$notif_name] = $notif_url;
+                $notifications[$notif_name] = [$notif_url, $notif['id']];
             }
         }
 
         return $notifications;
     }
+
+
 }

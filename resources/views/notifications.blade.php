@@ -20,10 +20,16 @@
                 <table class="table table-hover mt-5">
                     @foreach($notifications as $key => $item)
                         <tr>
-                            <td>
-                                <a href="{{ $item->notification_url }}">{{ $item->notification_name }}</a>
-                            </td>
-                            <td><a href="/notification/remove/{{ $item->id }}">&cross;</a></td>
+                            @if(!is_array($item))
+                                <td>
+                                    <a href="{{ $item }}">{{ $key }}</a>
+                                </td>
+                            @else
+                                <td>
+                                    <a href="{{ $item[0] }}">{{ $key }}</a>
+                                </td>
+                                <td><a href="/notification/remove/{{ $item[1] }}">&cross;</a></td>
+                            @endif
                         </tr>
                     @endforeach
                 </table>

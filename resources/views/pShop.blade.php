@@ -19,7 +19,7 @@
 			<li><span class="category-links" id="menDropDown">MEN</span></li>
 			<li><span class="category-links" id="womanDropDown">WOMAN</span></li>
 			<li><span class="category-links" id="othersDropDown">OTHERS</span></li>
-			<li><span class="category-links" id="saleDropDown">SALE</span></li>
+			<li><span class="category-links" onclick="loadSale()" id="saleDropDown">SALE</span></li>
 
 		</ul>
 

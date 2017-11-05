@@ -3,19 +3,27 @@
         <div class="col-lg-12">
             <form action="" id="addSlideImage">
                 <div class="row">
-                    <div class="col-lg-6">
-                        <div class="input-group">
-                            <label class="input-group-btn mb-2 mb-sm-0 mr-0">
-                                <span class="btn btn-primary" style="cursor: pointer">
-                                    Browse&hellip; <input type="file" name="image[]" style="display: none;" multiple>
-                                </span>
-                            </label>
-                            <input type="text" class="form-control" readonly>
-                            {{ csrf_field() }}
+                    <div class="col-lg-12 row mb-3">
+                        {{ csrf_field() }}
+                        <div class="col-lg-6">
+                            <div class="input-group">
+                                <label class="input-group-btn mb-2 mb-sm-0 mr-0">
+                                    <span class="btn btn-dark" style="cursor: pointer">
+                                        Browse&hellip; <input type="file" name="image" style="display: none;" >
+                                    </span>
+                                </label>
+                                <input type="text" class="form-control" readonly placeholder="Select a File">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="input-group">
+                                <label for="url" class="input-group-addon">http://</label>
+                                <input type="text" name="url" id="url" class="form-control" placeholder="emoonastudio.com">
+                            </div>
                         </div>
                     </div>
-                    <div class="col-lg-6">
-                        <button class="btn btn-primary btn-block" type="button" id="submit">Add New</button>
+                    <div class="col-lg-12">
+                        <button class="btn btn-dark btn-block" type="button" id="submit">Add New</button>
                     </div>
                 </div>
             </form>

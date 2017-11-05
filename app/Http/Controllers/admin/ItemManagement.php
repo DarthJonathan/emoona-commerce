@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\admin;
 
+use App\Discount;
 use App\Http\Requests\ItemDetailRequest;
 use App\Item;
 use App\ItemCategory;
 use App\ItemDetail;
+use Carbon\Carbon;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
@@ -523,5 +525,68 @@ class ItemManagement extends Controller
         $category->save();
 
         return back();
+    }
+
+    function salesStatus (Request $req)
+    {
+        $sales = Discount::where('item_detail_id', '=', $req->id)->first();
+        $data = ['id' => $req->id, 'sales' => $sales];
+        return view('admin.add_sale', $data);
+    }
+
+    function storeSale (Request $req)
+    {
+        $rules = [
+            'sale'  => 'required|integer|max:100'
+//            'valid' => 'required|date|after:today'
+        ];
+
+        $validate = Validator::make($req->all(), $rules);
+
+        if($validate->fails())
+        {
+            $message = $validate->messages();
+            $return = ['error' => true, 'errors' => $message];
+            return response()->json($return, 400);
+        }else {
+            try
+            {
+                $discount = Discount::where('item_detail_id', '=', $req->id)->first();
+
+                if($discount == null)
+                    $discount = new Discount();
+
+                $discount->amount           = $req->sale/100;
+//                $discount->valid_until      = $req->valid;
+                $discount->valid_until      = Carbon::now();
+                $discount->item_detail_id   = $req->id;
+
+                $discount->save();
+
+                return response()->json(['error' => false, 'msg' => 'Saving Discount on Item Success!'],200);
+
+            }catch(\Exception $e)
+            {
+                $return = ['error' => true, 'errors' => $e->getMessage()];
+                return response()->json($return, 400);
+            }
+        }
+    }
+
+    function removeSale (Request $req)
+    {
+        try
+        {
+            $discount = Discount::where('item_detail_id', '=', $req->id)->first();
+
+            $discount->delete();
+
+            return response()->json(['error' => false, 'msg' => 'Delete Discount on Item Success!'],200);
+
+        }catch(\Exception $e)
+        {
+            $return = ['error' => true, 'errors' => $e->getMessage()];
+            return response()->json($return, 400);
+        }
     }
 }

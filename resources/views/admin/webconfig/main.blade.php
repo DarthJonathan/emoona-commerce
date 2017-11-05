@@ -98,6 +98,22 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-lg-12 mt-3">
+                                <div class="card">
+                                    <span class="card-header">Payment Type</span>
+                                    <div class="card-body">
+                                        <div class="payment-type row">
+                                            <div class="form-row col-lg-12">
+                                                <label for="value_transfer" class="col-4 mt-3">Transfer Text</label>
+                                                <textarea  name="value_transfer" id="value_transfer" class="col-8 form-control">{{ $payment[0]->value }}</textarea>
+                                            </div>
+                                        </div>
+                                        <div class="input-group mt-3 col-lg-12">
+                                            <button class="btn btn-primary float-right" onclick="saveTransferText()">Save</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

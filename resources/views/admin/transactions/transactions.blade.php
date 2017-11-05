@@ -29,7 +29,7 @@
 
         <!-- Waiting Payment -->
         <div class="col-lg-12 wp">
-            <table class="table">
+            <table class="table" id="wpTable">
                 <thead>
                     <tr>
                         <td>No.</td>
@@ -48,7 +48,7 @@
 
         <!-- Payment Confirmation -->
         <div class="col-lg-12 pc">
-            <table class="table">
+            <table class="table" id="pcTable">
                 <thead>
                     <tr>
                         <td>No.</td>
@@ -69,7 +69,7 @@
         <!-- Waiting Shipping -->
         <div class="col-lg-12 ws">
             <table class="table">
-                <table class="table">
+                <table class="table" id="wsTable">
                     <thead>
                     <tr>
                         <td>No.</td>
@@ -90,7 +90,7 @@
 
         <!-- Shipped and Confirmed -->
         <div class="col-lg-12 sc">
-            <table class="table">
+            <table class="table" id="scTable">
                 <thead>
                 <tr>
                     <td>No.</td>

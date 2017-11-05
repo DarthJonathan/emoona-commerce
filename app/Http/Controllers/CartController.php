@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Discount;
+use App\Item;
+use App\ItemDetail;
 use Illuminate\Http\Request;
 use Cart;
 
@@ -11,13 +14,22 @@ class CartController extends Controller
     {
         try
         {
+            $product = ItemDetail::with('item')->where('id', '=', $req->product_detail_id)->first();
+            $discount = Discount::where('item_detail_id', '=', $req->product_detail_id)->first();
+
+            $price = $product->item->price;
+
+            if($discount != null)
+                $price = $price - ($price * $discount->amount);
+
             Cart::add([
-                'id' => $req->input('product_id'),
-                'name' => $req->input('product_name'),
-                'price' => $req->input('product_price'),
+                'id' => $req->input('product_id') . $req->product_detail_id,
+                'name' => $req->input('product_name') . ' (' . $product->color . ')',
+                'price' => $price,
                 'quantity' => $req->input('quantity'),
                 'attributes' => [
                     'product_detail_id' => $req->input('product_detail_id'),
+                    'product_id'        => $req->input('product_id'),
                     'product_image'     => $req->product_image
                 ]
             ]);

@@ -50,14 +50,15 @@
                 type: 'post',
                 success: function(response)
                 {
-                    console.log(response);
+//                    console.log(response);
                     $('#modal').modal('toggle');
                     toggleSuccess(response.msg);
+                    location.reload();
                 },
                 error: function(response)
                 {
                     $('#modal').modal('toggle');
-//                    toggleError(JSON.stringify(response.responseJSON.errors));
+                    toggleError(response.responseJSON.errors);
                     console.log(response.responseText);
                 }
             };

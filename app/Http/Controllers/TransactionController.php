@@ -14,6 +14,7 @@ use Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Image;
 
 class TransactionController extends Controller
 {
@@ -44,7 +45,7 @@ class TransactionController extends Controller
             $trans_detail = new TransactionDetails();
 
             $trans_detail->transaction_id   = $transaction->id;
-            $trans_detail->item_id          = $item->id;
+            $trans_detail->item_id          = $item->attributes['product_id'];
             $trans_detail->item_detail_id   = $item->attributes['product_detail_id'];
             $trans_detail->quantity         = $item->quantity;
 
@@ -113,7 +114,6 @@ class TransactionController extends Controller
             $transaction        = Transactions::with('transaction_detail', 'payment_type')->where('id', '=', $id)->first();
             $transaction_detail = TransactionDetails::with('item', 'item_detail')->where('transaction_id', '=', $id)->get();
 
-
             if($transaction->user_id != Auth::id())
                 return redirect('/');
 
@@ -152,9 +152,12 @@ class TransactionController extends Controller
                 return response()->json($return, 400);
             }else {
 
-                $path = 'public/payment_verification/' . $req->input('id');
+                $path = 'public/payment_verification/' . $req->input('id') . '/' . uniqid() . '.jpg';
 
-                $saved_path = $req->image->store($path);
+                mkdir(storage_path('app/public/payment_verification/' . $req->id));
+
+                $saved_path = $req->image->getRealPath();
+                Image::make($saved_path)->fit(1280, 720)->encode('jpg', 75)->interlace()->save(storage_path('app/' . $path));
 
                 $transaction = Transactions::find($req->id);
 
@@ -163,7 +166,7 @@ class TransactionController extends Controller
                     Storage::delete($transaction->transfer_proof);
 
                 //Write the transfer proof path
-                $transaction->transfer_proof = $saved_path;
+                $transaction->transfer_proof = $path;
                 $transaction->status = 1;
                 $transaction->save();
 

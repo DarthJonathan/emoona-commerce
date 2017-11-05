@@ -41,7 +41,6 @@
 
 		<input type="hidden" name="product_id" value="{{ $product['id'] }}">
 		<input type="hidden" name="product_name" value="{{ $product['name'] }}">
-		<input type="hidden" name="product_price" value="{{ $product['price'] }}">
 		<input type="hidden" name="product_image" value="{{ $images[0] }}">
 
 		<div class="row">
@@ -106,7 +105,7 @@
 								<ul>
 									@foreach($product['item_detail'] as $value => $item)
 										@if($item['status'] == 'available' && $item['stock'] > 0)
-											<li><div class="cbox" style="background-color: {{ $item['color'] }}; cursor: pointer" onclick="colorClick(this)" data-id="{{ $item['color'] }}"></div></li>
+											<li><div class="cbox" style="background-color: {{ $item['color'] }}; cursor: pointer" onclick="colorClick(this)" data-color="{{ $item['color'] }}" data-id="{{ $item['id'] }}"></div></li>
 										@endif
 									@endforeach
 								</ul>
@@ -148,16 +147,18 @@
 					@else
 						<div class="desc-product-out">
 							OUT OF STOCK
+							@if(\Illuminate\Support\Facades\Auth::check())
 							<div class="sub-desc-product-out">
 								<ul>
 									<li>
-										<input type="text" id="line-email" placeholder="EMAIL">
+										<input type="text" name="line-email" id="line-email" placeholder="EMAIL">
 									</li>
 									<li>
-										<button type="button" class="btn">NOTIFY ME</button>
+										<button type="button" style="cursor: pointer;" class="btn" onclick="notifyMe(this)">NOTIFY ME</button>
 									</li>
 								</ul>
 							</div><!--descproductout-->
+							@endif
 						</div><!--desc-product-out-->
 					@endif
 
@@ -170,15 +171,27 @@
 <script>
 
     var item_details = JSON.parse('<?php echo json_encode($product['item_detail']) ?>');
+    var item_discount = JSON.parse('<?php echo json_encode($discounts) ?>');
 
 	function colorClick(e)
 	{
-        var id = $(e).data('id');
+        var color   = $(e).data('color');
+        var id      = $(e).data('id');
+        var price   = {{ $product['price'] }};
 
         $('.cbox').removeClass('active');
         $(e).addClass('active');
 
-        loadSizes(id);
+        $.each(item_discount, function(key, value){
+            if(key == id)
+            {
+                var discounted = price-(price*value);
+                $('.desc-product-price').html('IDR <s>' + price + '</s> ' + discounted);
+                $('.item-price').html('<input type="hidden" name="product_price" value="' + discounted + '">')
+            }
+        });
+
+        loadSizes(color);
 	}
 
 	function loadSizes(id)

@@ -22,7 +22,7 @@ class UserController extends Controller
 
     public function notifications ()
     {
-        $notifications = user_notification::where('user_id', '=', Auth::id())->get();
+        $notifications = User::getNotifications();
         $data = ['notifications' => $notifications];
         return view('notifications', $data);
     }
@@ -41,7 +41,7 @@ class UserController extends Controller
         if($user_data['activation_code'] == null)
         {
             Session::flash('message', 'Already Activated');
-            return Redirect::home();
+            return redirect('/');
         }
 
         $mail_data = array(
@@ -56,7 +56,7 @@ class UserController extends Controller
         });
 
         Session::flash('message', 'Activation Code Sent, Please Check Your E-Mail');
-        return Redirect::home();
+        return redirect('/');
     }
 
     function removeNotification ($id)

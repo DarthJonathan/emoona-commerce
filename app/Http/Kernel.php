@@ -60,6 +60,7 @@ class Kernel extends HttpKernel
         'admin' => \App\Http\Middleware\isAdmin::class,
         'checkRole' => \App\Http\Middleware\checkRole::class,
         'suspended' => \App\Http\Middleware\isSuspended::class,
-        'cart.check' => \App\Http\Middleware\CartCheck::class
+        'cart.check' => \App\Http\Middleware\CartCheck::class,
+        'isActivated' => \App\Http\Middleware\isActivated::class
     ];
 }
