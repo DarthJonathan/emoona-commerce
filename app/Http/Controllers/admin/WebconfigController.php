@@ -282,4 +282,28 @@ class WebconfigController extends Controller
             }
         }
     }
+
+    function reorderSliders (Request $req)
+    {
+        try {
+            $old_order = $req->old;
+            $new_order = $req->new;
+
+            $sliders = HomeSlider::orderBy('display_order')->get();
+
+            $sliders[$old_order]->display_order = $new_order;
+            $sliders[$new_order]->display_order = $old_order;
+
+            $sliders[$old_order]->save();
+            $sliders[$new_order]->save();
+
+            return response()->json([
+                'error' => false,
+                'msg' => 'Reordering Success!'
+            ], 200);
+        }catch(\Exception $e)
+        {
+            return response()->json(['error' => true,'errors' => 'Reordering Error!', 'errors_debug' => $e->getMessage()], 400);
+        }
+    }
 }
