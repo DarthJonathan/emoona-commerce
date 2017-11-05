@@ -29,6 +29,8 @@
 			}
 		}
 
+		$flag = 0;
+
 	?>
 
 
@@ -90,24 +92,18 @@
 
 					{{-- Check if every item is empty --}}
 					@foreach($product['item_detail'] as $value => $item)
-						@if($item['stock']>1)
-							<?php $flag = 1 ?>
-						@else
-							<?php $flag = 0 ?>
+						@if($item['stock']>1 && $item['status'] != 'hidden')
+							<?php $flag++ ?>
 						@endif
 					@endforeach
 
-					@if($product['item_detail'] != null && $flag == 1)
+					@if($product['item_detail'] != null && $flag != 0)
 
 						<div class="desc-product-color">
 							COLOR:
 							<div class="sub-desc-product-color">
-								<ul>
-									@foreach($product['item_detail'] as $value => $item)
-										@if($item['status'] == 'available' && $item['stock'] > 0)
-											<li><div class="cbox" style="background-color: {{ $item['color'] }}; cursor: pointer" onclick="colorClick(this)" data-color="{{ $item['color'] }}" data-id="{{ $item['id'] }}"></div></li>
-										@endif
-									@endforeach
+								<ul class="colors">
+
 								</ul>
 							</div><!--subdescproductcolor-->
 						</div><!--deskproductcolor-->
@@ -117,7 +113,7 @@
 							<div class="sub-desc-product-size">
 
 							  <div class="form-group">
-								<select class="form-control" id="size" name="product_detail_id" required>
+								<select class="form-control" id="size" name="product_detail_id" onchange="checkStatus()" id="product_detail_id" required>
 								<option value="non">Select Color First</option>
 									{{--Size--}}
 								</select>
@@ -144,17 +140,34 @@
 							>ADD TO CART</button>
 						</div><!--desc-product-button-->
 
+                        <div class="notify" style="display: none">
+                            <div class="desc-product-out">
+                                Item will be available very soon
+                                @if(\Illuminate\Support\Facades\Auth::check())
+                                    <div class="sub-desc-product-out">
+                                        <ul>
+                                            {{--<li>--}}
+                                                {{--<input type="text" name="line-email" id="line-email" placeholder="EMAIL">--}}
+                                            {{--</li>--}}
+                                            <li>
+                                                <button type="button" id="notifyBtn" style="cursor: pointer;" class="btn" data-cat="preorder" onclick="notifyMe(this)">NOTIFY ME</button>
+                                            </li>
+                                        </ul>
+                                    </div><!--descproductout-->
+                                @endif
+                            </div><!--desc-product-out-->
+                        </div>
 					@else
 						<div class="desc-product-out">
 							OUT OF STOCK
 							@if(\Illuminate\Support\Facades\Auth::check())
 							<div class="sub-desc-product-out">
 								<ul>
+									{{--<li>--}}
+										{{--<input type="text" name="line-email" id="line-email" placeholder="EMAIL">--}}
+									{{--</li>--}}
 									<li>
-										<input type="text" name="line-email" id="line-email" placeholder="EMAIL">
-									</li>
-									<li>
-										<button type="button" style="cursor: pointer;" class="btn" onclick="notifyMe(this)">NOTIFY ME</button>
+										<button type="button" style="cursor: pointer;" class="btn" data-cat="no-stock" data-id="{{ $product['id'] }}" onclick="notifyMe(this)">NOTIFY ME</button>
 									</li>
 								</ul>
 							</div><!--descproductout-->
@@ -170,13 +183,36 @@
 </div><!--product-page-wrapper-->
 <script>
 
+    $(document).ready(function()
+    {
+        loadColors();
+    });
+
     var item_details = JSON.parse('<?php echo json_encode($product['item_detail']) ?>');
     var item_discount = JSON.parse('<?php echo json_encode($discounts) ?>');
+
+    function loadColors ()
+    {
+        var colors = $('.colors');
+        var colors_saved = [];
+
+        $.each(item_details, function (key, value){
+
+            if(colors_saved.includes(value.color))
+                return true;
+            else
+                colors_saved.push(value.color);
+
+            var html = '<li><div class="cbox" style="background-color: '+ value.color + '; cursor: pointer" onclick="colorClick(this)" data-color="'+ value.color +'"></div></li>';
+            colors.append(html);
+        });
+    }
 
 	function colorClick(e)
 	{
         var color   = $(e).data('color');
         var id      = $(e).data('id');
+        var avail   = $(e).data('avail');
         var price   = {{ $product['price'] }};
 
         $('.cbox').removeClass('active');
@@ -189,9 +225,11 @@
                 $('.desc-product-price').html('IDR <s>' + price + '</s> ' + discounted);
                 $('.item-price').html('<input type="hidden" name="product_price" value="' + discounted + '">')
             }
+
         });
 
         loadSizes(color);
+        checkStatus();
 	}
 
 	function loadSizes(id)
@@ -203,9 +241,33 @@
 		$.each(item_details, function(key, value){
 			if(value.color == id)
 			{
-				size.append('<option value="' + value.id + '">' + value.size + '</option>')
+				size.append('<option value="' + value.id + '" data-avail="'+ value.status +'" data-id="'+ value.id +'">' + value.size + '</option>')
 			}
 		});
 	}
+
+	function checkStatus ()
+    {
+        var check = $("#size option:selected").val();
+        var status = "";
+        var stock = 0;
+
+        $.each(item_details, function(key, value){
+            if(value.id == check)
+            {
+                status = value.status;
+                stock = value.stock;
+            }
+        });
+
+        if(status == 'preorder' || stock == 0)
+        {
+            $('.desc-product-button').hide();
+            $('.notify').css('display', 'block');
+        }else {
+            $('.desc-product-button').show();
+            $('.notify').css('display', 'none');
+        }
+    }
 </script>
 @endsection

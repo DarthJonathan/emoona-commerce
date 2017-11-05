@@ -346,9 +346,27 @@ body{
   margin:auto;
 }
 
+.home-slider-image
+{
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .placeholder-box
+  {
+    border: 1px solid #000;
+  }
+}
+
 .single-slide
 {
   text-align: center;
+  display: list-item;
+  -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+  box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+
   img
   {
     max-width: 100%;
@@ -366,4 +384,7 @@ body{
     margin-left: 10px;
   }
 }
+
+
+
 /* Media */

@@ -19,6 +19,7 @@
     <script src="{{ asset('js/all.js') }}"></script>
     <script src="{{ asset('js/jquery.form.min.js') }}"></script>
     <script src="{{ asset('js/pace.min.js') }}"></script>
+    <script src="{{ asset('js/html.sortable.min.js') }}"></script>
     {{--Tiny MCE--}}
     <script src="https://cloud.tinymce.com/stable/tinymce.min.js"></script>
     <script>tinymce.init({ selector:'textarea' });</script>

@@ -7,6 +7,8 @@ use App\Http\Requests\ItemDetailRequest;
 use App\Item;
 use App\ItemCategory;
 use App\ItemDetail;
+use App\ItemNotify;
+use App\user_notification;
 use Carbon\Carbon;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\File;
@@ -219,8 +221,39 @@ class ItemManagement extends Controller
         return view('admin.new_item_detail', $data);
     }
 
-    function newItemDetail (ItemDetailRequest $req)
+    function newItemDetail (Request $req)
     {
+        $rules = [
+            'color'     => 'required',
+            'size'      => 'required',
+            'stock'     => 'required|min:1',
+            'image'     => 'nullable',
+            'image.*'   => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+        ];
+
+        $messages = [
+            'color.required'    => 'Item color is required',
+            'size.required'     => 'Item size is required',
+            'stock.required'    => 'Item stock is required',
+            'stock.min'         => 'Item stock cannot be 0',
+            'image.*.mimes'     => 'Item image file type is invalid',
+            'image.*.image'     => 'Item image file uploaded is not an image',
+            'image.*.max'       => 'Item image maximum file size is 2 MB'
+        ];
+
+        $validate = Validator::make($req->all(), $rules, $messages);
+
+        if($validate->fails())
+        {
+            $return = ['error' => true, 'errors' => $validate->messages()];
+            return response()->json($return, 400);
+        }
+
+//        Check if item detail exists
+        $exists = ItemDetail::where(['color' => $req->color, 'size' => $req->size])->first();
+        if($exists != null)
+            return response()->json(['error' => true, 'errors' => 'Item Exists!'], 400);
+
         $parentId   = $req->input('id');
         $imageName  =  $parentId . '.' . time().uniqid();
         $imagePath  = 'public/item_detail/' . $imageName;
@@ -237,6 +270,9 @@ class ItemManagement extends Controller
             $itemDetail->status = $req->input('status');
             $itemDetail->images = $imageName;
             $itemDetail->save();
+
+            //Send notification
+            $this->sendNotification($parentId);
 
             //Store the file
             foreach($req->image as $image)
@@ -321,6 +357,47 @@ class ItemManagement extends Controller
         }
     }
 
+    function sendNotificationDetail($id)
+    {
+        $notifs = ItemNotify::where(['item_id' => $id, 'category' => 'preorder'])->get();
+
+        foreach($notifs as $notif)
+        {
+            $item = ItemDetail::with('item')->where('id', '=',$notif->item_id)->first();
+            $item_cate = $item->getCategory();
+
+            $user_notif = new user_notification();
+
+            $user_notif->user_id = $notif->user_id;
+            $user_notif->notification_name = "The item " . $item->item->name . " is now available";
+            $user_notif->notification_url = '/products/' . $item_cate->gender . '/' . $item_cate->name . '/' . $item->item->id;
+
+            $user_notif->save();
+
+            $notif->delete();
+        }
+    }
+
+    function sendNotification($id)
+    {
+        $notifs = ItemNotify::where(['item_id' => $id, 'category' => 'no-stock'])->get();
+
+        foreach($notifs as $notif)
+        {
+            $item = Item::with('item_category')->where('id', '=', $notif->item_id)->first();
+
+            $user_notif = new user_notification();
+
+            $user_notif->user_id = $notif->user_id;
+            $user_notif->notification_name = "The item " . $item->name . " is now available";
+            $user_notif->notification_url = '/products/' . $item->item_category->gender . '/' . $item->item_category->name . '/' . $item->id;
+
+            $user_notif->save();
+
+            $notif->delete();
+        }
+    }
+
     function editItemDetailAjax (Request $req)
     {
         $id     = $req->input('id');
@@ -346,11 +423,21 @@ class ItemManagement extends Controller
                 case 'status':
                 {
                     $itemDetail->status = $value;
+
+                    if($value == 'available')
+                    {
+                        $this->sendNotificationDetail($id);
+                    }
                 }break;
 
                 case 'stock':
                 {
                     $itemDetail->stock  = $value;
+
+                    if($value > 0)
+                    {
+                        $this->sendNotificationDetail($id);
+                    }
                 }break;
 
                 case 'featured':

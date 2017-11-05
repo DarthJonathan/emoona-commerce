@@ -41,6 +41,7 @@ Route::get('product/{gender}/{category_id}/{product_id}', 'ProductController@vie
     Route::post('products/front.page', 'ProductController@frontPage');
     Route::post('products/category.products', 'ProductController@categoryProducts');
     Route::post('products/on.sale', 'ProductController@loadOnSale');
+    Route::post('products/notify', 'StoreController@notify');
 
 /*
  * Cart Routes
@@ -142,6 +143,7 @@ Route::middleware(['admin'])->group(function()
         Route::post('/webconfig/add_slider', 'admin\WebconfigController@storeSliderImage');
         Route::post('/webconfig/change_collections', 'admin\WebconfigController@changeCollectionImages');
         Route::post('/webconfig/update_transfer_text', 'admin\WebconfigController@changeTransferText');
+        Route::post('/webconfig/reorder.slider', 'admin\WebconfigController@reorderSliders');
 
         /*
          * Item Management
@@ -173,7 +175,7 @@ Route::middleware(['admin'])->group(function()
         Route::post('delete_item_detail', 'admin\ItemManagement@deleteItemDetail');
         Route::post('delete_image', 'admin\ItemManagement@deleteItemDetailImage');
         Route::post('add_image_item_detail', 'admin\ItemManagement@addImageItemDetail');
-        Route::get('add_image_item_detail', 'admin\ItemManagement@addImageItemDetail');
+//        Route::get('add_image_item_detail', 'admin\ItemManagement@addImageItemDetail');
         Route::post('items/sales_status', 'admin\ItemManagement@salesStatus');
         Route::post('items/save_sales', 'admin\ItemManagement@storeSale');
         Route::post('items/remove_sale', 'admin\ItemManagement@removeSale');

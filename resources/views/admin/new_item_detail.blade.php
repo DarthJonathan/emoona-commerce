@@ -99,7 +99,7 @@
                 error: function(response)
                 {
                     $('#modal').modal('toggle');
-                    toggleError(response.responseJSON.errors);
+                    toggleError(JSON.stringify(response.responseJSON.errors));
                     console.log(response.responseJSON.errors_debug);
                 }
             };

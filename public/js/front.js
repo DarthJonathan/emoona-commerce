@@ -430,4 +430,38 @@ function loadSale ()
         }
     });
 }
+
+function notifyMe (e)
+{
+    var cat = $(e).data('cat');
+    var id ="";
+
+    console.log($("#size option:selected").val());
+    switch(cat)
+    {
+        case 'no-stock':
+        {
+            id = $(e).data('id');
+        }break;
+
+        case 'preorder':
+        {
+            id = $("#size option:selected").val();
+        }
+    }
+
+    $.ajax({
+        url: '/products/notify',
+        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+        type: 'POST',
+        data:{cat:cat, id:id},
+        success: function (res) {
+            toggleSuccess(res.msg);
+        },
+        error: function (res) {
+            toggleError(res.errors);
+            console.log(res.responseText);
+        }
+    });
+}
 //# sourceMappingURL=front.js.map

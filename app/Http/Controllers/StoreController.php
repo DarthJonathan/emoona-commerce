@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\HomeSlider;
 use App\ItemDetail;
+use App\ItemNotify;
 use App\Webconfig;
 use Storage;
+use Auth;
 use Illuminate\Http\Request;
 use File;
 
@@ -14,7 +17,7 @@ class StoreController extends Controller
     {
         $featured   = ItemDetail::with('item')->where('featured', '=', 1)->get();
         $images     = array();
-        $slider     = Storage::files('public/img/home-slider');
+        $slider     = HomeSlider::orderBy('display_order')->get();
         $collection = Storage::files('public/img/home-collections');
 
         //Deprecated
@@ -33,7 +36,7 @@ class StoreController extends Controller
             'datas'         => $webconfig,
             'featured'      => $featured,
             'images'        => $images,
-            'slider'        => $slider,
+            'sliders'       => $slider,
             'collections'   => $collection
         ];
 
@@ -67,5 +70,32 @@ class StoreController extends Controller
     function profile()
     {
         return view('pAccount');
+    }
+
+    function notify (Request $req)
+    {
+        try{
+
+            $cat = $req->cat;
+            $id = $req->id;
+
+            $notif = new ItemNotify();
+
+            $notif->user_id = Auth::id();
+            $notif->item_id = $id;
+            $notif->category = $cat;
+
+            $notif->save();
+
+            $return = ['error' => true, 'errors' => 'You will be notified if this item is available soon'];
+
+            return response()->json($return, 200);
+
+        }catch(\Exception $e)
+        {
+            $return = ['error' => true, 'errors' => 'Adding to notification failed', 'errors_debug' => $e->getMessage()];
+
+            return response()->json($return, 400);
+        }
     }
 }

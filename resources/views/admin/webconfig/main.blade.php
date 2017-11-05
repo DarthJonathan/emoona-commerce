@@ -46,7 +46,7 @@
                                     <div class="card-body">
                                         <div class="home-slider-image row">
                                             @foreach($slider as $key => $slide)
-                                                <div class="single-slide col-md-4 slide-{{ $key }}">
+                                                <div class="single-slide p-3 m-3 col-md-4 slide-{{ $key }}">
                                                     <img src="/storage/img/home-slider/{{ explode('/', $slide)[3] }}" data-id="{{  $key }}" onclick="checkBoxSlider(this)" id="slideimg{{  $key }}">
                                                     <input type="checkbox" name="slider#{{ $key }}" value="{{  explode('/', $slide)[3] }}" id="slide{{  $key }}" class="slide-items">
                                                 </div>
@@ -195,6 +195,34 @@
         $(document).ready(function()
         {
             loadFeatured();
+
+            sortable('.home-slider-image',{
+                forcePlaceholderSize: true,
+                placeholderClass: 'col-md-4 m-3 p-3 placeholder-box'
+            })
+
+            document.querySelector('.home-slider-image').addEventListener('sortupdate', function(e) {
+
+                var oldPos = e.detail.oldElementIndex;
+                var newPos = e.detail.elementIndex;
+
+                $.ajax({
+                    url: '/admin/webconfig/reorder.slider',
+                    headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+                    type: 'POST',
+                    data: {
+                        old: oldPos,
+                        new: newPos
+                    },
+                    success: function (res) {
+                        toggleSuccess(res.msg);
+                    },
+                    error: function (res) {
+                        toggleError(res.responseJSON.errors);
+                        console.log(res.responseJSON.errors_debug);
+                    }
+                });
+            });
 
             $(document).on('change', ':file', function () {
                 var input = $(this),

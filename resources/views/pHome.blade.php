@@ -2,9 +2,11 @@
 
 @section('bgpicture')
 <div id="home-pic-con" class="bgpicHome">
-    @foreach($slider as $key => $slide)
+    @foreach($sliders as $key => $slide)
 	<div class="home-image bghom{{ ($key+1) }}"
-         style="background-image: url('/storage/img/home-slider/{{ explode("/", $slide)[3] }}')"
+		 onclick="sliderRedirect(this)"
+		 data-link="{{ $slide->url }}"
+         style="background-image: url('/storage/img/home-slider/{{ explode("/", $slide->image)[4] }}')"
     ></div>
     @endforeach
 </div>
@@ -40,7 +42,7 @@
 							</div><!--line-content-box-1-->
 							<hr>
 							<div class="line-content-box-3">
-								{{ $datas['0']->value_1 }}
+								{{ $datas['1']->value_1 }}
 							</div><!--line-content-box-1-->
 							</div><!--wrapper-center-->
 						</div><!--text-content-box-1-->
@@ -68,7 +70,7 @@
 							</div><!--line-content-box-1-->
 							<hr>
 							<div class="line-content-box-3">
-								{{ $datas['1']->value_1 }}
+								{{ $datas['0']->value_1 }}
 							</div><!--line-content-box-1-->
 							</div><!--wrapper-center-->	
 						</div><!--text-content-box-4-->
