@@ -43,9 +43,10 @@ class StoreController extends Controller
         return view('phome',$data);
     }
 
-    function store ()
+    function store ($category = null)
     {
-        return view('pShop');
+        $data = ['category' => $category];
+        return view('pShop', $data);
     }
 
     function studio ()

@@ -227,8 +227,8 @@ class ItemManagement extends Controller
             'color'     => 'required',
             'size'      => 'required',
             'stock'     => 'required|min:1',
-            'image'     => 'nullable',
-            'image.*'   => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            'image'     => 'required',
+            'image.*'   => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ];
 
         $messages = [

@@ -21,7 +21,7 @@
     <script src="{{ asset('js/pace.min.js') }}"></script>
     <script src="{{ asset('js/html.sortable.min.js') }}"></script>
     {{--Tiny MCE--}}
-    <script src="https://cloud.tinymce.com/stable/tinymce.min.js"></script>
+    <script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=zbjkih4psdass55dhyxx68abl4afbzgu8qj49n1rkkrul1oy"></script>
     <script>tinymce.init({ selector:'textarea' });</script>
 
     {{--DataTables--}}

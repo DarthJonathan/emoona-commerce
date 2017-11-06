@@ -112,6 +112,45 @@ class ProductController extends Controller
         }
     }
 
+    function categoryProductsAll(Request $req)
+    {
+        $category_id = $req->category_id;
+        $products = array();
+        $all_images = array();
+
+        try {
+
+            $categories = ItemCategory::where('gender', '=', $category_id)->get();
+
+            foreach($categories as $key => $category) {
+                array_push($products, Item::with('item_category', 'item_detail')->where('category_id', '=', $category->id)->get());
+                $product_images = array();
+
+                foreach ($products[$key] as $product) {
+                    foreach ($product->item_detail as $detail) {
+                        $path = $detail->images;
+
+                        $files = Storage::files('public/item_detail/' . $path);
+
+                        array_push($product_images, $files);
+                    }
+                }
+
+                array_push($all_images, $product_images);
+            }
+
+            return response()->json([
+                'error'         => false,
+                'products'      => $products,
+                'images'        => $all_images
+            ], 200);
+
+        }catch(\Exception $e)
+        {
+            return response()->json(['error' => true, 'errors' => 'Error getting products from database! (Err: 225)', 'errors_debug' => $e->getMessage()], 400);
+        }
+    }
+
     function loadOnSale ()
     {
         try {

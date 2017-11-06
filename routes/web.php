@@ -15,7 +15,7 @@
  * Front Pages
  */
 Route::get('/', 'StoreController@home')->name('index');
-Route::get('/store', 'StoreController@store')->name('store');
+Route::get('/store/{category?}', 'StoreController@store')->name('store');
 Route::get('/studio', 'StoreController@studio')->name('studio');
 Route::get('/social', 'StoreController@social')->name('social');
 Route::get('/about', 'StoreController@about')->name('about');
@@ -40,6 +40,7 @@ Route::get('product/{gender}/{category_id}/{product_id}', 'ProductController@vie
      */
     Route::post('products/front.page', 'ProductController@frontPage');
     Route::post('products/category.products', 'ProductController@categoryProducts');
+    Route::post('products/category.products_all', 'ProductController@categoryProductsAll');
     Route::post('products/on.sale', 'ProductController@loadOnSale');
     Route::post('products/notify', 'StoreController@notify');
 

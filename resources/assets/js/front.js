@@ -76,8 +76,6 @@ function loadCart()
         type: 'POST',
         success: function (data) {
 
-            console.log(data);
-
             if(data.cart == null)
             {
                 var html = "<div class='cart-empty'>" +
@@ -436,7 +434,6 @@ function notifyMe (e)
     var cat = $(e).data('cat');
     var id ="";
 
-    console.log($("#size option:selected").val());
     switch(cat)
     {
         case 'no-stock':
@@ -457,6 +454,88 @@ function notifyMe (e)
         data:{cat:cat, id:id},
         success: function (res) {
             toggleSuccess(res.msg);
+        },
+        error: function (res) {
+            toggleError(res.errors);
+            console.log(res.responseText);
+        }
+    });
+}
+
+function sliderRedirect(e)
+{
+    var link = $(e).data('link');
+    window.location.href = link;
+}
+
+function openCategory(e)
+{
+    var cat = $(e).data('cat');
+    switch(cat)
+    {
+        case 'men':
+        {
+            window.location.href = '/store/male';
+        }break;
+
+        case 'woman':
+        {
+            window.location.href = '/store/female';
+        }break;
+
+        case 'others' :
+        {
+            window.location.href = '/store/others';
+        }break;
+    }
+}
+
+function loadCategory (e)
+{
+    var category_id = e;
+
+    var store = $('.shop-page-shop');
+
+    store.empty();
+
+    $.ajax({
+        url: '/products/category.products_all',
+        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+        type: 'POST',
+        data: {category_id: category_id},
+        success: function (res) {
+
+            //Load Default Products, limited 30 products
+            $.each(res.products, function(key1, value1){
+
+                $.each(value1, function(key, value) {
+
+                    //Check if item detail is not available
+                    if (value.item_detail == "")
+                        return true;
+
+                    var image = res.images[key1][key][0].split('/');
+                    image = '/storage/item_detail/' + image[2] + '/' + image[3];
+
+                    var html = '<div class="col-md-3 float-left mb-5" style="cursor: pointer" onclick="openProduct(this)" data-id="' + value.id + '" data-category="' + value.item_category.name + '" data-gender="' + value.item_category.gender + '">' +
+                        '<div class="shop-picture ps1"' +
+                        'style="background-image: url(' + image + ')"' +
+                        '>' +
+                        '</div>' +
+                        '<div class="shop-picture-desc">' +
+                        '<div class="shop-picture-name">' +
+                        value.name +
+                        '</div>' +
+                        '<div class="shop-picture-price">' +
+                        'IDR ' + value.price +
+                        '</div>' +
+                        '</div>' +
+                        '</div>';
+
+                    store.append(html);
+                });
+            });
+
         },
         error: function (res) {
             toggleError(res.errors);

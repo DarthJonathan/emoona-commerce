@@ -7,7 +7,9 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-6">
-
+                <pre>
+                    <?php print_r($analytics->toArray()); ?>
+                </pre>
             </div>
             <div class="col-lg-6">
 

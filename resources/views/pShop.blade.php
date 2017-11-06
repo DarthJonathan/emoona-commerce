@@ -54,8 +54,13 @@
 
 <script>
 	$(document).ready(function(){
-		//Load the Store First Time
-		loadStore();
+
+	    @if($category == null)
+			//Load the Store First Time
+			loadStore();
+		@else
+			loadCategory('{!! $category !!}');
+		@endif
 	});
 </script>
 

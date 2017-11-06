@@ -1482,6 +1482,10 @@ ul {
   min-width: 320px !important;
 }
 
+.account-login-dropdown input {
+  width: 100% !important;
+}
+
 /* John's Work */
 .center-box {
   width: 100%;
@@ -1502,6 +1506,17 @@ ul {
 .image-proof img {
   max-width: 100%;
   margin: auto;
+}
+
+.collections {
+  transition: all .4s ease-in-out;
+  cursor: pointer;
+}
+
+.collections:hover {
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+  z-index: 10000;
 }
 
 /* Medias */

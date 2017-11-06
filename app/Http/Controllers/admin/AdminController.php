@@ -6,6 +6,8 @@ use App\ItemDetail;
 use App\Newsletter;
 use App\PaymentType;
 use App\User;
+use Analytics;
+use Spatie\Analytics\Period;
 use Storage;
 use App\Webconfig;
 use Illuminate\Http\Request;
@@ -16,7 +18,11 @@ class AdminController extends Controller
 {
     public function dashboard ()
     {
-        return view('admin/dashboard');
+        //retrieve visitors and pageview data for the current day and the last seven days
+        $analyticsData = Analytics::fetchVisitorsAndPageViews(Period::days(7));
+
+        $data = ['analytics' => $analyticsData];
+        return view('admin/dashboard', $data);
     }
 
     public function accounts ()

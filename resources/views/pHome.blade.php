@@ -22,7 +22,7 @@
 		<div class="container">
 			<div class="row">
 				
-				<div class="col-md-4">
+				<div class="col-md-4 col-sm-12 woman-coll collections" onclick="openCategory(this)" data-cat="woman">
 					<div class="content-box cb1"
                          style="background-image: url('/storage/img/home-collections/{{ explode("/", $collections[0])[3] }}')"
                     >
@@ -30,7 +30,7 @@
 				
 				</div><!--col-->
 
-				<div class="col-md-4">
+				<div class="col-md-4 col-sm-12 men-coll-text collections mb-sm-5 mb-md-0" onclick="openCategory(this)" data-cat="men">
 					<div class="content-box cb2">
 						<div class="text-content-box tcb2">
 						<div class="wrapper-center">
@@ -50,7 +50,7 @@
 				
 				</div><!--col-->
 
-				<div class="col-md-4">
+				<div class="col-md-4 col-sm-12 others-coll collections" onclick="openCategory(this)" data-cat="others">
 					<div class="content-box cb3"
                          style="background-image: url('/storage/img/home-collections/{{ explode("/", $collections[1])[3] }}')"
                     >
@@ -58,7 +58,7 @@
 				
 				</div><!--col-->
 
-				<div class="col-md-4">
+				<div class="col-md-4 col-sm-12 woman-coll-text collections mb-sm-5 mb-md-0" onclick="openCategory(this)" data-cat="woman">
 					<div class="content-box cb4">
 						<div class="text-content-box tcb4">
 						<div class="wrapper-center">
@@ -78,7 +78,7 @@
 				
 				</div><!--col-->
 
-				<div class="col-md-4">
+				<div class="col-md-4 col-sm-12 men-coll collections" onclick="openCategory(this)" data-cat="men">
 					<div class="content-box cb5"
                          style="background-image: url('/storage/img/home-collections/{{ explode("/", $collections[2])[3] }}')"
                     >
@@ -86,7 +86,7 @@
 				
 				</div><!--col-->
 
-				<div class="col-md-4">
+				<div class="col-md-4 col-sm-12 others-coll-text collections mb-sm-5 mb-md-0" onclick="openCategory(this)" data-cat="others">
 					<div class="content-box cb6">
 						<div class="text-content-box tcb6">
 						<div class="wrapper-center">

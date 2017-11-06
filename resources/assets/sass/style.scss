@@ -1496,6 +1496,11 @@ ul{
 .account-login-dropdown
 {
   min-width:320px !important;
+
+  input
+  {
+    width:100% !important;
+  }
 }
 
 /* John's Work */
@@ -1514,6 +1519,16 @@ ul{
     max-width: 100%;
     margin:auto;
   }
+}
+
+.collections {
+  transition: all .4s ease-in-out;
+  cursor: pointer;
+}
+
+.collections:hover{
+  transform: scale(1.1);
+  z-index: 10000;
 }
 
 /* Medias */
