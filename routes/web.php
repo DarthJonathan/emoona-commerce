@@ -176,7 +176,6 @@ Route::middleware(['admin'])->group(function()
         Route::post('delete_item_detail', 'admin\ItemManagement@deleteItemDetail');
         Route::post('delete_image', 'admin\ItemManagement@deleteItemDetailImage');
         Route::post('add_image_item_detail', 'admin\ItemManagement@addImageItemDetail');
-//        Route::get('add_image_item_detail', 'admin\ItemManagement@addImageItemDetail');
         Route::post('items/sales_status', 'admin\ItemManagement@salesStatus');
         Route::post('items/save_sales', 'admin\ItemManagement@storeSale');
         Route::post('items/remove_sale', 'admin\ItemManagement@removeSale');
@@ -185,6 +184,8 @@ Route::middleware(['admin'])->group(function()
          * Account Management
          */
         Route::post('userinfo', 'admin\UserManagementController@userinfo');
+        Route::post('make.admin', 'admin\UserManagementController@makeAdmin');
+        Route::post('demote.admin', 'admin\UserManagementController@demoteAdmin');
         Route::post('user_transactions', 'admin\UserManagementController@userTransactions');
         Route::post('user_transaction_detail', 'admin\UserManagementController@userTransactionDetails');
         Route::post('suspend', 'admin\UserManagementController@suspend');

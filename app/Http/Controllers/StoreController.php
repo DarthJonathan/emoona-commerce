@@ -15,7 +15,7 @@ class StoreController extends Controller
 {
     function home ()
     {
-        $featured   = ItemDetail::with('item')->where('featured', '=', 1)->get();
+        $featured   = ItemDetail::with('item')->where('featured', '=', 1)->where('deleted', '=', 0)->get();
         $images     = array();
         $slider     = HomeSlider::orderBy('display_order')->get();
         $collection = Storage::files('public/img/home-collections');

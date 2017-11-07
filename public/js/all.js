@@ -16,50 +16,7 @@ function userInfo (e)
         type: 'POST',
         data: { id:id },
         success: function(data) {
-            const user = JSON.parse(data);
-
-            const html = '<h3 class="m-2 mb-4">User Information</h3>' +
-                '<table class="table">' +
-                '<tr>' +
-                '<td>Name</td>' +
-                '<td>'+ user.firstname +' ' + user.lastname+ '</td>' +
-                '</tr>' +
-                '<tr>' +
-                '<td>Phone</td>' +
-                '<td>'+ user.user_info.phone + '</td>' +
-                '</tr>' +
-                '<tr>' +
-                '<tr>' +
-                '<td>Birthday</td>' +
-                '<td>'+ user.user_info.birthday + '</td>' +
-                '</tr>' +
-                '<tr>' +
-                '<td>Address</td>' +
-                '<td>'+ user.user_info.address + '</td>' +
-                '</tr>' +
-                '<tr>' +
-                '<td>Country</td>' +
-                '<td>'+ user.user_info.country + '</td>' +
-                '</tr>' +
-                '<tr>' +
-                '<td>Postcode</td>' +
-                '<td>'+ user.user_info.postcode + '</td>' +
-                '</tr>' +
-                '<tr>' +
-                '<td>Province</td>' +
-                '<td>'+ user.user_info.province + '</td>' +
-                '</tr>' +
-                '<tr>' +
-                '<td>Last Login</td>' +
-                '<td>'+ user.last_login + '</td>' +
-                '</tr>' +
-                '<tr>' +
-                '<td>Created</td>' +
-                '<td>'+ user.created_at + '</td>' +
-                '</tr>' +
-                '</table>';
-
-            $('.modal-body').html(html);
+            $('.modal-body').html(data);
             $('#ajax-loading').hide();
         }
     });
@@ -67,7 +24,7 @@ function userInfo (e)
 
 function suspendUser (e)
 {
-    const id = e.id;
+    var id = e.id;
 
     $.ajax({
         url:'/admin/suspend',
@@ -81,9 +38,41 @@ function suspendUser (e)
     });
 }
 
+function makeAdmin(e)
+{
+    var id = e.id;
+
+    $.ajax({
+        url:'/admin/make.admin',
+        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+        type: 'POST',
+        data: { id:id },
+        success: function(data) {
+            toggleSuccess(data.msg);
+            location.reload();
+        }
+    });
+}
+
+function demoteAdmin(e)
+{
+    var id = $(e).data('id');
+
+    $.ajax({
+        url:'/admin/demote.admin',
+        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+        type: 'POST',
+        data: { id:id },
+        success: function(data) {
+            toggleSuccess(data.msg);
+            location.reload();
+        }
+    });
+}
+
 function deleteUser (e)
 {
-    const id = e.id;
+    var id = e.id;
 
     $('#modal').modal('toggle');
     $('.modal-title').empty();
@@ -345,37 +334,14 @@ function seeTransactionDetail (e)
         data: { id:id },
         success: function(data) {
             $('#ajax-loading').hide();
-            const transaction_details = JSON.parse(data);
-
-            var html = '<h3 class="m-2 mb-4">User Information</h3>' +
-                '<table class="table">' +
-                '<thead>' +
-                '<tr>' +
-                '<td>No</td>' +
-                '<td>Item</td>' +
-                '<td>Color</td>' +
-                '<td>Size</td>' +
-                '<td>Quantity</td>' +
-                '</tr>' +
-                '</thead>' +
-                '<tbody class="trans-detail"></tbody>' +
-                '</table>';
-
-            $('.modal-body').html(html);
-
-            $.each(transaction_details, function (key, value){
-                $('.trans-detail').append(
-                    '<tr>' +
-                    '<td>'+ (key+1) +'</td>' +
-                    '<td>'+ value.item.name +'</td>' +
-                    '<td>'+ value.item_detail.color +'</td>' +
-                    '<td>'+ value.item_detail.size +'</td>' +
-                    '<td>'+ value.quantity +'</td>' +
-                    '</td>'
-                );
-            });
-
+            $('.modal-body').html(data);
             $('#modal').modal('toggle');
+        },
+        error: function(data)
+        {
+            toggleError();
+            console.log(data.responseText);
+            console.log(data.responseJSON.errors);
         }
     });
 }

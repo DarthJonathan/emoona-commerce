@@ -6,10 +6,11 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="col-lg-6">
                 <pre>
                     <?php print_r($analytics->toArray()); ?>
                 </pre>
+            <div class="col-lg-6">
+
             </div>
             <div class="col-lg-6">
 

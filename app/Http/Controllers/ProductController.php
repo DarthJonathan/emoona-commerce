@@ -14,7 +14,7 @@ class ProductController extends Controller
 {
     function viewProduct($gender, $category_id, $product_id)
     {
-        $product = Item::with('item_category', 'item_detail')->where('id', '=', $product_id)->firstOrFail()->toArray();
+        $product = Item::with('item_category', 'item_detail')->where('id', '=', $product_id)->where('deleted', '=', 0)->firstOrFail()->toArray();
         $discounts          = array();
 
         if(strcasecmp($product['item_category']['name'], $category_id) || strcasecmp($product['item_category']['gender'], $gender))
@@ -42,7 +42,7 @@ class ProductController extends Controller
     {
         try
         {
-            $products           = Item::with('item_category', 'item_detail')->limit(30)->get();
+            $products           = Item::with('item_category', 'item_detail')->where('deleted', '=', 0)->limit(30)->get();
             $categories         = ItemCategory::all();
             $product_images     = array();
             $discounts          = array();
@@ -85,7 +85,7 @@ class ProductController extends Controller
         $category_id = $req->category_id;
 
         try {
-            $products = Item::with('item_category', 'item_detail')->where('category_id', '=', $category_id)->get();
+            $products = Item::with('item_category', 'item_detail')->where('category_id', '=', $category_id)->where('deleted', '=', 0)->get();
             $product_images = array();
 
             foreach ($products as $product)
@@ -120,10 +120,10 @@ class ProductController extends Controller
 
         try {
 
-            $categories = ItemCategory::where('gender', '=', $category_id)->get();
+            $categories = ItemCategory::where('gender', '=', $category_id)->where('deleted', '=', 0)->get();
 
             foreach($categories as $key => $category) {
-                array_push($products, Item::with('item_category', 'item_detail')->where('category_id', '=', $category->id)->get());
+                array_push($products, Item::with('item_category', 'item_detail')->where('category_id', '=', $category->id)->where('deleted', '=', 0)->get());
                 $product_images = array();
 
                 foreach ($products[$key] as $product) {
@@ -161,7 +161,7 @@ class ProductController extends Controller
 
             foreach($discounts as $count => $discount)
             {
-                $item_detail = ItemDetail::with('item')->where('id', '=', $discount->item_detail_id)->first();
+                $item_detail = ItemDetail::with('item')->where('id', '=', $discount->item_detail_id)->where('deleted', '=', 0)->first();
 
                 $products[$count]['item'] = $item_detail;
                 $products[$count]['category'] = $item_detail->getCategory();

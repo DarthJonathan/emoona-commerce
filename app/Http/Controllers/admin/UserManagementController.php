@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\TransactionDetails;
 use App\Transactions;
 use App\User;
+use App\users_groups;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -15,9 +16,11 @@ class UserManagementController extends Controller
     {
         $id = $req->input('id');
 
-        $users = User::with('user_info')->where('id', '=' , $id)->get()->toArray()[0];
+        $users = User::with('user_info')->where('id', '=' , $id)->first();
 
-        echo json_encode($users);
+        $data = ['user' => $users];
+
+        return view('admin.user_info', $data);
     }
 
     public function userTransactions (Request $req)
@@ -33,11 +36,41 @@ class UserManagementController extends Controller
 
     public function userTransactionDetails (Request $req)
     {
-        $id = $req->input('id');
+        try {
+            $id = $req->input('id');
 
-        $transaction_details = TransactionDetails::with('item', 'item_detail')->where('transaction_id', '=', $id)->get()->toArray();
+            $transaction_details = TransactionDetails::with('item', 'item_detail')->where('transaction_id', '=', $id)->get();
 
-        echo json_encode($transaction_details);
+            $data = ['transactions' => $transaction_details];
+
+            return view('admin.transactiondetails', $data);
+
+        }catch(\Exception $e)
+        {
+            return response()->json(['error' => true, 'errors' => $e->getMessage()], 400);
+        }
+    }
+
+    function demoteAdmin (Request $req)
+    {
+        $id = $req->id;
+
+        $group = users_groups::where('user_id', '=', $id)->first();
+        $group->group_id = 2;
+        $group->save();
+
+        return response()->json(['error' => false, 'msg' => 'User admin rights have been revoked'], 200);
+    }
+
+    function makeAdmin (Request $req)
+    {
+        $id = $req->id;
+
+        $group = users_groups::where('user_id', '=', $id)->first();
+        $group->group_id = 1;
+        $group->save();
+
+        return response()->json(['error' => false, 'msg' => 'User have been given admin rights'], 200);
     }
 
     public function suspend (Request $req)

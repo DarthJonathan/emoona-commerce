@@ -3,15 +3,12 @@
 namespace App\Http\Controllers\admin;
 
 use App\Discount;
-use App\Http\Requests\ItemDetailRequest;
 use App\Item;
 use App\ItemCategory;
 use App\ItemDetail;
 use App\ItemNotify;
 use App\user_notification;
 use Carbon\Carbon;
-use Illuminate\Filesystem\Filesystem;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Validator;
 use Illuminate\Http\Request;
@@ -38,7 +35,7 @@ class ItemManagement extends Controller
 
             case 2:
             {
-                $itemDetails = Item::where('category_id', '=', $req->input('id'))->get()->toArray();
+                $itemDetails = Item::where(['category_id' => $req->id, 'deleted' => 0])->get()->toArray();
 
                 $data = [
                     'category'  => $req->input('category'),
@@ -50,7 +47,7 @@ class ItemManagement extends Controller
 
             case 3:
             {
-                $itemDetails = ItemDetail::where('item_id', '=', $req->input('id'))->get()->toArray();
+                $itemDetails = ItemDetail::where(['item_id' => $req->id, 'deleted' => 0])->get()->toArray();
 
                 $data = [
                     'category'  => $req->input('category'),
@@ -65,7 +62,7 @@ class ItemManagement extends Controller
     function deleteCategory (Request $req)
     {
         $category_id = $req->input('id');
-        $check_category = count(Item::where('category_id', '=', $category_id)->get()->toArray());
+        $check_category = count(Item::where(['category_id' => $category_id, 'deleted' => 0])->get()->toArray());
 
         if($check_category > 0)
             $return = ['error' => true, 'msg' => 'There are items in this category'];
@@ -74,7 +71,8 @@ class ItemManagement extends Controller
             try {
                 $category = ItemCategory::where('id', '=', $category_id)->first();
                 $gender = $category->gender;
-                $category->delete();
+                $category->deleted = 1;
+                $category->save();
 
                 $return = ['error' => false, 'msg' => 'Deleting category completed', 'next' => ['id' => $gender, 'next' => 1]];
 
@@ -93,7 +91,10 @@ class ItemManagement extends Controller
 
         try {
             //Delete The Item
-            Item::where('id', '=', $item_id)->first()->delete();
+            $deleted = Item::where('id', '=', $item_id)->first();
+
+            $deleted->deleted = 1;
+            $deleted->save();
 
             //Delete the following item details
             $details = ItemDetail::where('item_id', '=', $item_id)->get();
@@ -106,7 +107,8 @@ class ItemManagement extends Controller
                     //Delete Image Folder
                     Storage::deleteDirectory($image_path);
 
-                    $detail->delete();
+                    $detail->deleted = 1;
+                    $detail->save();
                 }
             }
 
@@ -135,7 +137,8 @@ class ItemManagement extends Controller
 
             Storage::deleteDirectory($image_path);
 
-            $detail->delete();
+            $detail->deleted = 1;
+            $detail->save();
 
             $return = ['error' => false, 'msg' => 'Deleting item details completed', 'next' => ['id' => $parent, 'next' => 3]];
 

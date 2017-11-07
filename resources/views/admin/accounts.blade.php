@@ -28,10 +28,18 @@
                                     <td>{{ $admin['email'] }}</td>
                                     <td>{{ $admin['firstname'] }} {{ $admin['lastname'] }}</td>
                                     <td>
+                                        @if($admin['email'] != 'admin@admin.com')
+                                            <button
+                                                    class="btn btn-warning"
+                                                    data-id="{{ $admin['id'] }}"
+                                                    onclick="demoteAdmin(this)"
+                                                    style="cursor: pointer"
+                                            >Demote Admin</button>
+                                        @endif
                                         <button
                                                 class="btn btn-danger"
                                                 data-id="{{ $admin['id'] }}"
-                                                onclick="deleteAdmin(this)"
+                                                onclick="deleteUser(this)"
                                                 style="cursor: pointer"
                                         >Delete User</button>
                                     </td>
@@ -95,6 +103,12 @@
 
                                                 <button class="btn btn-primary m-1" style="cursor: pointer">User Transactions</button>
                                             </form>
+                                            <button
+                                                class="btn btn-warning m-1"
+                                                id="{{ $account['id'] }}"
+                                                onclick="makeAdmin(this)"
+                                                style="cursor: pointer"
+                                            >Make Admin</button>
                                             <button
                                                 class="btn btn-warning m-1"
                                                 id="{{ $account['id'] }}"
