@@ -99,10 +99,10 @@
         E.MOON.A Dashboard
     </a>
 
-    <div class="navbar-toggler" data-toggle="collapse" data-target="#navbarMobileContent" aria-controls="navbarContent" aria-expanded="false">
+    <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarMobileContent" aria-controls="navbarContent" aria-expanded="false">
         {{ Auth::user()->firstname }} {{ Auth::user()->lastname }}
         <div class="profilePicture" style="background-image: url({{ asset('img/profile-icon.png') }})"></div>
-    </div>
+    </button>
 
     <div class="collapse navbar-collapse" id="navbarMobileContent">
         <ul class="navbar-nav">

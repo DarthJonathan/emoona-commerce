@@ -13,7 +13,7 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col-md-4 m-auto">
+        <div class="col-md-6 m-3 m-sm-auto">
             <form method="POST" action="{{ route('login') }}">
                 {{ csrf_field() }}
 

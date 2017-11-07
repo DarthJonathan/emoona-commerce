@@ -44,7 +44,7 @@ class NewsletterController extends Controller
 
                 foreach($subcribers as $person)
                 {
-                    Mail::to($person->email)->later($when, new NewsletterMail($newsletter));
+                    Mail::to($person->email)->from('newsletter@emoonastudio.com', 'Emoona Studio Newsletter')->later($when, new NewsletterMail($newsletter));
                     $when = $when->addSecond(30);
                 }
 

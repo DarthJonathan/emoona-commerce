@@ -268,8 +268,11 @@
                 toggleSuccess('{!! $succ !!}');
             @endforeach
         @endif
+        @if(Session::has('success'))
+            toggleSuccess('{!! Session::get('success') !!}');
+        @endif
 
-        loadCart();
+loadCart();
         $('.btn-cart, .cart-overlay').on('click', function () {
             $('.cart-container').toggleClass('cart-active');
             $('.cart-overlay').toggleClass('overlay-active');

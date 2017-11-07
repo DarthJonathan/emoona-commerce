@@ -85,7 +85,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="header">
-                        <img src="{{ \Illuminate\Support\Facades\URL::to('assets/img/logo.png') }}" alt="" id="logo">
+                        <img src="{{ public_path() . 'assets/img/logo.png' }}" alt="" id="logo">
 
                         <div class="title">
                             THANKS FOR VERIFYING YOUR EMAIL
@@ -102,9 +102,9 @@
                 <div class="col-lg-12">
                     <div class="Context">
                         <div class="text">
-                            You'll be notified as soon as we launch,
+                            You can now shop at our store,
                             <br>
-                            Please whitelist us to receive the news!
+                            We look forward to serve you.
                         </div><!--text-->
 
                     </div><!--Context-->

@@ -2,26 +2,25 @@
 
 namespace App\Mail;
 
-use App\Newsletter;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class NewsletterMail extends Mailable
+class RegisterMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $newsletter;
+    public $activation_code;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(Newsletter $news)
+    public function __construct($data)
     {
-        $this->newsletter = $news;
+        $this->activation_code = $data;
     }
 
     /**
@@ -31,6 +30,8 @@ class NewsletterMail extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.newsletter');
+        return $this->from('activation@emoonastudio.com', 'Emoona Studio Activation')
+                    ->subject('Activate Your Account')
+                    ->view('emails.activate');
     }
 }

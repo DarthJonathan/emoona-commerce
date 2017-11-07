@@ -11,11 +11,24 @@
             <canvas id="lastWeek"></canvas>
         </div>
         <div class="col-lg-6 my-5">
-            <h3 class="my-3">Visitor Right Now</h3>
-            <canvas id="visitorRightNow"></canvas>
+            <h3 class="my-3">Most Visited Page</h3>
+            <div class="mt-5">
+                <h2>{{ $most_visited[1]['pageViews'] }}</h2>
+                <h4>{{ $most_visited[1]['pageTitle'] }}</h4>
+            </div>
         </div>
-        <div class="col-lg-6 my-5">
-            <h3 class="my-3">Visitor Right Now</h3>
+        <div class="col-lg-6 my-5 row">
+            <div class="col-lg-12">
+                <h3 class="my-2">User Types</h3>
+            </div>
+            <div class="col-lg-6 mt-5">
+                <h2>{{ $user_type[0]['sessions'] }}</h2>
+                <h4>{{ $user_type[0]['type'] }}</h4>
+            </div>
+            <div class="col-lg-6 mt-5">
+                <h2>{{ $user_type[1]['sessions'] }}</h2>
+                <h4>{{ $user_type[1]['type'] }}</h4>
+            </div>
         </div>
     </div>
 </div>

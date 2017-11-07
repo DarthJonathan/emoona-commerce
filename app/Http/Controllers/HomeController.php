@@ -63,4 +63,10 @@ class HomeController extends Controller
             return redirect('/register')->with($req->all());
         }
     }
+
+    function checkMail ()
+    {
+        $data = ['activation_code' => 'aaa'];
+        return view('emails.activate', $data);
+    }
 }

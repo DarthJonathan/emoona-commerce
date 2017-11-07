@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Mail\RegisterMail;
 use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
@@ -28,7 +29,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/';
+    protected $redirectTo = '/login';
 
     /**
      * Create a new controller instance.
@@ -84,16 +85,7 @@ class RegisterController extends Controller
             'group_id' => 2
         ]);
 
-        $mail_data = array(
-            'activation_code' => $activation_code
-        );
-
-        Mail::send('emails.activate', $mail_data, function($message) use ($data)
-        {
-            $message->from('activation@emoonastudio.com', 'Emoona Studio')
-                    ->to($data['email'], $data['firstname'] . $data['lastname'])
-                    ->subject('Activate Your Account');
-        });
+        Mail::to($data['email'])->send(new RegisterMail($activation_code));
 
         return $user;
     }

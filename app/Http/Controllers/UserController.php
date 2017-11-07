@@ -7,6 +7,7 @@ use App\User;
 use App\user_info;
 use App\user_notification;
 use Validator;
+use Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -112,6 +113,46 @@ class UserController extends Controller
                 Session::flash('message', 'Update Failed');
 
             return Redirect::to('/');
+        }
+    }
+
+    function editPassword ()
+    {
+        return view('auth.passwords.edit');
+    }
+
+    function storePassword (Request $req)
+    {
+        $rules = [
+            'old_password'      => 'required',
+            'password'          => 'required|confirmed'
+        ];
+
+        $validation = Validator::make($req->all(), $rules);
+
+        if($validation->fails())
+        {
+            $message = $validation->messages();
+            return back()->withError($message);
+        }else
+        {
+            try{
+                $old = $req->old_password;
+                $new = $req->password;
+
+                if(!Hash::check($old, Auth::user()->password))
+                    return back()->withErrors('Old password is incorrect');
+
+                $user = Auth::user();
+
+                $user->password = Hash::make($new);
+                $user->save();
+
+                return redirect('/profile')->with('success','Password Change was successful!');
+
+            }catch(\Exception $e) {
+                return back()->withErrors($e->getMessage());
+            }
         }
     }
 }

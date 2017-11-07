@@ -163,6 +163,9 @@ class ProductController extends Controller
             {
                 $item_detail = ItemDetail::with('item')->where('id', '=', $discount->item_detail_id)->where('deleted', '=', 0)->first();
 
+                if($item_detail == null)
+                    continue;
+
                 $products[$count]['item'] = $item_detail;
                 $products[$count]['category'] = $item_detail->getCategory();
             }

@@ -22,6 +22,8 @@ class CartController extends Controller
             //Check if the item is in preoder mode
             if($product->status == 'preorder')
                 return response()->json(['error' => false, 'errors' => 'Adding Item to Cart Failed (Item is available for preorder)'], 400);
+            else if($req->quantity > $product->stock)
+                return response()->json(['error' => false, 'errors' => 'Adding Item to Cart Failed (Item Exceeded Item Stock)'], 400);
 
             if($discount != null)
                 $price = $price - ($price * $discount->amount);

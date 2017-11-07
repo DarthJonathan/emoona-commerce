@@ -78,6 +78,7 @@ Route::middleware(['notifications', 'checkRole', 'suspended', 'auth'])->group(fu
     Route::get('/resend_activation', 'UserController@resend')->name('resend');
     Route::post('/update', 'UserController@update')->name('update');
     Route::get('/password.edit', 'UserController@editPassword')->name('edit.password');
+    Route::post('/password.edit', 'UserController@storePassword');
 
     /*
      * Checkout Transaction

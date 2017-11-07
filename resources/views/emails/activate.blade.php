@@ -77,6 +77,11 @@
             width:100%;
             text-align: center;
         }
+
+        img {
+            width: 200px;
+            margin:auto;
+        }
     </style>
 
 </head>
@@ -86,7 +91,7 @@
         <table>
             <tr>
                 <td>
-                    <img src="{{ \Illuminate\Support\Facades\URL::to('img/logo.png') }}" alt="" id="logo">
+                    <img src="{{ $message->embed(public_path() . '/img/logo.png') }}" alt="" id="logo">
                     <div class="title">
                         THANKS FOR SIGNING UP
                         <br>
@@ -103,7 +108,7 @@
                         </div><!--text-->
 
                         <div class="button">
-                            <a href="{{ \Illuminate\Support\Facades\URL::to('/activate/' . $activation_code) }}">
+                            <a href="{{ URL::to('/activate/' . $activation_code) }}">
                                 <button class="btn btn-default" id="btnVerify">Verify Email Address</button>
                             </a>
                         </div>

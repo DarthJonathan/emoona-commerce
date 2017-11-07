@@ -709,7 +709,7 @@ ul{
 .cbox{
   width: 32px;
   padding-bottom: 100%;
-
+  border: solid 1px #000;
 }
 
 .cbx1{
@@ -1536,6 +1536,11 @@ ul{
 /*----------------------------------------------------*/
 @media screen and (max-width: 900px){
 
+  .background{
+    position: relative;
+    top: 3vh;
+  }
+
   .footer li{
     font-size: 14px;
     padding:0 1.5rem 0 1.5rem;
@@ -1561,7 +1566,25 @@ ul{
 
   .subsc-content-wrapper{
     padding: 4% 15% 4% 15%;
+  }
 
+}
+
+@media screen and (max-height: 750px) {
+
+  .cart-container {
+    .cart-item-container{
+      height: calc(90vh - 100px);
+    }
+  }
+
+}
+
+@media screen and (min-height: 960px) {
+
+  .background{
+    position: relative;
+    top: 0;
   }
 
 }

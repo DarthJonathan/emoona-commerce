@@ -78,6 +78,9 @@ function loadCart()
 
             if(data.cart == null)
             {
+                bag.html('<span>BAG</span>(0)');
+                total.html('Rp.0,00');
+
                 var html = "<div class='cart-empty'>" +
                     "<h4>Cart Is Empty</h4>" +
                     "</div>";
@@ -123,7 +126,7 @@ function loadStore()
         type: 'POST',
         success: function (res) {
 
-            console.log(res);
+            // console.log(res);
 
             //Load Default Products, limited 30 products
             $.each(res.products, function(key, value){

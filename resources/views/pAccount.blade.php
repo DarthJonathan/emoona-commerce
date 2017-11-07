@@ -69,7 +69,7 @@
 				<div class="acc-order ico-track">
 					<img src="{{ asset('img/track.png')}}" alt="">
 				</div><!--track-->
-				Support Tickets
+				Customer Service
 			</li>
 		</ul>
 	
