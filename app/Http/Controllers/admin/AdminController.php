@@ -18,9 +18,9 @@ class AdminController extends Controller
 {
     public function dashboard ()
     {
-        $analyticsData = Analytics::fetchTotalVisitorsAndPageViews(Period::days(7));
+        $last_week = Analytics::fetchTotalVisitorsAndPageViews(Period::days(6));
 
-        $data = ['analytics' => $analyticsData];
+        $data = ['last_week' => $last_week];
         return view('admin/dashboard', $data);
     }
 

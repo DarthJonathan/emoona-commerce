@@ -17,6 +17,7 @@
     <script src="{{ asset('js/popper-utils.js') }}"></script>
     <script src="{{ asset('js/bootstrap.js') }}"></script>
     <script src="{{ asset('js/all.js') }}"></script>
+    <script src="{{ asset('js/dependency.js') }}"></script>
     <script src="{{ asset('js/jquery.form.min.js') }}"></script>
     <script src="{{ asset('js/pace.min.js') }}"></script>
     <script src="{{ asset('js/html.sortable.min.js') }}"></script>

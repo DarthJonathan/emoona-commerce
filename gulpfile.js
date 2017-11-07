@@ -12,5 +12,8 @@ elixir(function(mix) {
     mix.scripts([
         'main.js'
     ]);
+
+    mix.webpack('dependency.js');
+
     mix.scripts('front.js');
 });
