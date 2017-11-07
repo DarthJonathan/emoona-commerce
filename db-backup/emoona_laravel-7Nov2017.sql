@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 06, 2017 at 12:29 PM
+-- Generation Time: Nov 07, 2017 at 04:12 PM
 -- Server version: 10.1.26-MariaDB
 -- PHP Version: 7.1.8
 
@@ -105,6 +105,7 @@ CREATE TABLE `items` (
   `price` int(11) NOT NULL,
   `hidden` int(11) NOT NULL,
   `preorder` int(11) NOT NULL DEFAULT '0',
+  `deleted` int(11) NOT NULL DEFAULT '0',
   `created_at` date NOT NULL,
   `updated_at` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -113,11 +114,11 @@ CREATE TABLE `items` (
 -- Dumping data for table `items`
 --
 
-INSERT INTO `items` (`id`, `category_id`, `name`, `sku`, `description`, `price`, `hidden`, `preorder`, `created_at`, `updated_at`) VALUES
-(21, 4, 'Black', 'SK001', '1000', 1000, 0, 0, '2017-11-02', '2017-11-02'),
-(22, 5, 'APAPAPAPAPA', 'SK001', 'Black', 100000, 0, 0, '2017-11-02', '2017-11-02'),
-(23, 4, 'Test', 'SK001', 'Black', 10000, 0, 0, '2017-11-03', '2017-11-03'),
-(24, 7, 'Black Neckless', 'BN001', 'Neckless Brow', 10000, 0, 0, '2017-11-03', '2017-11-03');
+INSERT INTO `items` (`id`, `category_id`, `name`, `sku`, `description`, `price`, `hidden`, `preorder`, `deleted`, `created_at`, `updated_at`) VALUES
+(21, 4, 'Black', 'SK001', '1000', 1000, 0, 0, 0, '2017-11-02', '2017-11-02'),
+(22, 5, 'APAPAPAPAPA', 'SK001', 'Black', 100000, 0, 0, 0, '2017-11-02', '2017-11-02'),
+(23, 4, 'Test', 'SK001', 'Black', 10000, 0, 0, 1, '2017-11-03', '2017-11-07'),
+(24, 7, 'Black Neckless', 'BN001', 'Neckless Brow', 10000, 0, 0, 0, '2017-11-03', '2017-11-03');
 
 -- --------------------------------------------------------
 
@@ -130,6 +131,7 @@ CREATE TABLE `item_category` (
   `name` varchar(255) NOT NULL,
   `description` text NOT NULL,
   `gender` varchar(255) NOT NULL,
+  `deleted` int(11) NOT NULL DEFAULT '0',
   `updated_at` date NOT NULL,
   `created_at` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -138,11 +140,11 @@ CREATE TABLE `item_category` (
 -- Dumping data for table `item_category`
 --
 
-INSERT INTO `item_category` (`id`, `name`, `description`, `gender`, `updated_at`, `created_at`) VALUES
-(4, 'T Shirt', 'Black', 'male', '2017-11-02', '2017-11-02'),
-(5, 'Blouse', 'Blous', 'female', '2017-11-02', '2017-11-02'),
-(6, 'Test', 'asdasd', 'female', '2017-11-03', '2017-11-03'),
-(7, 'Neckless', 'Neckless', 'others', '2017-11-03', '2017-11-03');
+INSERT INTO `item_category` (`id`, `name`, `description`, `gender`, `deleted`, `updated_at`, `created_at`) VALUES
+(4, 'T Shirt', 'Black', 'male', 0, '2017-11-02', '2017-11-02'),
+(5, 'Blouse', 'Blous', 'female', 0, '2017-11-02', '2017-11-02'),
+(6, 'Test', 'asdasd', 'female', 0, '2017-11-03', '2017-11-03'),
+(7, 'Neckless', 'Neckless', 'others', 0, '2017-11-03', '2017-11-03');
 
 -- --------------------------------------------------------
 
@@ -159,6 +161,7 @@ CREATE TABLE `item_detail` (
   `stock` int(11) NOT NULL,
   `status` varchar(11) NOT NULL,
   `featured` int(1) NOT NULL DEFAULT '0',
+  `deleted` int(11) NOT NULL DEFAULT '0',
   `updated_at` date NOT NULL,
   `created_at` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -167,14 +170,14 @@ CREATE TABLE `item_detail` (
 -- Dumping data for table `item_detail`
 --
 
-INSERT INTO `item_detail` (`id`, `item_id`, `color`, `size`, `images`, `stock`, `status`, `featured`, `updated_at`, `created_at`) VALUES
-(44, 22, 'Kentang', 'Apel', '22.150960869759faccf9b9b0f', 100000, 'available', 0, '2017-11-02', '2017-11-02'),
-(46, 24, 'Black White', 'L', '24.150972895459fca2ba0ad69', 10, 'available', 1, '2017-11-03', '2017-11-03'),
-(47, 22, 'Blue', 'L', '22.150973118859fcab7451eb9', 1000, 'available', 1, '2017-11-03', '2017-11-03'),
-(48, 23, 'Black', 'L', '23.150986162059fea8f4aeda3', 10, 'available', 0, '2017-11-05', '2017-11-05'),
-(50, 23, 'BLUE', 'M', '23.150986263259feace89873c', 10, 'available', 0, '2017-11-05', '2017-11-05'),
-(52, 23, 'Black', 'M', '23.150986412759feb2bf26873', 10, 'available', 0, '2017-11-05', '2017-11-05'),
-(54, 21, 'Black', 'L', '21.150986562759feb89b20867', 0, 'available', 0, '2017-11-05', '2017-11-05');
+INSERT INTO `item_detail` (`id`, `item_id`, `color`, `size`, `images`, `stock`, `status`, `featured`, `deleted`, `updated_at`, `created_at`) VALUES
+(43, 23, 'Black', 'L', '21.150986562759feb89b20867', 0, 'available', 0, 1, '2017-11-07', '2017-11-05'),
+(44, 22, 'Kentang', 'Apel', '22.150960869759faccf9b9b0f', 100000, 'available', 0, 0, '2017-11-02', '2017-11-02'),
+(46, 24, 'Black White', 'L', '24.150972895459fca2ba0ad69', 10, 'available', 1, 0, '2017-11-03', '2017-11-03'),
+(47, 22, 'Blue', 'L', '22.150973118859fcab7451eb9', 1000, 'available', 1, 0, '2017-11-03', '2017-11-03'),
+(48, 23, 'Black', 'L', '23.150986162059fea8f4aeda3', 10, 'available', 0, 1, '2017-11-07', '2017-11-05'),
+(50, 23, 'BLUE', 'M', '23.150986263259feace89873c', 10, 'available', 0, 1, '2017-11-07', '2017-11-05'),
+(52, 23, 'Black', 'M', '23.150986412759feb2bf26873', 10, 'available', 0, 1, '2017-11-07', '2017-11-05');
 
 -- --------------------------------------------------------
 
@@ -506,7 +509,6 @@ INSERT INTO `transaction_detail` (`id`, `transaction_id`, `item_id`, `item_detai
 (10, 16, 21, 42, 1, '2017-11-03', '2017-11-03'),
 (11, 17, 21, 42, 1, '2017-11-05', '2017-11-05'),
 (12, 17, 21, 43, 1, '2017-11-05', '2017-11-05'),
-(13, 21, 2143, 43, 2, '2017-11-05', '2017-11-05'),
 (14, 23, 21, 43, 1, '2017-11-05', '2017-11-05');
 
 -- --------------------------------------------------------
@@ -536,8 +538,7 @@ INSERT INTO `users` (`id`, `firstname`, `lastname`, `activation_code`, `email`, 
 (22, 'Jonathan', 'Hosea', NULL, 'jonathan.hosea@me.com', '$2y$10$6Xd3Y7E.CcYAsSsDbGD82eWDg2tmh31F.TfRSYiGK923eMENkT4ti', '2017-11-05 04:46:49', '75N24wqQu9oXiwR5J9zOnmVkZ5aBYkcH0cSvDPdr08BddqPOZbr8DiiaPF0G', '2017-09-05 12:46:09', '2017-09-05 16:15:17'),
 (24, 'Administrator', 'Admin', '150468752659afb5a698dc0', 'admin@admin.com', '$2y$10$awV4e.Kuz85DjE.jnx/Cz.EtIvxuYSZv8Wl0nDofqVcXkmPoOi5My', '2017-11-06 09:32:49', 'Il63ELlNWhsD9ZLc6sdxrck0SG2LESHLlUw93Uzs1lTuWeZUQ643jiVUmE39', '2017-09-05 18:45:26', '2017-09-05 18:45:26'),
 (30, 'Jonathan', 'Hosea', NULL, 'zonecaptain@gmail.com', '$2y$10$uYlrGR8aPoq0iHXxKIADCelP3b1BNop47qFapxNg.5MAfLbYmtmCe', '2017-11-05 05:58:16', '6smzzcHipY15iyDxhLWZz6zCIP0rd6uCNrirQsKiNNCIbigIT6qb0Zwa0D4y', '2017-09-25 05:31:12', '2017-09-25 05:31:24'),
-(31, 'Jonathan', 'Hosea', '150970339959fc3ee784e2a', 'asd@asd.com', '$2y$10$0yrTYxzVYEOPdEHYBq0GA.QUd6VyWu7bd40rN.h2y.NOax/zplC2m', '2017-11-03 10:32:56', 'JRezln1eQyHx89HQipCFdl26P9zfFaLbUYyPHzqmF2BMsZKNNWZha2VjNCtj', '2017-11-03 03:03:19', '2017-11-03 03:03:19'),
-(32, 'Jonathan', 'Hosea', '150970372459fc402c4005c', 'aaa@aaa.com', '$2y$10$l1/R4GRtQk4lX7RXM3Pr3ec88db0fTfoOktdLSQnwH8ivjZv7D58u', '2017-11-03 16:49:30', '6JsDfPNUHxkeGSkNVCflm4eyROKCyYq6iVXnWmjv85cnrhvq0oItR6fDf6mP', '2017-11-03 03:08:44', '2017-11-03 03:08:44');
+(31, 'Jonathan', 'Hosea', '150970339959fc3ee784e2a', 'asd@asd.com', '$2y$10$0yrTYxzVYEOPdEHYBq0GA.QUd6VyWu7bd40rN.h2y.NOax/zplC2m', '2017-11-03 10:32:56', 'JRezln1eQyHx89HQipCFdl26P9zfFaLbUYyPHzqmF2BMsZKNNWZha2VjNCtj', '2017-11-03 03:03:19', '2017-11-03 03:03:19');
 
 -- --------------------------------------------------------
 
@@ -559,8 +560,7 @@ INSERT INTO `users_groups` (`id`, `user_id`, `group_id`) VALUES
 (7, 22, 2),
 (8, 24, 1),
 (13, 30, 2),
-(14, 31, 2),
-(15, 32, 2);
+(14, 31, 2);
 
 -- --------------------------------------------------------
 
@@ -591,8 +591,7 @@ INSERT INTO `user_info` (`id`, `user_id`, `address`, `postcode`, `province`, `co
 (14, 22, 'Taman Pegangsaan Indah Blok D No 11', '14250', 'Jakarta', 'INA', '1997-04-03', '87875763570', 'male', 1, 0, NULL),
 (15, 24, NULL, NULL, NULL, NULL, '1997-04-03', NULL, NULL, NULL, 0, NULL),
 (20, 30, 'Taman Pegangsaan Indah Blok D No 11', '14250', 'Jakarta', 'INA', '1997-04-03', '087875763570', 'male', NULL, 0, NULL),
-(21, 31, NULL, NULL, NULL, NULL, '2017-11-18', NULL, NULL, 1, 0, NULL),
-(22, 32, NULL, NULL, NULL, NULL, '2017-11-18', NULL, NULL, NULL, 0, NULL);
+(21, 31, NULL, NULL, NULL, NULL, '2017-11-18', NULL, NULL, 1, 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -617,7 +616,6 @@ INSERT INTO `user_notification` (`id`, `user_id`, `notification_name`, `notifica
 (5, 30, 'Transaction Number 12', '/transactions/12', '2017-10-16', '2017-10-16'),
 (6, 30, 'Transaction Number 13', '/transactions/13', '2017-10-25', '2017-10-25'),
 (7, 30, 'Transaction Number 14', '/transactions/14', '2017-10-26', '2017-10-26'),
-(8, 32, 'Transaction Number 15', '/transactions/15', '2017-11-03', '2017-11-03'),
 (9, 30, 'Transaction Number 16', '/transactions/16', '2017-11-03', '2017-11-03'),
 (10, 30, 'Transaction Number 17', '/transactions/17', '2017-11-05', '2017-11-05'),
 (11, 30, 'Transaction Number 22', '/transactions/22', '2017-11-05', '2017-11-05'),

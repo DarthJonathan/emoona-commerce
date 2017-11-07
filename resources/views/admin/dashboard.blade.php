@@ -6,20 +6,35 @@
 @section('content')
 <div class="container">
     <div class="row">
-            <pre>
-                <?php print_r($last_week->toArray()); ?>
-            </pre>
-        <div class="col-lg-12">
-            <canvas id="lastWeel" width="400" height="400"></canvas>
+        <div class="col-lg-12 lastweekChart">
+            <h2 class="my-3">Visitors in the last 7 Days</h2>
+            <canvas id="lastWeek"></canvas>
         </div>
-        <div class="col-lg-6">
-
+        <div class="col-lg-6 my-5">
+            <h3 class="my-3">Visitor Right Now</h3>
+            <canvas id="visitorRightNow"></canvas>
+        </div>
+        <div class="col-lg-6 my-5">
+            <h3 class="my-3">Visitor Right Now</h3>
         </div>
     </div>
 </div>
 <script>
-    var ctx = document.getElementById("lastWeek").getContext('2d');
-    var lastWeek = new Chart(ctx, {
+    var lastweek = document.getElementById("lastWeek").getContext('2d');
+
+    var options = {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        }
+    };
+
+    var lastweekChart = new Chart(lastweek, {
         type: 'bar',
         data: {
             labels: [
@@ -28,7 +43,7 @@
                 @endforeach
             ],
             datasets: [{
-                label: '# of Votes',
+                label: '# of Visitors',
                 data: [
                     @foreach($last_week as $day)
                     {!! $day['visitors'] !!},
@@ -53,15 +68,7 @@
                 borderWidth: 1
             }]
         },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero:true
-                    }
-                }]
-            }
-        }
+        options: options
     });
 </script>
 @endsection
