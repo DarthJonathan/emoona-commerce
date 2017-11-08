@@ -23,7 +23,6 @@
     <script src="{{ asset('js/html.sortable.min.js') }}"></script>
     {{--Tiny MCE--}}
     <script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=zbjkih4psdass55dhyxx68abl4afbzgu8qj49n1rkkrul1oy"></script>
-    <script>tinymce.init({ selector:'textarea' });</script>
 
     {{--DataTables--}}
     <link rel="stylesheet" type="text/css" href="{{ asset('third-party/datatables/datatables.min.css') }}"/>
@@ -294,5 +293,13 @@
         });
     </script>
 @endif
+<script>
+    tinymce.init({
+        selector:'textarea',
+        file_browser_callback: function(field_name, url, type, win) {
+            win.document.getElementById(field_name).value = 'my browser value';
+        }
+    });
+</script>
 </body>
 </html>
