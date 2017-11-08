@@ -253,7 +253,7 @@ class ItemManagement extends Controller
         }
 
 //        Check if item detail exists
-        $exists = ItemDetail::where(['color' => $req->color, 'size' => $req->size])->first();
+        $exists = ItemDetail::where(['color' => $req->color, 'size' => $req->size, 'deleted' => 0])->first();
         if($exists != null)
             return response()->json(['error' => true, 'errors' => 'Item Exists!'], 400);
 

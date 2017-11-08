@@ -198,7 +198,7 @@
 
         $.each(item_details, function (key, value){
 
-            if(colors_saved.includes(value.color))
+            if(colors_saved.includes(value.color) || item_details.deleted == 1)
                 return true;
             else
                 colors_saved.push(value.color);
@@ -241,6 +241,9 @@
 		$.each(item_details, function(key, value){
 			if(value.color == id)
 			{
+			    if(value.deleted == 1)
+			        return true;
+
 				size.append('<option value="' + value.id + '" data-avail="'+ value.status +'" data-id="'+ value.id +'">' + value.size + '</option>')
 			}
 		});
