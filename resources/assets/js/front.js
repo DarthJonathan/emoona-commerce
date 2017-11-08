@@ -144,6 +144,7 @@ function loadStore()
                                         'style="background-image: url(' + image + ')"' +
                                     '>' +
                                     '</div>' +
+                                    '<div class="sale-tag-circle sale-'+ key + '">SALE</div>' +
                                 '<div class="shop-picture-desc">' +
                                     '<div class="shop-picture-name">' +
                                         value.name +
@@ -155,6 +156,13 @@ function loadStore()
                             '</div>';
 
                 store.append(html);
+                $('.sale-' + key).css('display', 'none');
+                var key_parent = key;
+
+                $.each(value.item_detail, function(key, value){
+                    if(res.discounts[value.id] != null)
+                        $('.sale-' + key_parent).css('display', 'block');
+                });
             });
 
             var mcat = $('#mdropdowns');
@@ -233,6 +241,7 @@ function loadFromCategory (e)
                     'style="background-image: url(' + image + ')"' +
                     '>' +
                     '</div>' +
+                    '<div class="sale-tag-circle sale-'+ key + '">SALE</div>' +
                     '<div class="shop-picture-desc">' +
                     '<div class="shop-picture-name">' +
                     value.name +
@@ -244,6 +253,13 @@ function loadFromCategory (e)
                     '</div>';
 
                 store.append(html);
+                $('.sale-' + key).css('display', 'none');
+                var key_parent = key;
+
+                $.each(value.item_detail, function(key, value){
+                    if(res.discounts[value.id] != null)
+                        $('.sale-' + key_parent).css('display', 'block');
+                });
             });
 
         },
@@ -398,7 +414,7 @@ function loadSale ()
         type: 'POST',
         success: function (res) {
 
-            // console.log(res);
+            console.log(res);
 
             //Load Default Products, limited 30 products
             $.each(res.products, function(key, value){
@@ -411,6 +427,7 @@ function loadSale ()
                     'style="background-image: url(' + image + ')"' +
                     '>' +
                     '</div>' +
+                    '<div class="sale-tag-circle">SALE</div>' +
                     '<div class="shop-picture-desc">' +
                     '<div class="shop-picture-name">' +
                     value.item.item.name +

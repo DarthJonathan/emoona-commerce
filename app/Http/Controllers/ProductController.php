@@ -87,6 +87,7 @@ class ProductController extends Controller
         try {
             $products = Item::with('item_category', 'item_detail')->where('category_id', '=', $category_id)->where('deleted', '=', 0)->get();
             $product_images = array();
+            $discounts = array();
 
             foreach ($products as $product)
             {
@@ -97,12 +98,20 @@ class ProductController extends Controller
                     $files = Storage::files('public/item_detail/' . $path);
 
                     array_push($product_images, $files);
+
+                    $discount = Discount::where('item_detail_id', '=', $detail->id)->first();
+
+                    if($discount != null)
+                    {
+                        $discounts[$detail->id] = $discount->amount;
+                    }
                 }
             }
 
             return response()->json([
                 'error'         => false,
                 'products'      => $products,
+                'discounts'     => $discounts,
                 'images'        => $product_images
             ], 200);
 
@@ -158,6 +167,7 @@ class ProductController extends Controller
             $discounts = Discount::all();
             $products = array();
             $product_images = array();
+            $counter = 0;
 
             foreach($discounts as $count => $discount)
             {
@@ -166,8 +176,9 @@ class ProductController extends Controller
                 if($item_detail == null)
                     continue;
 
-                $products[$count]['item'] = $item_detail;
-                $products[$count]['category'] = $item_detail->getCategory();
+                $products[$counter]['item'] = $item_detail;
+                $products[$counter]['category'] = $item_detail->getCategory();
+                $counter++;
             }
 
             foreach ($products as $product)

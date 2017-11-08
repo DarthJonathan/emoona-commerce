@@ -132,6 +132,7 @@
 							class="box-featured bf1"
 							style="background-image: url('/storage/item_detail/{{ explode('/', $images[$key][0])[2] }}/{{ explode('/', $images[$key][0])[3] }}')"
 						>
+
 						</div><!--box-featured-->
 						<div class="box-featured-desc">
 							{{ $feature->item->name }}
