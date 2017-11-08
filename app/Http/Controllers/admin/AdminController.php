@@ -100,4 +100,96 @@ class AdminController extends Controller
         $data = ['newsletters' => $newsletters];
         return view('admin.newsletter.home', $data);
     }
+
+    function editProfile ()
+    {
+        $data = Auth::user()->toArray();
+
+        return view('editprofile', $data);
+    }
+
+    function changePassword ()
+    {
+        return view('auth.passwords.edit');
+    }
+
+    function storeProfile (Request $req)
+    {
+        $rules = array (
+            'firstname' => 'required',
+            'lastname'  => 'required',
+            'address'   => 'required',
+            'postcode'  => 'required|numeric',
+            'province'  => 'required',
+            'country'   => 'required',
+            'birthday'  => 'date|required',
+            'gender'    => 'required',
+            'phone'     => 'required|numeric'
+        );
+
+        $validation = Validator::make($req->all(), $rules);
+
+        if($validation->fails())
+        {
+            $message = $validation->messages();
+
+            return back()->withError($message);
+        }else
+        {
+            $updated_data = array (
+                'address'  => $req->input('address'),
+                'postcode'  => $req->input('postcode'),
+                'province'  => $req->input('province'),
+                'country'  => $req->input('country'),
+                'birthday'  => $req->input('birthday'),
+                'gender'  => $req->input('gender'),
+                'phone'  => $req->input('phone'),
+            );
+
+            $updated_data_core = array (
+                'firstname' => $req->input('firstname'),
+                'lastname'  => $req->input('lastname')
+            );
+
+            if(user_info::where('user_id', '=', Auth::id())->update($updated_data) && Auth::user()->update($updated_data_core))
+                return redirect('/admin')->with('success', 'Admin user data updated!');
+            else
+                return redirect('/admin')->with('error', 'Admin user data update failed!');
+        }
+    }
+
+    function storePassword (Request $req)
+    {
+        $rules = [
+            'old_password'      => 'required',
+            'password'          => 'required|confirmed'
+        ];
+
+        $validation = Validator::make($req->all(), $rules);
+
+        if($validation->fails())
+        {
+            $message = $validation->messages();
+            return back()->withError($message);
+        }else
+        {
+            try{
+                $old = $req->old_password;
+                $new = $req->password;
+
+                if(!Hash::check($old, Auth::user()->password))
+                    return back()->withErrors('Old password is incorrect');
+
+                $user = Auth::user();
+
+                $user->password = Hash::make($new);
+                $user->save();
+
+                return redirect('/admin')->with('success','Password Change was successful!');
+
+            }catch(\Exception $e) {
+                return back()->withErrors($e->getMessage());
+            }
+        }
+    }
 }

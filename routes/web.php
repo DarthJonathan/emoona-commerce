@@ -131,6 +131,17 @@ Route::middleware(['admin'])->group(function()
         Route::get('configuration', 'admin\AdminController@webConfiguration')->name('web_configuration');
         Route::get('newsletter', 'admin\AdminController@newsletter')->name('newsletter');
 
+        /**
+         * User Data & Passwords
+         */
+        Route::get('edit_profile', 'admin\AdminController@editProfile');
+        Route::get('change_password', 'admin\AdminController@changePassword');
+        Route::post('edit_profile', 'admin\AdminController@storeProfile');
+        Route::post('change_password', 'admin\AdminController@storePassword');
+
+        /**
+         * Ajax Confirmation
+         */
         Route::post('confirm_prompt', 'admin\AdminController@prompt');
 
         /*

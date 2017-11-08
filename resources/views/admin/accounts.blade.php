@@ -41,7 +41,11 @@
                                                 data-id="{{ $admin['id'] }}"
                                                 onclick="deleteUser(this)"
                                                 style="cursor: pointer"
-                                        >Delete User</button>
+                                                data-toggle="popover"
+                                                data-content="Delete User"
+                                        >
+                                            <img src="{{ asset('icons/trash_icon.png') }}" width="25px" alt="">
+                                        </button>
                                     </td>
                                 </tr>
                             @endforeach
@@ -91,36 +95,59 @@
                                         </td>
                                         <td>
                                             <button
-                                                class="btn btn-primary m-1"
+                                                class="btn btn-primary float-left m-1 user-info"
                                                 id="{{ $account['id'] }}"
                                                 onclick="userInfo(this)"
                                                 style="cursor: pointer"
-                                            >User Information</button>
+                                                data-toggle="popover"
+                                                data-content="See User Info"
+                                            >
+                                                <img src="{{ asset('icons/plus_icon.png') }}" width="25px" alt="">
+                                            </button>
                                             <form action="{{ URL::to('admin/user_transactions') }}" method="POST">
                                                 {{ csrf_field() }}
 
                                                 <input type="hidden" name="id" value="{{ $account['id'] }}">
 
-                                                <button class="btn btn-primary m-1" style="cursor: pointer">User Transactions</button>
+                                                <button
+                                                    class="btn btn-primary float-left m-1"
+                                                    style="cursor: pointer"
+                                                    data-toggle="popover"
+                                                    data-content="See User Transactions"
+                                                >
+                                                    <img src="{{ asset('icons/search_icon.png') }}" width="25px" alt="">
+                                                </button>
                                             </form>
                                             <button
-                                                class="btn btn-warning m-1"
+                                                class="btn btn-warning float-left m-1 make-admin"
                                                 id="{{ $account['id'] }}"
                                                 onclick="makeAdmin(this)"
                                                 style="cursor: pointer"
-                                            >Make Admin</button>
+                                                data-toggle="popover"
+                                                data-content="Set User as Admin"
+                                            >
+                                                <img src="{{ asset('icons/star_icon.png') }}" width="25px" alt="">
+                                            </button>
                                             <button
-                                                class="btn btn-warning m-1"
+                                                class="btn btn-warning float-left m-1 suspend-user"
                                                 id="{{ $account['id'] }}"
                                                 onclick="suspendUser(this)"
                                                 style="cursor: pointer"
-                                            >(un)Suspend User</button>
+                                                data-toggle="popover"
+                                                data-content="Suspend or Unsuspend User"
+                                            >
+                                                <img src="{{ asset('icons/minus_icon.png') }}" width="25px" alt="">
+                                            </button>
                                             <button
-                                                class="btn btn-danger m-1"
+                                                class="btn btn-danger float-left m-1 delete-user"
                                                 id="{{ $account['id'] }}"
                                                 onclick="deleteUser(this)"
                                                 style="cursor: pointer"
-                                            >Delete User</button>
+                                                data-toggle="popover"
+                                                data-content="Delete User"
+                                            >
+                                                <img src="{{ asset('icons/trash_icon.png') }}" width="25px" alt="">
+                                            </button>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -131,4 +158,13 @@
             </div>
         </div>
     </div>
+    <script>
+        $(document).ready(function()
+        {
+            $('[data-toggle="popover"]').popover({
+                placement : 'top',
+                trigger : 'hover'
+            });
+        });
+    </script>
 @endsection

@@ -107,42 +107,32 @@
     <div class="collapse navbar-collapse" id="navbarMobileContent">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <img src="{{ asset('img/mail-icon.png') }}">
-                    <span>Notifications</span>
-                    @if(count(Session::get('notifications')) > 0)
-                        <span style="margin-left: 20px; color:white; opacity:0.5">
-                            {{ count(Session::get('notifications')) }} new notification(s)
-                        </span>
-                    @else
-                        <span style="margin-left: 20px; color:white; opacity:0.5">
-                            No new notifications
-                        </span>
-                    @endif
-                </a>   
+                <a class="nav-link" href="{{ route('admindashboard') }}"> <img src="{{ asset('img/sidebar-icons/dashboard-icon.png') }}"><span>Dashboard</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#"> <img src="{{ asset('img/sidebar-icons/dashboard-icon.png') }}"><span>Dashboard</span></a>
+                <a class="nav-link" href="{{ route('web_configuration') }}"> <img src="{{ asset('img/sidebar-icons/dashboard-icon.png') }}"><span>Web Configuration</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#"> <img src="{{ asset('img/sidebar-icons/dashboard-icon.png') }}"><span>Web Configuration</span></a>
+                <a class="nav-link" href="{{ route('storeitems') }}"><img src="{{ asset('img/sidebar-icons/post-icon.png') }}">Store Items</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#"> <img src="{{ asset('img/sidebar-icons/post-icon.png') }}"><span>Post</span></a>
+                <a class="nav-link" href="{{ route('newsletter') }}"><img src="{{ asset('img/sidebar-icons/post-icon.png') }}">Newsletter</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#"> <img src="{{ asset('img/sidebar-icons/media-icon.png') }}"><span>Media</span></a>
+                <a class="nav-link" href="{{ route('accounts') }}"><img src="{{ asset('img/sidebar-icons/media-icon.png') }}">Accounts</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#"> <img src="{{ asset('img/sidebar-icons/sales-icon.png') }}"><span>Sales</span></a>
+                <a class="nav-link" href="{{ route('transactions') }}"><img src="{{ asset('img/sidebar-icons/sales-icon.png') }}">Sales</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#"> <img src="{{ asset('img/sidebar-icons/report-icon.png') }}"><span>Report</span></a>
+                <a class="nav-link" href="{{ route('tickets') }}"><img src="{{ asset('img/sidebar-icons/report-icon.png') }}">Report</a>
             </li>
-
             <hr style=" width:100%; border: 1px solid white;">
             <li class="nav-item">
-                 <a class="nav-link" href="profile/edit">Edit Profile</a>
+                 <a class="nav-link" href="{{ URL::to('admin/edit_profile') }}">Edit Profile</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ URL::to('admin/change_password') }}">Change Password</a>
             </li>
             <li class="nav-item">
                 <a href="{{ route('logout') }}" class="nav-link"
@@ -285,6 +275,21 @@
                 toggleError('{{ session('error') }}');
             @elseif(session('success', null) != null)
                 toggleSuccess('{{ session('success') }}');
+            @endif
+
+            @if($errors->all())
+                @foreach($errors->all() as $error)
+                    toggleError('{!! $error !!}');
+                @endforeach
+            @endif
+
+            @if(!empty($success))
+                @foreach($success->all() as $succ)
+                    toggleSuccess('{!! $succ !!}');
+                @endforeach
+            @endif
+            @if(Session::has('success'))
+                toggleSuccess('{!! Session::get('success') !!}');
             @endif
         });
     </script>
