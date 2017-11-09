@@ -563,3 +563,23 @@ function loadCategory (e)
         }
     });
 }
+
+function loadStudioCategory(e){
+    var template = $(e).data('category');
+
+    console.log(template);
+
+    var banners = $('#banner-space');
+    var dropdown = $('#mdropdowns');
+    banners.empty();
+    dropdown.empty();
+
+    $.ajax({
+        url: '/studio/test'+template,
+        type : "GET",
+        success : function(data){
+            $('#mdropdowns').html(data);
+        }
+    });
+
+}

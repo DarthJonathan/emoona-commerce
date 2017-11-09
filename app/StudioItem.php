@@ -14,7 +14,7 @@ class StudioItem extends Model
 
     function StudioCategory()
     {
-    	return $this->belongsTo('App\StudioCategory','category_id');
+        return $this->belongsTo('App\StudioCategory','category_id', 'id');
     }
 
 }

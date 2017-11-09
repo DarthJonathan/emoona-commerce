@@ -35,9 +35,14 @@ Route::post('/newsletter/sign.up', 'HomeController@signUpNewsletter');
 Route::get('product/{gender}/', 'ProductController@viewCategoryGender');
 Route::get('product/{gender}/{category_id}', 'ProductController@viewCategory');
 Route::get('product/{gender}/{category_id}/{product_id}', 'ProductController@viewProduct');
-    /*
-     * Ajax APIs
-     */
+
+// Studio
+Route::post('studio/all','StudioFrontController@getStudioData');
+Route::get('studio/{id}','StudioFrontController@viewStudioItem');
+
+/*
+ * Ajax APIs
+ */
     Route::post('products/front.page', 'ProductController@frontPage');
     Route::post('products/category.products', 'ProductController@categoryProducts');
     Route::post('products/category.products_all', 'ProductController@categoryProductsAll');

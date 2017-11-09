@@ -7,6 +7,8 @@ use App\ItemDetail;
 use App\ItemNotify;
 use App\Webconfig;
 use App\Social;
+use App\StudioCategory;
+use App\StudioItem;
 use Storage;
 use Auth;
 use Illuminate\Http\Request;
@@ -52,7 +54,13 @@ class StoreController extends Controller
 
     function studio ()
     {
-        return view('pStudio');
+        $category = StudioCategory::orderBy('template','asc')->get();
+        $item = StudioItem::with('StudioCategory')->orderBy('category_id','asc')->get();
+        $data = [
+            'categories' => $category,
+            'items' => $item
+        ];
+        return view('pStudio',$data);
     }
 
     function social ()

@@ -1120,6 +1120,16 @@ ul {
   width: 100%;
 }
 
+/*DAVID NEWEST*/
+.social-picture {
+  width: 100%;
+  padding-bottom: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  margin-bottom: 10%;
+}
+
 /*-----------------------pStudio----------------------*/
 .studio-page-wrapper {
   padding: 2% 8% 3% 8%;
@@ -1150,6 +1160,39 @@ ul {
 }
 
 /*-------------------------------------------------------*/
+/*-----------------------pbInside---------------------*/
+.binside-page-wrapper {
+  margin: 2% 8% 5% 8%;
+  overflow: hidden;
+}
+
+.media {
+  width: 99%;
+  padding-bottom: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  margin-bottom: 1%;
+}
+
+.vid {
+  padding-bottom: 0%;
+}
+
+.binside-page-desc {
+  margin: 1% 5% 1% 5%;
+  text-align: center;
+}
+
+#backtostudio {
+  color: grey;
+  font-size: 14px;
+}
+
+.binside-page-wrapper a {
+  text-decoration: none;
+}
+
 /* -------------- Jeffrys Stuff -------------------------*/
 .dropdown-align-right {
   right: 0;

@@ -1,6 +1,8 @@
  <script src="{{ asset('js/instaSocial.js') }}"></script>
 @extends('layouts.app')
 
+@section('title', 'Social')
+
 @section('bgpicture')
 <div class="bgpic" style="background-image: url('../img/bannerSocial.jpg');">
 	
@@ -17,18 +19,44 @@
 
 	<div class="social-page-wrapper">
 
-		<div class="social-page-header">
+		<div class="social-page-header mb-5">
 			<div class="social-page-header-t">
 				.CONVICTION YOU CAN WEAR.
-			</div>
-			<div class="social-page-header-d">
-				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestiae sit, voluptates magni similique odit porro nemo nostrum iure sunt animi numquam, veniam, neque natus error. Eum dolorum expedita, rerum sapiente.
-			neque natus error. Eum dolorum expedita, rerum sapiente.
 			</div>
 			
 		</div><!--div-social-page-header-->
 
-		
+		<div class="social-img-wrapper">
+ 
+	    	<div class="social-picture-wrapper">
+	    		<div class="row">
+
+	 				@foreach($socials as $social)
+	 				
+					    <div class="col-md-3">
+					    	<div class="social-picture" style="background-image:url('{{url('/storage/img/social/'. explode('/', $social->image)[4] )}}')">
+				    		</div>
+					    
+					    </div><!--col-md-3-->
+				    
+				    @endforeach
+    	
+    			</div><!--row-->
+		  	</div><!--shop-pic-wrapper-->
+		 
+	    </div><!--social-img-wrapper-->
+
+		<!-- SEMENTARA, buat liat data -->
+		<!-- <div class="col-md-10">
+			<div class="row">
+			@foreach($socials as $social)
+				<div class="col-md-3">
+					<img src="/storage/img/social/{{ explode('/', $social->image)[4] }}" style="height:400px">
+				</div>
+			@endforeach
+			</div>
+		</div> -->
+
 		<div class="row" id="instafeed">
 			
 		</div>
