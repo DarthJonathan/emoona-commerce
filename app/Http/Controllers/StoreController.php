@@ -6,6 +6,7 @@ use App\HomeSlider;
 use App\ItemDetail;
 use App\ItemNotify;
 use App\Webconfig;
+use App\Social;
 use Storage;
 use Auth;
 use Illuminate\Http\Request;
@@ -56,7 +57,10 @@ class StoreController extends Controller
 
     function social ()
     {
-        return view('pSocial');
+        $socials = Social::all(); 
+        $data = ['socials'=> $socials]; 
+ 
+        return view('pSocial',$data); 
     }
 
     function about ()

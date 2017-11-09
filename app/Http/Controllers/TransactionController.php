@@ -92,6 +92,7 @@ class TransactionController extends Controller
             case 1:
             {
                 //Transfer
+                $data = ['info' => PaymentType::find(1)];
                 return view('payment/transfer', $data);
             }break;
 

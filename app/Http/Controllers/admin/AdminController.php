@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\admin;
+namespace App\Http\Controllers\Admin;
 
 use App\ItemDetail;
 use App\Newsletter;
 use App\PaymentType;
+use App\HomeSlider;
 use App\User;
 use Analytics;
 use Spatie\Analytics\Period;
@@ -13,6 +14,9 @@ use App\Webconfig;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Social; 
+use App\StudioCategory; 
+use App\StudioItem; 
 
 class AdminController extends Controller
 {
@@ -80,7 +84,7 @@ class AdminController extends Controller
 
     public function webConfiguration ()
     {
-        $slider     = Storage::files('public/img/home-slider');
+        $slider     = HomeSlider::orderBy('display_order')->get();
         $collection = Storage::files('public/img/home-collections');
         $payment    = PaymentType::all();
 
@@ -192,4 +196,23 @@ class AdminController extends Controller
             }
         }
     }
+
+    public function studio() 
+    { 
+        $category = StudioCategory::orderBy('template','asc')->get(); 
+        $item = StudioItem::orderBy('category_id','asc')->get(); 
+        $data = [ 
+            'categories' => $category, 
+            'items' => $item 
+            ]; 
+        return view('admin.studio',$data); 
+    } 
+ 
+    public function social() 
+    { 
+        $photos = Social::get(); 
+        $data = ['photos' => $photos]; 
+ 
+        return view('admin.social', $data); 
+    } 
 }

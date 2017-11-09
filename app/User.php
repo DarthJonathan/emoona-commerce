@@ -95,7 +95,7 @@ class User extends Authenticatable
      *
      * @return boolean
      */
-    private static function checkCompletion ()
+    static function checkCompletion ()
     {
         $elsecheck = user_info::where('user_id', Auth::id())->first()->toArray();
         $data = 0;

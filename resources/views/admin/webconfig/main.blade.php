@@ -14,9 +14,6 @@
                     <div class="card-body row">
                         <div class="col-md-4">
                             <form id="collections_card">
-
-                            {{ csrf_field() }}
-
                             <div class="card">
                                 <span class="card-header">Collections Card</span>
                                 <div class="card-body">
@@ -46,9 +43,9 @@
                                     <div class="card-body">
                                         <div class="home-slider-image row">
                                             @foreach($slider as $key => $slide)
-                                                <div class="single-slide p-3 m-3 col-md-4 slide-{{ $key }}">
-                                                    <img src="/storage/img/home-slider/{{ explode('/', $slide)[3] }}" data-id="{{  $key }}" onclick="checkBoxSlider(this)" id="slideimg{{  $key }}">
-                                                    <input type="checkbox" name="slider#{{ $key }}" value="{{  explode('/', $slide)[3] }}" id="slide{{  $key }}" class="slide-items">
+                                                <div class="single-slide p-3 m-3 col-md-4 slide-{{ $slide->id }}">
+                                                    <img src="/storage/img/home-slider/{{ explode('/', $slide->image)[4] }}" data-id="{{ $slide->id }}" onclick="checkBoxSlider(this)" id="slideimg{{  $slide->id }}">
+                                                    <input type="checkbox" name="slider#{{ $slide->id }}" value="{{  explode('/', $slide->image)[4] }}" id="slide{{  $slide->id }}" class="slide-items">
                                                 </div>
                                             @endforeach
                                         </div>
@@ -63,7 +60,7 @@
                                 <div class="card">
                                     <span class="card-header">Collection Images</span>
                                     <div class="card-body">
-                                        <form class="collection-image row" method="POST" action="{{ action('admin\WebconfigController@changeCollectionImages') }}" id="changeCollection" enctype="multipart/form-data">
+                                        <form class="collection-image row" method="POST" action="/admin/webconfig/change_collections" id="changeCollection" enctype="multipart/form-data">
                                             {{ csrf_field() }}
                                             @foreach($collections as $key => $collection)
                                                 <div class="col-lg-4">
@@ -79,7 +76,7 @@
                                                 </div>
                                             @endforeach
                                         <div class="input-group mt-3 col-lg-12">
-                                            <button class="btn btn-primary float-right" type="button" onclick="changeImage()">Save</button>
+                                            <button class="btn btn-primary float-right">Save</button>
                                         </div>
                                         </form>
                                     </div>
@@ -218,8 +215,9 @@
                         toggleSuccess(res.msg);
                     },
                     error: function (res) {
-                        toggleError(res.responseJSON.errors);
+                        console.log(res.responseText);
                         console.log(res.responseJSON.errors_debug);
+                        toggleError(res.responseJSON.errors);
                     }
                 });
             });
@@ -247,22 +245,29 @@
 
         function saveColletionsCard ()
         {
-            var options = {
-                url: '{{ action('admin\WebconfigController@collectionsCard') }}',
+            var woman = tinyMCE.get('woman_collection').getContent();
+            var man = tinyMCE.get('man_collection').getContent();
+            var accessories = tinyMCE.get('accessories_collection').getContent();
+
+            $.ajax({
+                url: '/admin/webconfig/collections_card',
+                headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
                 type: 'post',
+                data: {
+                    woman_collection: woman,
+                    man_collection:man,
+                    accessories_collection: accessories
+                },
                 success: function(response)
                 {
                     toggleSuccess(response.msg);
-                    console.log(response);
                 },
                 error: function(response)
                 {
-                    toggleError(response.errors);
-                    console.log(response.errors_debug);
+                    console.log(response.responseText);
+                    toggleError(response.responseJSON.errors);
                 }
-            };
-
-            $("#collections_card").ajaxSubmit(options);
+            });
         }
 
         function checkBox(e) {

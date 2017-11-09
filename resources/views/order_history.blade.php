@@ -40,7 +40,7 @@
                                         <button class="btn btn-warning">Finished</button>
                                     @endif
                                 </td>
-                                <td>{{ $order->created_at }}</td>
+                                <td>{{ Carbon\Carbon::parse($order->created_at)->format('D, d M Y') }}</td>
                             </tr>
                         @endforeach
                     </tbody>

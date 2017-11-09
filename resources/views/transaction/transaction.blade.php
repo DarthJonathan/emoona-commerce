@@ -28,9 +28,9 @@
                             @elseif($transaction->status == 1)
                                 <button class="btn btn-warning">Processing</button>
                             @elseif($transaction->status == 2)
-                                <button class="btn btn-warning">Sent</button>
+                                <button class="btn btn-warning">Verified</button>
                             @elseif($transaction->status == 3)
-                                <button class="btn btn-warning">Finished</button>
+                                <button class="btn btn-warning">Sent</button>
                             @endif
                         </td>
                     </tr>

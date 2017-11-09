@@ -177,6 +177,8 @@
                         <a href="{{ route('accounts') }}"><li @yield('accounts_active')><img src="{{ asset('img/sidebar-icons/media-icon.png') }}">Accounts</li></a>
                         <a href="{{ route('transactions') }}"><li @yield('transactions_active')><img src="{{ asset('img/sidebar-icons/sales-icon.png') }}">Sales</li></a>
                         <a href="{{ route('tickets') }}"><li @yield('tickets_active')><img src="{{ asset('img/sidebar-icons/report-icon.png') }}">Report</li></a>
+                        <a href="{{ route('studio') }}"><li @yield('studio_active')><img src="{{ asset('img/sidebar-icons/report-icon.png') }}">Studio</li></a> 
+                        <a href="{{ route('social') }}"><li @yield('social_active')><img src="{{ asset('img/sidebar-icons/report-icon.png') }}">Social</li></a> 
                     </ul>
 
                 <!-- Not used

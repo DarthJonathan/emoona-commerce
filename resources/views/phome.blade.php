@@ -42,7 +42,7 @@
 							</div><!--line-content-box-1-->
 							<hr>
 							<div class="line-content-box-3">
-								{{ $datas['1']->value_1 }}
+								{!! $datas['1']->value_1 !!}
 							</div><!--line-content-box-1-->
 							</div><!--wrapper-center-->
 						</div><!--text-content-box-1-->
@@ -70,7 +70,7 @@
 							</div><!--line-content-box-1-->
 							<hr>
 							<div class="line-content-box-3">
-								{{ $datas['0']->value_1 }}
+								{!! $datas['0']->value_1 !!}
 							</div><!--line-content-box-1-->
 							</div><!--wrapper-center-->	
 						</div><!--text-content-box-4-->
@@ -98,7 +98,7 @@
 							</div><!--line-content-box-1-->
 							<hr>
 							<div class="line-content-box-3">
-								{{ $datas['2']->value_1 }}
+								{!! $datas['2']->value_1 !!}
 							</div><!--line-content-box-1-->
 							</div><!--wrapper-center-->	
 						</div><!--text-content-box-6-->

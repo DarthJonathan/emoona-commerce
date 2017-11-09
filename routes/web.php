@@ -130,6 +130,8 @@ Route::middleware(['admin'])->group(function()
         Route::get('tickets', 'admin\AdminController@tickets')->name('tickets');
         Route::get('configuration', 'admin\AdminController@webConfiguration')->name('web_configuration');
         Route::get('newsletter', 'admin\AdminController@newsletter')->name('newsletter');
+        Route::get('studio', 'admin\AdminController@studio')->name('studio'); 
+        Route::get('social', 'admin\AdminController@social')->name('social'); 
 
         /**
          * User Data & Passwords
@@ -228,6 +230,23 @@ Route::middleware(['admin'])->group(function()
          */
         Route::get('newsletter/new.newsletter', 'admin\NewsletterController@newNewsletter');
         Route::post('newsletter/view.content', 'admin\NewsletterController@viewContent');
+
+        /*
+         * Social 
+         */
+        Route::post('social/save_images','admin\SocialController@saveImages'); 
+        Route::get('social/remove/{id}', 'admin\SocialController@removeImage'); 
+ 
+        /*
+         * Studio 
+         */
+        Route::post('studio/createCategory','admin\StudioController@createCategory'); 
+        Route::get('studio/deleteCategory/{id}','admin\StudioController@deleteCategory'); 
+        Route::post('studio/editCategory/{id}','admin\StudioController@editCategoryView'); 
+        Route::post('studio/editCategory/','admin\StudioController@editCategory'); 
+        Route::post('studio/getCategory','admin\StudioController@getCategory'); 
+        Route::post('studio/addStudioItem','admin\StudioController@addStudioItem');
+        Route::get('studio/deleteItem/{id}','admin\StudioController@deleteStudioItem');  
     });
 });
 

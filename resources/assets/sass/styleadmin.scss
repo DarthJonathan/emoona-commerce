@@ -317,6 +317,12 @@ body{
   }
 }
 
+.image-proof {
+  img {
+    width:100%;
+  }
+}
+
 /* Web Configuration */
 .freatured-product
 {
@@ -391,5 +397,15 @@ body{
     max-height: 300px;
   }
 }
+
+.admin-social-image{ 
+  height:200px; 
+  max-width: 100%; 
+} 
+ 
+.admin-social-image-container{ 
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75); 
+  padding: 10px; 
+} 
 
 /* Media */

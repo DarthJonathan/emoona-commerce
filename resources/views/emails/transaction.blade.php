@@ -84,11 +84,6 @@
             width: 70%;
             padding-left: 0;
         }
-
-        .cart td
-        {
-            border: 1px solid #000;
-        }
     </style>
 
 </head>

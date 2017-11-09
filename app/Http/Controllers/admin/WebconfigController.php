@@ -158,9 +158,7 @@ class WebconfigController extends Controller
         {
             $message = $valid->messages();
 
-            $return = ['error' => true, 'errors' => $message];
-
-            return response()->json($return, 400);
+            return redirect('/admin/configuration')->withError($message);
         }else
         {
             $path = 'app/public/img/home-slider/' . time() . '.jpg';
@@ -184,15 +182,12 @@ class WebconfigController extends Controller
 
                 $slider->save();
 
-                $return = ['error' => false, 'msg' => 'Adding Slider Image Success!'];
-
-                return response()->json($return, 200);
+                return redirect('/admin/configuration');
 
             }catch(\Exception $e)
             {
-                $return = ['error' => true, 'errors' => 'Adding Slider Image Failed! (ERR: 90)', 'errors_debug' => $e->getMessage()];
-
-                return response()->json($return, 400);
+//                return redirect('/admin/configuration')->withError('Adding Slider Image Failed!');
+                return redirect('/admin/configuration')->withError($e->getMessage());
             }
         }
     }
@@ -210,8 +205,10 @@ class WebconfigController extends Controller
         if($validation->fails())
         {
             $message = $validation->messages();
-            $return = ['error' => true, 'errors' => $message];
-            return response()->json($return, 400);
+//            $return = ['error' => true, 'errors' => $message];
+//            return response()->json($return, 400);
+
+            return redirect('admin/configuration')->withError($message);
         }else
         {
             try
@@ -240,13 +237,12 @@ class WebconfigController extends Controller
                     Image::make($img2)->fit(500)->interlace()->save(storage_path('app/public/img/home-collections/3.jpg'));
                 }
 
-                $return = ['error' => false, 'msg' => 'Changing Collection Image Success!'];
-                return response()->json($return, 200);
+//                $return = ['error' => false, 'msg' => 'Changing Collection Image Success!'];
+                return redirect('admin/configuration');
 
             }catch(\Exception $e)
             {
-                $return = ['error' => true, 'errors' => 'Changing Collections Image Failed! (ERR: 91)', 'errors_debug' => $e->getMessage()];
-                return response()->json($return, 400);
+                return redirect('admin/configuration')->withError($e->getMessage());
             }
         }
     }
@@ -268,7 +264,7 @@ class WebconfigController extends Controller
 
                 $value = $req->value;
 
-                $transfer = PaymentType::find(1)->first();
+                $transfer = PaymentType::find(1);
 
                 $transfer->value = $value;
 

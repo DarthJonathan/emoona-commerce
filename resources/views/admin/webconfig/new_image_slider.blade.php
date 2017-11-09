@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-12">
-            <form action="" id="addSlideImage">
+            <form action="{{ action('admin\WebconfigController@storeSliderImage') }}" method="post" enctype="multipart/form-data" id="addSlideImage">
                 <div class="row">
                     <div class="col-lg-12 row mb-3">
                         {{ csrf_field() }}
@@ -23,7 +23,7 @@
                         </div>
                     </div>
                     <div class="col-lg-12">
-                        <button class="btn btn-dark btn-block" type="button" id="submit">Add New</button>
+                        <button class="btn btn-dark btn-block" id="submit">Add New</button>
                     </div>
                 </div>
             </form>
@@ -50,28 +50,6 @@
                 if (log) alert(log);
             }
 
-        });
-
-        $('#submit').click(function()
-        {
-            var options = {
-                url: '{{ action('admin\WebconfigController@storeSliderImage') }}',
-                type: 'POST',
-                success: function(response)
-                {
-                    $('#modal').modal('toggle');
-                    toggleSuccess(response.msg);
-                    setTimeout(location.reload(), 2500);
-                },
-                error: function(response)
-                {
-                    $('#modal').modal('toggle');
-                    toggleError(JSON.stringify(response.responseJSON.errors));
-                    console.log(response.responseJSON.errors_debug);
-                }
-            };
-
-            $("#addSlideImage").ajaxSubmit(options);
         });
     });
 </script>

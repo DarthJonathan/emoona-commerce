@@ -1089,7 +1089,8 @@ function uploadNew ()
         error: function(response) {
             $('#modal').modal('toggle');
             toggleError(response.responseJSON.errors);
-            console.log(response.responseText);0
+            console.log(response.responseText);
+            console.log(response.responseJSON);
         }
     });
 }
@@ -1189,7 +1190,7 @@ function viewMailContent(e)
 
 function saveTransferText ()
 {
-    var value = data = tinyMCE.get('value_transfer').getContent();
+    var value = tinyMCE.get('value_transfer').getContent();
 
     $.ajax({
         url: '/admin/webconfig/update_transfer_text',
@@ -1240,4 +1241,28 @@ function newCategory () {
         }
     });
 }
+
+
+function editStudioCategory (e)
+{
+    $('#modal').modal('toggle');
+    $('.modal-title').html('New Category');
+
+    var id = $(e).data('id');
+
+    $.ajax({
+        url: '/admin/studio/editCategory/' + id,
+        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+        type: 'POST',
+        success: function (data) {
+            $('.modal-body').html(data);
+            $('#ajax-loading').hide();
+        },
+        error: function(res){
+            console.log(res.responseText);
+        }
+    });
+}
+
+
 //# sourceMappingURL=all.js.map

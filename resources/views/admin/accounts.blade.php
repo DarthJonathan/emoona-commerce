@@ -44,7 +44,7 @@
                                                 data-toggle="popover"
                                                 data-content="Delete User"
                                         >
-                                            <img src="{{ asset('icons/trash_icon.png') }}" width="25px" alt="">
+                                            <img src="/storage/icons/trash_icon.png" width="25px" alt="">
                                         </button>
                                     </td>
                                 </tr>
@@ -102,7 +102,7 @@
                                                 data-toggle="popover"
                                                 data-content="See User Info"
                                             >
-                                                <img src="{{ asset('icons/plus_icon.png') }}" width="25px" alt="">
+                                                <img src="{{ '/storage/icons/plus_icon.png' }}" width="25px" alt="">
                                             </button>
                                             <form action="{{ URL::to('admin/user_transactions') }}" method="POST">
                                                 {{ csrf_field() }}
@@ -115,7 +115,7 @@
                                                     data-toggle="popover"
                                                     data-content="See User Transactions"
                                                 >
-                                                    <img src="{{ asset('icons/search_icon.png') }}" width="25px" alt="">
+                                                    <img src="{{ '/storage/icons/search_icon.png' }}" width="25px" alt="">
                                                 </button>
                                             </form>
                                             <button
@@ -126,7 +126,7 @@
                                                 data-toggle="popover"
                                                 data-content="Set User as Admin"
                                             >
-                                                <img src="{{ asset('icons/star_icon.png') }}" width="25px" alt="">
+                                                <img src="{{ '/storage/icons/star_icon.png' }}" width="25px" alt="">
                                             </button>
                                             <button
                                                 class="btn btn-warning float-left m-1 suspend-user"
@@ -136,7 +136,7 @@
                                                 data-toggle="popover"
                                                 data-content="Suspend or Unsuspend User"
                                             >
-                                                <img src="{{ asset('icons/minus_icon.png') }}" width="25px" alt="">
+                                                <img src="{{ '/storage/icons/minus_icon.png' }}" width="25px" alt="">
                                             </button>
                                             <button
                                                 class="btn btn-danger float-left m-1 delete-user"
@@ -146,7 +146,7 @@
                                                 data-toggle="popover"
                                                 data-content="Delete User"
                                             >
-                                                <img src="{{ asset('icons/trash_icon.png') }}" width="25px" alt="">
+                                                <img src="{{ '/storage/icons/trash_icon.png' }}" width="25px" alt="">
                                             </button>
                                         </td>
                                     </tr>

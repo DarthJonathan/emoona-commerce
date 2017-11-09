@@ -17,7 +17,9 @@
             <div class="col-lg-8 m-auto">
                 <h1 class="mb-5">Transfer Account Information</h1>
                 <p>Please pay to</p>
-                <h3 class="mt-1 mb-5"><span>5271254441</span> a/n Jonathan Hosea</h3>
+                <h3 class="mt-1 mb-5">
+                    {!! $info->value !!}
+                </h3>
                 <a onclick="printThis()" href="#" class="btn btn-dark mt-3">Print</a>
                 <a href="/" class="btn btn-dark mt-3">Home</a>
             </div>
