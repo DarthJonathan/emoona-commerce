@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Mail\RegisterMail;
 use App\User;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -73,6 +74,10 @@ class RegisterController extends Controller
 
         $activation_code = time().uniqid();
 
+        //Backward compability to old browsers
+        $birthday = Carbon::parse($data['birthday'])->format('Y-m-d');
+
+
         $user = User::create([
             'firstname' => $data['firstname'],
             'lastname' => $data['lastname'],
@@ -81,7 +86,7 @@ class RegisterController extends Controller
             'password' => bcrypt($data['password']),
         ])->user_info()->create([
             'newsletter' => $newsletter,
-            'birthday' => $data['birthday']
+            'birthday' => $birthday
         ])->users_groups()->create([
             'group_id' => 2
         ]);
