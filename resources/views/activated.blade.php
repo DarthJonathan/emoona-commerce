@@ -3,8 +3,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1 ,user-scalable=0">
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-
-
 </head>
 <style>
     body{
@@ -13,7 +11,7 @@
     }
     @font-face{
         font-family: Emoona;
-        src:url("{{ \Illuminate\Support\Facades\URL::to('assets/css/font/Avenir.ttc') }}");
+        src:url("{{ asset('css/font/Avenir.ttc') }}");
     }
 
     .wrapper{
@@ -85,7 +83,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="header">
-                        <img src="{{ public_path() . 'assets/img/logo.png' }}" alt="" id="logo">
+                        <img src="{{ asset('img/logo.png') }}" alt="" id="logo">
 
                         <div class="title">
                             THANKS FOR VERIFYING YOUR EMAIL
@@ -106,6 +104,12 @@
                             <br>
                             We look forward to serve you.
                         </div><!--text-->
+
+                        <div class="button">
+                            <a href="{{ URL::to('/store') }}">
+                                <button class="btn btn-default" id="btnVerify">Shop Now!</button>
+                            </a>
+                        </div>
 
                     </div><!--Context-->
                 </div>

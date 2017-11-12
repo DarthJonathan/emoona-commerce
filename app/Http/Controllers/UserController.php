@@ -8,6 +8,7 @@ use App\user_info;
 use App\user_notification;
 use Validator;
 use Hash;
+use App\Mail\RegisterMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -45,19 +46,11 @@ class UserController extends Controller
             return redirect('/');
         }
 
-        $mail_data = array(
-            'activation_code' => $user_data['activation_code']
-        );
+        $activation_code = $user_data['activation_code'];
 
-        Mail::send('emails.activate', $mail_data, function($message) use ($user_data)
-        {
-            $message->from('activation@emoonastudio.com', 'Emoona Studio')
-                ->to($user_data['email'], $user_data['firstname'] . $user_data['lastname'])
-                ->subject('Activate Your Account');
-        });
+        Mail::to($user_data['email'])->send(new RegisterMail($activation_code));
 
-        Session::flash('message', 'Activation Code Sent, Please Check Your E-Mail');
-        return redirect('/');
+        return redirect('/profile')->with('success', 'Activation Code Sent, Please Check Your E-Mail');
     }
 
     function removeNotification ($id)
@@ -108,11 +101,9 @@ class UserController extends Controller
             );
 
             if(user_info::where('user_id', '=', Auth::id())->update($updated_data) && Auth::user()->update($updated_data_core))
-                Session::flash('message', 'Updating Data Completed');
+                return back()->with('success', 'Updating Data Completed');
             else
-                Session::flash('message', 'Update Failed');
-
-            return Redirect::to('/');
+                return back()->withErrors('Update Failed');            
         }
     }
 

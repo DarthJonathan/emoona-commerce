@@ -30,7 +30,7 @@ class CartController extends Controller
 
             Cart::add([
                 'id' => $req->input('product_id') . $req->product_detail_id,
-                'name' => $req->input('product_name') . ' (' . $product->color . ')',
+                'name' => $req->input('product_name') . ' (' . $product->size . ')',
                 'price' => $price,
                 'quantity' => $req->input('quantity'),
                 'attributes' => [

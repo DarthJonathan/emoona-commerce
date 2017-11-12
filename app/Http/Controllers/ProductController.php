@@ -14,8 +14,8 @@ class ProductController extends Controller
 {
     function viewProduct($gender, $category_id, $product_id)
     {
-        $product = Item::with('item_category', 'item_detail')->where(['id' => $product_id])->where('deleted', '=', 0)->firstOrFail()->toArray();
-        $discounts          = array();
+        $product        = Item::with('item_category', 'item_detail')->where(['id' => $product_id])->where('deleted', '=', 0)->firstOrFail()->toArray();
+        $discounts      = array();
 
         if(strcasecmp($product['item_category']['name'], $category_id) || strcasecmp($product['item_category']['gender'], $gender))
             abort(404);

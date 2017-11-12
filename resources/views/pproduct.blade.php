@@ -22,8 +22,6 @@
 		    $files = Storage::files('public/item_detail/' . $detail['images']);
 
 		    foreach($files as $count => $file) {
-//		        $images[$detail['color']][$count] = $file;
-
                 $file_path = explode('/',$file)[2] . '/' . explode('/',$file)[3];
 				array_push($images, $file_path);
 			}
@@ -186,6 +184,7 @@
     $(document).ready(function()
     {
         loadColors();
+		console.log(item_details);
     });
 
     var item_details = JSON.parse('<?php echo json_encode($product['item_detail']) ?>');
@@ -203,7 +202,7 @@
             else
                 colors_saved.push(value.color);
 
-            var html = '<li><div class="cbox" style="background-color: '+ value.color + '; cursor: pointer" onclick="colorClick(this)" data-color="'+ value.color +'"></div></li>';
+            var html = '<li><div class="cbox" style="background-color: '+ value.color + '; cursor: pointer" onclick="colorClick(this)" data-id="' + value.id + '" data-color="'+ value.color +'"></div></li>';
             colors.append(html);
         });
     }
@@ -213,17 +212,18 @@
         var color   = $(e).data('color');
         var id      = $(e).data('id');
         var avail   = $(e).data('avail');
-        var price   = {{ $product['price'] }};
+        var price   = {!! $product['price'] !!};
 
         $('.cbox').removeClass('active');
         $(e).addClass('active');
+
+		$('.desc-product-price').html('IDR ' + price);
 
         $.each(item_discount, function(key, value){
             if(key == id)
             {
                 var discounted = price-(price*value);
                 $('.desc-product-price').html('IDR <s>' + price + '</s> ' + discounted);
-                $('.item-price').html('<input type="hidden" name="product_price" value="' + discounted + '">')
             }
 
         });
@@ -247,6 +247,7 @@
 				size.append('<option value="' + value.id + '" data-avail="'+ value.status +'" data-id="'+ value.id +'">' + value.size + '</option>')
 			}
 		});
+		
 	}
 
 	function checkStatus ()
@@ -254,6 +255,7 @@
         var check = $("#size option:selected").val();
         var status = "";
         var stock = 0;
+        var price   = {!! $product['price'] !!};
 
         $.each(item_details, function(key, value){
             if(value.id == check)
@@ -271,6 +273,18 @@
             $('.desc-product-button').show();
             $('.notify').css('display', 'none');
         }
+
+		$('.desc-product-price').html('IDR ' + price);
+
+        $.each(item_discount, function(key, value){
+				console.log(check);
+            if(key == check)
+            {
+                var discounted = price-(price*value);
+                $('.desc-product-price').html('IDR <s>' + price + '</s> ' + discounted);
+            }
+
+        });
     }
 </script>
 @endsection

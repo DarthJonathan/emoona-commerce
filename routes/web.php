@@ -24,6 +24,11 @@ Route::get('/return', 'HomeController@returnPolicy')->name('return');
 Route::get('/shipping', 'HomeController@shippingPolicy')->name('shipping');
 Route::get('/contact', 'HomeController@contactUs')->name('contact');
 
+Route::get('/test', function(){
+    return view('activated');
+});
+
+
 /*
  * News Letter
  */

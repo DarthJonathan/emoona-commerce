@@ -21,7 +21,7 @@ class isActivated
         if($user->activation_code != null)
             return back()->withErrors(['error' => 'Please activate your account first!']);
         else if(!$user->checkCompletion())
-            return back()->withErrors(['error' => 'Please complete your account data first!']);
+            return back()->withErrors(['error' => '<a href="/profile/edit">Please complete your account data first!</a>']);
 
         return $next($request);
     }
