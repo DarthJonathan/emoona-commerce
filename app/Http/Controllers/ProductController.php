@@ -123,9 +123,10 @@ class ProductController extends Controller
 
     function categoryProductsAll(Request $req)
     {
-        $category_id = $req->category_id;
-        $products = array();
-        $all_images = array();
+        $category_id        = $req->category_id;
+        $products           = array();
+        $categories         = ItemCategory::all();
+        $all_images         = array();
 
         try {
 
@@ -151,7 +152,8 @@ class ProductController extends Controller
             return response()->json([
                 'error'         => false,
                 'products'      => $products,
-                'images'        => $all_images
+                'images'        => $all_images,
+                'categories'    => $categories
             ], 200);
 
         }catch(\Exception $e)

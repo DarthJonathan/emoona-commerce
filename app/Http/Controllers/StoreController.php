@@ -23,10 +23,6 @@ class StoreController extends Controller
         $slider     = HomeSlider::orderBy('display_order')->get();
         $collection = Storage::files('public/img/home-collections');
 
-        //Deprecated
-//        $slider     = File::allFiles(public_path('img\home-slider'));
-//        $collection = File::allFiles(public_path('img\home-collections'));
-
         foreach($featured as $single)
         {
             $files = Storage::files('public/item_detail/' . $single->images);

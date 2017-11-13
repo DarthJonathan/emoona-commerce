@@ -556,6 +556,37 @@ function loadCategory (e)
                 });
             });
 
+            //Load the category dropdown
+            var mcat = $('#mdropdowns');
+            var wcat = $('#wdropdowns');
+            var ocat = $('#odropdowns');
+
+            mcat.empty();
+            wcat.empty();
+            ocat.empty();
+
+            //Load Categories
+            $.each(res.categories, function(key, value){
+
+
+                switch(value.gender)
+                {
+                    case 'male' :
+                    {
+                        mcat.append('<li class="category-links" data-id="' + value.id + '" onclick="loadFromCategory(this)">' + value.name.toUpperCase() + '</li>');
+                    }break;
+
+                    case 'female' :
+                    {
+                        wcat.append('<li class="category-links" data-id="' + value.id + '" onclick="loadFromCategory(this)">' + value.name.toUpperCase() + '</li>');
+                    }break;
+
+                    case 'others' :
+                    {
+                        ocat.append('<li class="category-links" data-id="' + value.id + '" onclick="loadFromCategory(this)">' + value.name.toUpperCase() + '</li>');
+                    }break;
+                }
+            });
         },
         error: function (res) {
             toggleError(res.errors);
