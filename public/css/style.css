@@ -28,6 +28,22 @@
   display: none;
 }
 
+.category-empty {
+  width: 100%;
+  height: 30vh;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+}
+
+.category-empty h4 {
+  font-weight: 500;
+  font-size: 2rem;
+}
+
 /* ------------ David's Stuff ------------*/
 body {
   padding: 0;

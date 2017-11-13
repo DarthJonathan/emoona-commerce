@@ -37,6 +37,7 @@ $(document).ready(function(){
 
     $('#womanDropDown').click(function(){
       isWoman = true;
+      checkProducts(this);
       $('#wdropdowns').animate({opacity:'1'});
       $('#wdropdowns').css('display','block');
       $('#mdropdowns').css('display','none');
@@ -46,6 +47,7 @@ $(document).ready(function(){
 
     $('#menDropDown').click(function(){
       isMen = true;
+      checkProducts(this);
        $('#mdropdowns').animate({opacity:'1'});
        $('#mdropdowns').css('display','block');
        $('#wdropdowns').css('display','none');
@@ -55,6 +57,7 @@ $(document).ready(function(){
 
     $('#othersDropDown').click(function(){
       isOthers = true;
+      checkProducts(this);
        $('#odropdowns').animate({opacity:'1'});
        $('#odropdowns').css('display','block');
        $('#wdropdowns').css('display','none');

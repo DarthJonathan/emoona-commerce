@@ -23,7 +23,7 @@ class ItemManagement extends Controller
         {
             case 1:
             {
-                $itemDetails = ItemCategory::where('gender', '=', $req->input('id'))->get()->toArray();
+                $itemDetails = ItemCategory::where('gender', '=', $req->input('id'))->where('deleted', '=', 0)->get()->toArray();
 
                 $data = [
                     'category'  => $req->input('category'),

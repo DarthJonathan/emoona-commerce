@@ -173,6 +173,10 @@ function loadStore()
             wcat.empty();
             ocat.empty();
 
+            var countMcat = 0;
+            var countWcat = 0;
+            var countOcat = 0;
+
             //Load Categories
             $.each(res.categories, function(key, value){
 
@@ -181,19 +185,27 @@ function loadStore()
                     case 'male' :
                     {
                         mcat.append('<li class="category-links" data-id="' + value.id + '" onclick="loadFromCategory(this)">' + value.name.toUpperCase() + '</li>');
+                        countMcat++;
                     }break;
 
                     case 'female' :
                     {
                         wcat.append('<li class="category-links" data-id="' + value.id + '" onclick="loadFromCategory(this)">' + value.name.toUpperCase() + '</li>');
+                        countWcat++;
                     }break;
 
                     case 'others' :
                     {
                         ocat.append('<li class="category-links" data-id="' + value.id + '" onclick="loadFromCategory(this)">' + value.name.toUpperCase() + '</li>');
+                        countOcat++;
                     }break;
                 }
             });
+
+            $('#menDropDown').data('count', countMcat);
+            $('#womanDropDown').data('count', countWcat);
+            $('#othersDropDown').data('count', countOcat);
+            
         },
         error: function (res) {
             toggleError(res.errors);
@@ -222,8 +234,12 @@ function loadFromCategory (e)
         type: 'POST',
         data: {category_id: category_id},
         success: function (res) {
-
-            // console.log(res);
+                
+            if(res.products.length == 0)
+            {
+                var html = "<div class='category-empty'><h4>we're making something great, stay connected!</h4></div>";
+                store.append(html);   
+            }
 
             //Load Default Products, limited 30 products
             $.each(res.products, function(key, value){
@@ -413,8 +429,6 @@ function loadSale ()
         type: 'POST',
         success: function (res) {
 
-            console.log(res);
-
             //Load Default Products, limited 30 products
             $.each(res.products, function(key, value){
 
@@ -564,29 +578,39 @@ function loadCategory (e)
             wcat.empty();
             ocat.empty();
 
+            var countMcat = 0;
+            var countWcat = 0;
+            var countOcat = 0;
+
             //Load Categories
             $.each(res.categories, function(key, value){
-
-                console.log(res.categories);
 
                 switch(value.gender)
                 {
                     case 'male' :
                     {
                         mcat.append('<li class="category-links" data-id="' + value.id + '" onclick="loadFromCategory(this)">' + value.name.toUpperCase() + '</li>');
+                        countMcat++;
                     }break;
 
                     case 'female' :
                     {
                         wcat.append('<li class="category-links" data-id="' + value.id + '" onclick="loadFromCategory(this)">' + value.name.toUpperCase() + '</li>');
+                        countWcat++;
                     }break;
 
                     case 'others' :
                     {
                         ocat.append('<li class="category-links" data-id="' + value.id + '" onclick="loadFromCategory(this)">' + value.name.toUpperCase() + '</li>');
+                        countOcat++;
                     }break;
                 }
             });
+
+            $('#menDropDown').data('count', countMcat);
+            $('#womanDropDown').data('count', countWcat);
+            $('#othersDropDown').data('count', countOcat);
+
         },
         error: function (res) {
             toggleError(res.errors);
@@ -612,6 +636,19 @@ function loadStudioCategory(e){
             $('#mdropdowns').html(data);
         }
     });
+}
 
+function checkProducts (e)
+{   
+    var store   = $('.shop-page-shop');
+    var cats    = $(e).data('count');
+
+    if(cats == 0)
+    {
+        store.empty();
+
+        var html = "<div class='category-empty'><h4>we're making something great, stay connected!</h4></div>";
+        store.append(html);   
+    }
 }
 //# sourceMappingURL=front.js.map

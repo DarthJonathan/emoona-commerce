@@ -43,7 +43,7 @@ class ProductController extends Controller
         try
         {
             $products           = Item::with('item_category', 'item_detail')->where('deleted', '=', 0)->limit(30)->get();
-            $categories         = ItemCategory::all();
+            $categories         = ItemCategory::where('deleted', '=', 0)->get();
             $product_images     = array();
             $discounts          = array();
 
@@ -125,7 +125,7 @@ class ProductController extends Controller
     {
         $category_id        = $req->category_id;
         $products           = array();
-        $cate               = ItemCategory::all();
+        $cate               = ItemCategory::where('deleted', '=', 0)->get();
         $all_images         = array();
 
         try {

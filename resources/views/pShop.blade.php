@@ -55,8 +55,8 @@
 <script>
 	$(document).ready(function(){
 
+		//Load the store using ajax
 	    @if($category == null)
-			//Load the Store First Time
 			loadStore();
 		@else
 			loadCategory('{!! $category !!}');
