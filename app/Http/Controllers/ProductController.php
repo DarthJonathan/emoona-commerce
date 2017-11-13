@@ -125,7 +125,7 @@ class ProductController extends Controller
     {
         $category_id        = $req->category_id;
         $products           = array();
-        $categories         = ItemCategory::all();
+        $cate               = ItemCategory::all();
         $all_images         = array();
 
         try {
@@ -153,7 +153,7 @@ class ProductController extends Controller
                 'error'         => false,
                 'products'      => $products,
                 'images'        => $all_images,
-                'categories'    => $categories
+                'categories'    => $cate
             ], 200);
 
         }catch(\Exception $e)

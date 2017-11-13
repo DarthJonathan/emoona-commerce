@@ -176,7 +176,6 @@ function loadStore()
             //Load Categories
             $.each(res.categories, function(key, value){
 
-
                 switch(value.gender)
                 {
                     case 'male' :
@@ -568,6 +567,7 @@ function loadCategory (e)
             //Load Categories
             $.each(res.categories, function(key, value){
 
+                console.log(res.categories);
 
                 switch(value.gender)
                 {
