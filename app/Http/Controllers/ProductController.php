@@ -43,7 +43,7 @@ class ProductController extends Controller
         try
         {
             $products           = Item::with('item_category', 'item_detail')->where('deleted', '=', 0)->limit(30)->get();
-            $categories         = ItemCategory::all();
+            $categories         = ItemCategory::where('deleted', '=', 0)->get();
             $product_images     = array();
             $discounts          = array();
 
@@ -123,9 +123,10 @@ class ProductController extends Controller
 
     function categoryProductsAll(Request $req)
     {
-        $category_id = $req->category_id;
-        $products = array();
-        $all_images = array();
+        $category_id        = $req->category_id;
+        $products           = array();
+        $cate               = ItemCategory::where('deleted', '=', 0)->get();
+        $all_images         = array();
 
         try {
 
@@ -151,7 +152,8 @@ class ProductController extends Controller
             return response()->json([
                 'error'         => false,
                 'products'      => $products,
-                'images'        => $all_images
+                'images'        => $all_images,
+                'categories'    => $cate
             ], 200);
 
         }catch(\Exception $e)

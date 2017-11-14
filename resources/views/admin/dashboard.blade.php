@@ -21,14 +21,12 @@
             <div class="col-lg-12">
                 <h3 class="my-2">User Types</h3>
             </div>
-            <div class="col-lg-6 mt-5">
-                <h2>{{ $user_type[0]['sessions'] }}</h2>
-                <h4>{{ $user_type[0]['type'] }}</h4>
-            </div>
-            <div class="col-lg-6 mt-5">
-                <h2>{{ $user_type[1]['sessions'] }}</h2>
-                <h4>{{ $user_type[1]['type'] }}</h4>
-            </div>
+            @foreach($user_type as $user)
+                <div class="col-lg-6 mt-5">
+                    <h2>{{ $user['sessions'] }}</h2>
+                    <h4>{{ $user['type'] }}</h4>
+                </div>
+            @endforeach
         </div>
     </div>
 </div>
