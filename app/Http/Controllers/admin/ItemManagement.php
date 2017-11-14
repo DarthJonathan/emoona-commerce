@@ -14,6 +14,7 @@ use Validator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductImageRequest;
+use Image;
 
 class ItemManagement extends Controller
 {
@@ -280,7 +281,8 @@ class ItemManagement extends Controller
             //Store the file
             foreach($req->image as $image)
             {
-                array_push($singularPath, $image->store($imagePath));
+                // array_push($singularPath, $image->store($imagePath));
+                Image::make($image->getRealPath())->fit(1280, 1080)->encode('jpg', 75)->interlace()->save(storage_path('app/' . $imagePath . '.jpg'));
             }
 
             $return = ['error' => false, 'msg' => 'Successfully added a new item detail!', 'id' => $parentId];
