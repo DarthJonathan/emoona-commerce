@@ -18,6 +18,11 @@ use Image;
 
 class ItemManagement extends Controller
 {
+    function __construct ()
+    {
+        ini_set('memory_limit','512M');
+    }
+
     function category (Request $req)
     {
         switch($req->input('category'))
@@ -155,7 +160,7 @@ class ItemManagement extends Controller
     function newItemAjax (Request $req)
     {
         $data =[
-            'categories'    => json_encode(ItemCategory::all()->toArray())
+            'categories'    => json_encode(ItemCategory::where('deleted', '=', 0)->get()->toArray())
         ];
         return view('admin.new_item', $data);
     }
@@ -278,11 +283,14 @@ class ItemManagement extends Controller
             //Send notification
             $this->sendNotification($parentId);
 
+            //Make the directory
+            mkdir(storage_path('app/' . $imagePath));
+
             //Store the file
             foreach($req->image as $image)
             {
                 // array_push($singularPath, $image->store($imagePath));
-                Image::make($image->getRealPath())->fit(1280, 1080)->encode('jpg', 75)->interlace()->save(storage_path('app/' . $imagePath . '.jpg'));
+                Image::make($image->getRealPath())->encode('jpg', 75)->interlace()->save(storage_path('app/' . $imagePath . '/' . time() . '.jpg'));
             }
 
             $return = ['error' => false, 'msg' => 'Successfully added a new item detail!', 'id' => $parentId];
@@ -539,7 +547,8 @@ class ItemManagement extends Controller
 
                 //Store the file
                 foreach ($req->image as $image) {
-                    array_push($singularPath, $image->store($path));
+                    // array_push($singularPath, $image->store($path));
+                    Image::make($image)->encode('jpg', 75)->interlace()->save(storage_path('app/' . $path . '/' . time() . '.jpg'));
                 }
 
                 $return = ['error' => false, 'msg' => 'Successfully added a new item detail image!'];

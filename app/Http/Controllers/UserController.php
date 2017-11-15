@@ -101,7 +101,12 @@ class UserController extends Controller
             );
 
             if(user_info::where('user_id', '=', Auth::id())->update($updated_data) && Auth::user()->update($updated_data_core))
+            {
+                if(Session::has('backUrl'))
+                    return redirect(Session::pull('backUrl'))->with('success', 'Updating Data Completed');
+
                 return back()->with('success', 'Updating Data Completed');
+            }
             else
                 return back()->withErrors('Update Failed');            
         }

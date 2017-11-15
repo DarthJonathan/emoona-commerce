@@ -11,6 +11,11 @@ use Storage;
 
 class SocialController extends Controller
 {
+    function __construct ()
+    {
+        ini_set('memory_limit','512M');
+    }
+
     public function saveImages(Request $req)
     {
 

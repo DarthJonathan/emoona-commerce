@@ -13,6 +13,11 @@ use Image;
 
 class StudioController extends Controller
 {
+    function __construct ()
+    {
+        ini_set('memory_limit','512M');
+    }
+    
     public function createCategory(Request $req){
 
     	$rules = [

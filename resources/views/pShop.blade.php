@@ -16,9 +16,9 @@
 <div class="shop-page-wrapper">
 	<div class="shop-page-nav-wrapper">
 		<ul>
-			<li><span class="category-links" id="menDropDown">MEN</span></li>
-			<li><span class="category-links" id="womanDropDown">WOMAN</span></li>
-			<li><span class="category-links" id="othersDropDown">OTHERS</span></li>
+			<li><span class="category-links" data-category="male" id="menDropDown">MEN</span></li>
+			<li><span class="category-links" data-category="female" id="womanDropDown">WOMAN</span></li>
+			<li><span class="category-links" data-category="others" id="othersDropDown">OTHERS</span></li>
 			<li><span class="category-links" onclick="loadSale()" id="saleDropDown">SALE</span></li>
 
 		</ul>

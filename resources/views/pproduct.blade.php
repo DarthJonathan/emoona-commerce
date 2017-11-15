@@ -184,11 +184,11 @@
     $(document).ready(function()
     {
         loadColors();
-		console.log(item_details);
     });
 
     var item_details = JSON.parse('<?php echo json_encode($product['item_detail']) ?>');
     var item_discount = JSON.parse('<?php echo json_encode($discounts) ?>');
+	var price = {!! $product['price'] !!};
 
     function loadColors ()
     {
@@ -196,6 +196,9 @@
         var colors_saved = [];
 
         $.each(item_details, function (key, value){
+
+			if(value.deleted == 1)
+				return true;
 
             if(colors_saved.includes(value.color) || item_details.deleted == 1)
                 return true;
@@ -212,7 +215,7 @@
         var color   = $(e).data('color');
         var id      = $(e).data('id');
         var avail   = $(e).data('avail');
-        var price   = {!! $product['price'] !!};
+        var price   = price;
 
         $('.cbox').removeClass('active');
         $(e).addClass('active');
@@ -225,7 +228,6 @@
                 var discounted = price-(price*value);
                 $('.desc-product-price').html('IDR <s>' + price + '</s> ' + discounted);
             }
-
         });
 
         loadSizes(color);
@@ -277,7 +279,6 @@
 		$('.desc-product-price').html('IDR ' + price);
 
         $.each(item_discount, function(key, value){
-				console.log(check);
             if(key == check)
             {
                 var discounted = price-(price*value);

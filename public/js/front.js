@@ -206,6 +206,7 @@ function loadStore()
             $('#womanDropDown').data('count', countWcat);
             $('#othersDropDown').data('count', countOcat);
             
+            
         },
         error: function (res) {
             toggleError(res.errors);
@@ -538,6 +539,15 @@ function loadCategory (e)
         data: {category_id: category_id},
         success: function (res) {
 
+            //Check if product is null
+            if(res.products.length == 0)
+            {
+                store.empty();
+                
+                var html = "<div class='category-empty'><h4>we're making something great, stay connected!</h4></div>";
+                store.append(html);   
+            }
+
             //Load Default Products, limited 30 products
             $.each(res.products, function(key1, value1){
 
@@ -622,8 +632,6 @@ function loadCategory (e)
 function loadStudioCategory(e){
     var template = $(e).data('category');
 
-    console.log(template);
-
     var banners = $('#banner-space');
     var dropdown = $('#mdropdowns');
     banners.empty();
@@ -649,6 +657,8 @@ function checkProducts (e)
 
         var html = "<div class='category-empty'><h4>we're making something great, stay connected!</h4></div>";
         store.append(html);   
+    }else {
+        loadCategory($(e).data('category'));
     }
 }
 //# sourceMappingURL=front.js.map

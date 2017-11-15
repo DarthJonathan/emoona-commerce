@@ -28,7 +28,7 @@
         <button class="btn btn-primary btn-block" onclick="deleteSelected()">Delete Selected</button>
     </div>
 </div>
-<form action="" class="row mt-3" id="addImageItemDetail">
+<form action="{{ action('admin\ItemManagement@addImageItemDetail') }}" method="post" enctype="multipart/form-data" class="row mt-3" id="addImageItemDetail">
     <div class="col-lg-6">
         <div class="input-group">
                 <label class="input-group-btn mb-2 mb-sm-0 mr-0">

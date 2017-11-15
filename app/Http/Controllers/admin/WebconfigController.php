@@ -14,6 +14,11 @@ use Storage;
 
 class WebconfigController extends Controller
 {
+    function __construct ()
+    {
+        ini_set('memory_limit','512M');
+    }
+
     function collectionsCard (Request $req)
     {
         try

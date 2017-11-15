@@ -93,6 +93,9 @@ class ProductController extends Controller
             {
                 foreach ($product->item_detail as $detail)
                 {
+                    if($detail->deleted == 1)
+                        continue;
+
                     $path = $detail->images;
 
                     $files = Storage::files('public/item_detail/' . $path);
@@ -138,6 +141,10 @@ class ProductController extends Controller
 
                 foreach ($products[$key] as $product) {
                     foreach ($product->item_detail as $detail) {
+                        
+                        if($detail->deleted == 1)
+                            continue;
+
                         $path = $detail->images;
 
                         $files = Storage::files('public/item_detail/' . $path);
