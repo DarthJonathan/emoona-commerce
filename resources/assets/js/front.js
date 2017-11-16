@@ -54,6 +54,7 @@ function clearCart ()
         success: function (response) {
             toggleSuccess ("Cart Cleared!");
             loadCart();
+            location.reload();
         },
         error: function(data) {
             toggleError(data.responseJSON.errors);
