@@ -1,4 +1,4 @@
-<html>
+{{--  <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1 ,user-scalable=0">
     <style>
@@ -129,4 +129,21 @@
 </div><!--wrapper-->
 </body>
 
-</html>
+</html>  --}}
+
+@component('mail::message')
+# Hello
+
+THANK YOU FOR SIGNING UP
+
+Please click the link below to confirm your email.
+
+@component('mail::button', ['url' => '/activate/' . $activation_code, 'color' => 'blue'])
+Activate Account
+@endcomponent
+
+@component('mail::subcopy')
+    Need Help?
+    Contact Us Through
+    help@emoonastudio.com
+@endcomponent

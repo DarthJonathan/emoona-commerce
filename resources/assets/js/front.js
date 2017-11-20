@@ -74,7 +74,7 @@ function loadCart()
     $.ajax({
         url: '/cart/contents_ajax',
         headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
-        type: 'POST',
+        type: 'GET',
         success: function (data) {
 
             if(data.cart == null)
@@ -124,7 +124,7 @@ function loadStore()
     $.ajax({
         url: '/products/front.page',
         headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
-        type: 'POST',
+        type: 'GET',
         success: function (res) {
 
             // console.log(res);
@@ -233,7 +233,7 @@ function loadFromCategory (e)
     $.ajax({
         url: '/products/category.products',
         headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
-        type: 'POST',
+        type: 'GET',
         data: {category_id: category_id},
         success: function (res) {
                 
@@ -339,7 +339,7 @@ function newTicketUser()
 {
     var options = {
         url: '/tickets/new.ticket',
-        type: 'post',
+        type: 'POST',
         success: function(response) {
             toggleSuccess(response.msg);
             location.reload();
@@ -364,7 +364,7 @@ function replyTicketUser(e)
 {
     var options = {
         url: '/tickets/reply.ticket',
-        type: 'post',
+        type: 'POST',
         success: function(response) {
             toggleSuccess(response.msg);
             reloadTicket(e);
@@ -428,7 +428,7 @@ function loadSale ()
     $.ajax({
         url: '/products/on.sale',
         headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
-        type: 'POST',
+        type: 'GET',
         success: function (res) {
 
             //Load Default Products, limited 30 products
@@ -536,7 +536,7 @@ function loadCategory (e)
     $.ajax({
         url: '/products/category.products_all',
         headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
-        type: 'POST',
+        type: 'GET',
         data: {category_id: category_id},
         success: function (res) {
 

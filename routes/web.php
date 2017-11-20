@@ -24,6 +24,13 @@ Route::get('/return', 'HomeController@returnPolicy')->name('return');
 Route::get('/shipping', 'HomeController@shippingPolicy')->name('shipping');
 Route::get('/contact', 'HomeController@contactUs')->name('contact');
 
+Route::get('/test_email', function(){
+
+    $invoice['activation_code'] = 'aaaa';
+
+    return new App\Mail\ActivationMail($invoice);
+});
+
 
 /*
  * News Letter
@@ -44,11 +51,11 @@ Route::get('studio/{id}','StudioFrontController@viewStudioItem');
 /*
  * Ajax APIs
  */
-    Route::post('products/front.page', 'ProductController@frontPage');
-    Route::post('products/category.products', 'ProductController@categoryProducts');
-    Route::post('products/category.products_all', 'ProductController@categoryProductsAll');
-    Route::post('products/on.sale', 'ProductController@loadOnSale');
-    Route::post('products/notify', 'StoreController@notify');
+    Route::get('products/front.page', 'ProductController@frontPage');
+    Route::get('products/category.products', 'ProductController@categoryProducts');
+    Route::get('products/category.products_all', 'ProductController@categoryProductsAll');
+    Route::get('products/on.sale', 'ProductController@loadOnSale');
+    Route::POST('products/notify', 'StoreController@notify');
 
 /*
  * Cart Routes
