@@ -7,20 +7,20 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class ActivationMail extends Mailable
+class TransactionMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $user;
+    public $data;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($user)
+    public function __construct($data)
     {
-        $this->user = $user;
+        $this->data = $data;
     }
 
     /**
@@ -30,6 +30,9 @@ class ActivationMail extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.activate')->with('activation_code', 'aaaa');
+        return $this->from('donotreply@emoonastudio.com', 'Emoona Studio')
+                    ->subject('Emoona Studio Transaction')
+                    ->markdown('emails.transaction')
+                    ->with('data', $this->data);
     }
 }

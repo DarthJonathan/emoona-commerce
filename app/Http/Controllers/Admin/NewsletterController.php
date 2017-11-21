@@ -39,18 +39,23 @@ class NewsletterController extends Controller
 
                 $newsletter->save();
 
-                $when           = Carbon::parse($newsletter->blasted_date);
-                $subcribers     = User::with('user_info')->where('newsletter', '=', 1)->get();
+                $when = Carbon::parse($req->blast);
+
+                $time_difference = $when->diffInDays(Carbon::now());
+                $subcribers     = User::whereHas('user_info', function ($query) {
+                                    $query->where('newsletter', '=', 1);
+                                  })->get();;
 
                 foreach($subcribers as $person)
                 {
-                    Mail::to($person->email)->from('newsletter@emoonastudio.com', 'Emoona Studio Newsletter')->later($when, new NewsletterMail($newsletter));
-                    $when = $when->addSecond(30);
+                    Mail::to($person->email)->queue((new NewsletterMail($newsletter))->delay($time_difference));
+                    $time_difference = $when->addSeconds(30)->diffInDays(Carbon::now());
                 }
 
                 return back();
 
             }catch (\Exception $e) {
+                return $e->getMessage();
                 return back()->withErrors($e->getMessage());
             }
         }
@@ -62,6 +67,6 @@ class NewsletterController extends Controller
 
         $newsletter = Newsletter::find($id);
 
-        return view('emails.newsletter',['newsletter' => $newsletter]);
+        return new NewsletterMail($newsletter);
     }
 }

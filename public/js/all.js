@@ -639,9 +639,10 @@ function loadTransactionDatas ()
 
             $.each(res.transactions, function(key, value){
 
-                console.log(value);
-
                 var date = value.created_at.substring(0,10).split('-');
+
+                if(value.user === null)
+                 return true;
 
                 if(value.transfer_proof == null)
                 {

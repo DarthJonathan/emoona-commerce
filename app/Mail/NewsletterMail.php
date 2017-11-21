@@ -31,6 +31,8 @@ class NewsletterMail extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.newsletter');
+        return $this->from('newsletter@emoonastudio.com', 'Emoona Studio')
+                    ->subject('Emoona Studio Newsletter')
+                    ->markdown('emails.newsletter');
     }
 }

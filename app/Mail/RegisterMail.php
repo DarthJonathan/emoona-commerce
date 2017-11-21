@@ -32,6 +32,7 @@ class RegisterMail extends Mailable
     {
         return $this->from('activation@emoonastudio.com', 'Emoona Studio Activation')
                     ->subject('Activate Your Account')
-                    ->view('emails.activate');
+                    ->markdown('emails.activate')
+                    ->with('activation_code', $this->activation_code);
     }
 }

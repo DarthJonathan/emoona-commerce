@@ -411,5 +411,10 @@ body {
 }
 
 /* Media */
+@media screen and (max-width: 900px) {
+  .tabs-wrapper {
+    height: 290px;
+  }
+}
 
 /*# sourceMappingURL=styleadmin.css.map */

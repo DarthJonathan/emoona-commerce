@@ -24,14 +24,6 @@ Route::get('/return', 'HomeController@returnPolicy')->name('return');
 Route::get('/shipping', 'HomeController@shippingPolicy')->name('shipping');
 Route::get('/contact', 'HomeController@contactUs')->name('contact');
 
-Route::get('/test_email', function(){
-
-    $invoice['activation_code'] = 'aaaa';
-
-    return new App\Mail\ActivationMail($invoice);
-});
-
-
 /*
  * News Letter
  */
@@ -99,6 +91,7 @@ Route::middleware(['notifications', 'checkRole', 'suspended', 'auth'])->group(fu
     Route::middleware(['cart.check', 'isActivated'])->group(function() {
         Route::get('checkout', 'TransactionController@checkoutCart');
         Route::post('payment', 'TransactionController@payment');
+        Route::get('payment.screen', 'TransactionController@paymentScreen');
     });
 
     Route::get('transfer.information', 'TransactionController@transferInformation');

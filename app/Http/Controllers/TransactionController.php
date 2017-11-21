@@ -8,6 +8,7 @@ use App\PaymentType;
 use App\TransactionDetails;
 use App\Transactions;
 use App\user_notification;
+use App\Mail\TransactionMail;
 use Cart;
 use Validator;
 use Storage;
@@ -15,6 +16,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Image;
+use Session;
 
 class TransactionController extends Controller
 {
@@ -71,23 +73,23 @@ class TransactionController extends Controller
         $data['firstname']      = Auth::user()->firstname;
         $data['lastname']       = Auth::user()->lastname;
 
-        $mail_data = array(
+        $data['transaction']    = [
             'transaction_code'  => $transaction->id,
             'cart'              => $cart
-        );
+        ];
 
-        Mail::send('emails.transaction', $mail_data, function($message) use ($data)
-        {
-            $message->from('donotreply@emoonastudio.com', 'Emoona Studio')
-                ->to($data['email'], $data['firstname'] . $data['lastname'])
-                ->subject('Your Transaction Today');
-        });
+        Mail::to($data['email'])->send(new TransactionMail($data));
 
+        Session::put('payment_type', $req->payment_type);
+        return redirect('/payment.screen');
+    }
+
+    function paymentScreen(Request $req)
+    {
         //Clear the cart afterwards
         Cart::clear();
 
-        //Return the view
-        switch($req->input('payment_type'))
+        switch(Session::get('payment_type'))
         {
             case 1:
             {

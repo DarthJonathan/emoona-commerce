@@ -155,7 +155,7 @@
             <div id="sidebar">
                 <center>
                     <div class="sidebarLogo">
-                        <img src="{{ asset('img/logo.png') }}" width="50%" height="auto">
+                        <img src="/storage/img/logo.png" width="50%" height="auto">
                     </div>
 
                     {{--Depreceated--}}
