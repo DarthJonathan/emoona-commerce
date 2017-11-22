@@ -35,10 +35,7 @@
 						<div class="text-content-box tcb2">
 						<div class="wrapper-center">
 							<div class="line-content-box-1">
-								MEN
-							</div><!--line-content-box-1-->
-							<div class="line-content-box-2">
-								COLLECTIONS
+								{!! $datas['9']->value_1 !!}
 							</div><!--line-content-box-1-->
 							<hr>
 							<div class="line-content-box-3">
@@ -63,10 +60,7 @@
 						<div class="text-content-box tcb4">
 						<div class="wrapper-center">
 							<div class="line-content-box-1">
-								WOMAN
-							</div><!--line-content-box-1-->
-							<div class="line-content-box-2">
-								COLLECTIONS
+								{!! $datas[10]->value_1 !!}
 							</div><!--line-content-box-1-->
 							<hr>
 							<div class="line-content-box-3">
@@ -91,10 +85,7 @@
 						<div class="text-content-box tcb6">
 						<div class="wrapper-center">
 							<div class="line-content-box-1">
-								ACCESSORIES 
-							</div><!--line-content-box-1-->
-							<div class="line-content-box-2">
-								COLLECTIONS
+								{!! $datas['11']->value_1 !!}
 							</div><!--line-content-box-1-->
 							<hr>
 							<div class="line-content-box-3">

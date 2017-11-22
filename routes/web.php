@@ -23,6 +23,7 @@ Route::get('/tnc', 'HomeController@termsAndCons')->name('tnc');
 Route::get('/return', 'HomeController@returnPolicy')->name('return');
 Route::get('/shipping', 'HomeController@shippingPolicy')->name('shipping');
 Route::get('/contact', 'HomeController@contactUs')->name('contact');
+Route::post('/contact.send', 'HomeController@contactUsSend');
 
 /*
  * News Letter

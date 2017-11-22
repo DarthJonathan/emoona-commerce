@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Webconfig;
+use App\Mail\whisperMail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Validator;
 
 class HomeController extends Controller
@@ -37,11 +39,46 @@ class HomeController extends Controller
 
     function contactUs ()
     {
-        $webconfig = Webconfig::all();
+        $data = ['page_title' => 'Contact Us'];
+        return view('contactUs', $data);
+    }
 
-        $data = ['webconfig' => $webconfig, 'link' => 7, 'page_title' => 'Contact Us'];
+    function contactUsSend (Request $req)
+    {
+        $rules = [
+            'firstname' => 'required|alpha',
+            'lastname'  => 'required|alpha',
+            'email'     => 'required|email',
+            'subject'   => 'required',
+            'message'   => 'required|min:20'
+        ];
 
-        return view('pTermsCon', $data);
+
+        $validate = Validator::make($req->all(), $rules);
+
+        if($validate->fails())
+        {
+            return response()->json(['error' => true, 'errors' => $validate->messages()], 400);
+        }else
+        {
+            try
+            {
+                $data = [
+                    'email'     => $req->email,
+                    'subject'   => $req->subject,
+                    'name'      => $req->firstname . ' ' . $req->lastname,
+                    'message'   => $req->message
+                ];
+
+                Mail::to('whisper@emoonastudio.com')->send(new whisperMail($data));
+                
+                return response()->json(['error' => false, 'msg' => 'Message sent, please check your email for replies.'], 200);
+
+            }catch(\Exception $e)
+            {
+                return response()->json(['error' => true, 'errors' => $e->getMessage()], 400);
+            }
+        }
     }
 
     function signUpNewsLetter (Request $req)

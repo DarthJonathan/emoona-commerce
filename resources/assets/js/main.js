@@ -964,7 +964,7 @@ function loadFeatured ()
         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
         type: 'POST',
         success: function (data) {
-
+            
             $.each(data.featured, function(key, value){
 
                 var images = data.images[key][0];

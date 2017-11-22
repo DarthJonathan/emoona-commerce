@@ -18,15 +18,21 @@
                                 <span class="card-header">Collections Card</span>
                                 <div class="card-body">
                                     <div class="form-group">
-                                        <label for="woman_collection" class="col-form-label mb-2">Woman Collections</label>
+                                        <label for="woman_collection" class="col-form-label mb-2">
+                                            <input type="text" name="collections_one" id="collections_one" class="form-control" value="{!! $settings[9]->value_1 !!}" required>
+                                        </label>
                                         <textarea  name="woman_collection" id="woman_collection" class="form-control">{{ $settings[0]->value_1 }}</textarea>
                                     </div>
                                     <div class="form-group">
-                                        <label for="man_collection" class="col-form-label mb-2">Man Collections</label>
+                                        <label for="man_collection" class="col-form-label mb-2">
+                                            <input type="text" name="collections_two" id="collections_two" class="form-control" value="{!! $settings[10]->value_1 !!}" required>
+                                        </label>
                                         <textarea  name="man_collection" id="man_collection" class="form-control">{{ $settings[1]->value_1 }}</textarea>
                                     </div>
                                     <div class="form-group">
-                                        <label for="accessories_collection" class="col-form-label mb-2">Accessories Collections</label>
+                                        <label for="accessories_collection" class="col-form-label mb-2">
+                                            <input type="text" name="collections_three" id="collections_three" class="form-control" value="{!! $settings[11]->value_1 !!}" required>
+                                        </label>
                                         <textarea  name="accessories_collection" id="accessories_collection" class="form-control">{{ $settings[2]->value_1 }}</textarea>
                                     </div>
                                     <div class="form-group">
@@ -249,6 +255,10 @@
             var man = tinyMCE.get('man_collection').getContent();
             var accessories = tinyMCE.get('accessories_collection').getContent();
 
+            var one = $('#collections_one').val();
+            var two = $('#collections_two').val();
+            var three = $('#collections_three').val();
+
             $.ajax({
                 url: '/admin/webconfig/collections_card',
                 headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
@@ -256,7 +266,10 @@
                 data: {
                     woman_collection: woman,
                     man_collection:man,
-                    accessories_collection: accessories
+                    accessories_collection: accessories,
+                    one: one,
+                    two: two,
+                    three: three
                 },
                 success: function(response)
                 {

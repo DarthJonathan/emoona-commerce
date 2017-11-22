@@ -27,13 +27,25 @@ class WebconfigController extends Controller
             $man            = Webconfig::find('2');
             $accessories    = Webconfig::find('3');
 
+            $one            = Webconfig::find('10');
+            $two            = Webconfig::find('11');
+            $three          = Webconfig::find('12');
+
             $woman->value_1 = $req->woman_collection;
             $man->value_1 = $req->man_collection;
             $accessories->value_1 = $req->accessories_collection;
 
+            $one->value_1 = $req->one;
+            $two->value_1 = $req->two;
+            $three->value_1 = $req->three;
+
             $woman->save();
             $man->save();
             $accessories->save();
+
+            $one->save();
+            $two->save();
+            $three->save();
 
             return response()->json(['error' => false, 'msg' => 'Success Updating Collections Texts'],200);
 
@@ -46,7 +58,10 @@ class WebconfigController extends Controller
     function getFeatured ()
     {
         try {
-            $featured = ItemDetail::where('featured', '=', 1)->get();
+            $featured = ItemDetail::where([
+                'featured' => 1,
+                'deleted'  => 0
+            ])->get();
             $images   = array();
 
             foreach($featured as $single)
