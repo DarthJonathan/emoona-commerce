@@ -346,6 +346,8 @@ body {
   align-items: center;
   max-width: 60vw;
   max-height: 60vh;
+  overflow-y: scroll;
+  padding: 1em 0 1em 0;
 }
 
 .single-featured {

@@ -442,40 +442,42 @@ function loadNextCategory (e)
 
                         //Deprecaeated
 
-                        // html = '<tr>' +
-                        //     '<td>'+ (key+1) +'</td>' +
-                        //     '<td data-case="color" data-id="'+ value.id +'" onblur="editItemDetail(this)" contenteditable>'+ value.color +'</td>' +
-                        //     '<td data-case="size" data-id="'+ value.id +'" onblur="editItemDetail(this)" contenteditable>'+ value.size +'</td>' +
-                        //     '<td>' +
-                        //     '   <button class="btn btn-primary btn-block" style="cursor: pointer;" data-link="'+ value.images +'" onclick="viewImagesDetail(this)">View Images</button>' +
-                        //     '</td>' +
-                        //     '<td data-case="stock" data-id="'+ value.id +'" onblur="editItemDetail(this)" contenteditable>'+ value.stock +'</td>' +
-                        //     '<td>'+
-                        //     '<input type="radio" name="status#'+ value.id +'" ' + status.available + ' data-case="status" data-id="'+ value.id +'" onclick="editItemDetail(this)" value="available"> Available <br>' +
-                        //     '<input type="radio" name="status#'+ value.id +'" ' + status.preorder + '  data-case="status" data-id="'+ value.id +'" onclick="editItemDetail(this)" value="preorder"> Preorder <br>' +
-                        //     '<input type="radio" name="status#'+ value.id +'" ' + status.hidden + '  data-case="status" data-id="'+ value.id +'" onclick="editItemDetail(this)" value="hidden"> Hidden <br>' +
-                        //     '</td>' +
-                        //     '<td>' +
-                        //     '<input type="checkbox" name="featured" id="featured" data-case="featured"  data-id="'+ value.id +'" onchange="editItemDetail(this)" ' + featured + ' > Yes' +
-                        //     '</td>' +
-                        //     '<td>' +
-                        //     '<button class="btn btn-dark" onclick="saleStatus(this)" data-id="'+ value.id +'" style="cursor:pointer">Sale Status</button>' +
-                        //     '<button class="btn btn-danger" onclick="deleteItemDetail(this)" data-id="'+ value.id +'" style="cursor:pointer">Delete</button>' +
-                        //     '</td>' +
-                        //     '</tr>';
+                        var html = '<tr>' +
+                            '<td>'+ (key+1) +'</td>' +
+                            '<td data-case="color" data-id="'+ value.id +'" onblur="editItemDetail(this)" contenteditable>'+ value.color +'</td>' +
+                            '<td data-case="size" data-id="'+ value.id +'" onblur="editItemDetail(this)" contenteditable>'+ value.size +'</td>' +
+                            '<td>' +
+                            '   <button class="btn btn-primary btn-block" style="cursor: pointer;" data-link="'+ value.images +'" onclick="viewImagesDetail(this)">View Images</button>' +
+                            '</td>' +
+                            '<td data-case="stock" data-id="'+ value.id +'" onblur="editItemDetail(this)" contenteditable>'+ value.stock +'</td>' +
+                            '<td>'+
+                            '<input type="radio" name="status#'+ value.id +'" ' + status.available + ' data-case="status" data-id="'+ value.id +'" onclick="editItemDetail(this)" value="available"> Available <br>' +
+                            '<input type="radio" name="status#'+ value.id +'" ' + status.preorder + '  data-case="status" data-id="'+ value.id +'" onclick="editItemDetail(this)" value="preorder"> Preorder <br>' +
+                            '<input type="radio" name="status#'+ value.id +'" ' + status.hidden + '  data-case="status" data-id="'+ value.id +'" onclick="editItemDetail(this)" value="hidden"> Hidden <br>' +
+                            '</td>' +
+                            '<td>' +
+                            '<input type="checkbox" name="featured" id="featured" data-case="featured"  data-id="'+ value.id +'" onchange="editItemDetail(this)" ' + featured + ' > Yes' +
+                            '</td>' +
+                            '<td>' +
+                            '<button class="btn btn-dark" onclick="saleStatus(this)" data-id="'+ value.id +'" style="cursor:pointer">Sale Status</button>' +
+                            '<button class="btn btn-danger" onclick="deleteItemDetail(this)" data-id="'+ value.id +'" style="cursor:pointer">Delete</button>' +
+                            '</td>' +
+                            '</tr>';
 
-                        // $('.items-list').append(html);
+                        $('.items-list').append(html);
 
-                        itemTable.row.add( [
-                            '<td>'+ (key+1) +'</td>',
-                            '<td data-case="color" data-id="'+ value.id +'" onblur="editItemDetail(this)" contenteditable>'+ value.color +'</td>',
-                            '<td data-case="size" data-id="'+ value.id +'" onblur="editItemDetail(this)" contenteditable>'+ value.size +'</td>',
-                            '<td><button class="btn btn-primary btn-block" style="cursor: pointer;" data-link="'+ value.images +'" onclick="viewImagesDetail(this)">View Images</button></td>',
-                            '<td data-case="stock" data-id="'+ value.id +'" onblur="editItemDetail(this)" contenteditable>'+ value.stock +'</td>',
-                            '<td><input type="radio" name="status#'+ value.id +'" ' + status.available + ' data-case="status" data-id="'+ value.id +'" onclick="editItemDetail(this)" value="available"> Available <br><input type="radio" name="status#'+ value.id +'" ' + status.preorder + '  data-case="status" data-id="'+ value.id +'" onclick="editItemDetail(this)" value="preorder"> Preorder <br><input type="radio" name="status#'+ value.id +'" ' + status.hidden + '  data-case="status" data-id="'+ value.id +'" onclick="editItemDetail(this)" value="hidden"> Hidden <br></td>',
-                            '<td><input type="checkbox" name="featured" id="featured" data-case="featured"  data-id="'+ value.id +'" onchange="editItemDetail(this)" ' + featured + ' > Yes </td>',
-                            '<td><button class="btn btn-dark" onclick="saleStatus(this)" data-id="'+ value.id +'" style="cursor:pointer">Sale Status</button><button class="btn btn-danger" onclick="deleteItemDetail(this)" data-id="'+ value.id +'" style="cursor:pointer">Delete</button></td>'
-                        ] ).draw( false );
+
+
+                        // itemTable.row.add( [
+                        //     '<td>'+ (key+1) +'</td>',
+                        //     '<td data-case="color" data-id="'+ value.id +'" onblur="editItemDetail(this)" contenteditable>'+ value.color +'</td>',
+                        //     '<td data-case="size" data-id="'+ value.id +'" onblur="editItemDetail(this)" contenteditable>'+ value.size +'</td>',
+                        //     '<td><button class="btn btn-primary btn-block" style="cursor: pointer;" data-link="'+ value.images +'" onclick="viewImagesDetail(this)">View Images</button></td>',
+                        //     '<td data-case="stock" data-id="'+ value.id +'" onblur="editItemDetail(this)" contenteditable>'+ value.stock +'</td>',
+                        //     '<td><input type="radio" name="status#'+ value.id +'" ' + status.available + ' data-case="status" data-id="'+ value.id +'" onclick="editItemDetail(this)" value="available"> Available <br><input type="radio" name="status#'+ value.id +'" ' + status.preorder + '  data-case="status" data-id="'+ value.id +'" onclick="editItemDetail(this)" value="preorder"> Preorder <br><input type="radio" name="status#'+ value.id +'" ' + status.hidden + '  data-case="status" data-id="'+ value.id +'" onclick="editItemDetail(this)" value="hidden"> Hidden <br></td>',
+                        //     '<td><input type="checkbox" name="featured" id="featured" data-case="featured"  data-id="'+ value.id +'" onchange="editItemDetail(this)" ' + featured + ' > Yes </td>',
+                        //     '<td><button class="btn btn-dark" onclick="saleStatus(this)" data-id="'+ value.id +'" style="cursor:pointer">Sale Status</button><button class="btn btn-danger" onclick="deleteItemDetail(this)" data-id="'+ value.id +'" style="cursor:pointer">Delete</button></td>'
+                        // ] ).draw( false );
                     });
                 }break
             }

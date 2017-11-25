@@ -247,7 +247,8 @@ class ItemManagement extends Controller
             'stock.min'         => 'Item stock cannot be 0',
             'image.*.mimes'     => 'Item image file type is invalid',
             'image.*.image'     => 'Item image file uploaded is not an image',
-            'image.*.max'       => 'Item image maximum file size is 2 MB'
+            'image.*.max:2048'  => 'Item image maximum file size is 2 MB',
+            'image.max'         => 'Item image maximum file size is 2 MB'
         ];
 
         $validate = Validator::make($req->all(), $rules, $messages);
@@ -538,7 +539,14 @@ class ItemManagement extends Controller
                 'image.*'   => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
             ];
 
-            $validator = Validator::make($req->all(), $rules);
+            $messages = [
+                'image.*.mimes'     => 'Item image file type is invalid',
+                'image.*.image'     => 'Item image file uploaded is not an image',
+                'image.*.max:2048'  => 'Item image maximum file size is 2 MB',
+                'image.max:2048'    => 'Item image maximum file size is 2 MB'
+            ];
+
+            $validator = Validator::make($req->all(), $rules, $messages);
 
             if($validator->fails())
             {
@@ -620,19 +628,33 @@ class ItemManagement extends Controller
 
     function newCategory (Request $req)
     {
-        $data = [
-            'name' => $req->input('categoryName'),
-            'description' => $req->input('categoryDescription'),
-            'gender' => $req->input('gender')
+        $rules = [
+            'categoryName'          => 'required',
+            'categoryDescription'   => 'required',
+            'gender'                => 'required'
         ];
 
-        $category = new ItemCategory();
-        $category->name = $data['name'];
-        $category->description = $data['description'];
-        $category->gender = $data['gender'];
-        $category->save();
+        $validate = Validator::make($req->all(), $rules);
 
-        return back();
+        if($validate->fails())
+        {
+            return back()->withError($validate->messages());
+        }else
+        {
+            $data = [
+                'name' => $req->input('categoryName'),
+                'description' => $req->input('categoryDescription'),
+                'gender' => $req->input('gender')
+            ];
+    
+            $category = new ItemCategory();
+            $category->name = $data['name'];
+            $category->description = $data['description'];
+            $category->gender = $data['gender'];
+            $category->save();
+    
+            return back();
+        }
     }
 
     function salesStatus (Request $req)

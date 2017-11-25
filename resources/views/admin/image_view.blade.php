@@ -3,21 +3,15 @@
     <div class="col-lg-12">
         <div class="image-scroller">
             <div class="image-group">
-            @foreach($files as $count => $file)
-                <?php
-                    $file_path = explode('/',$file)[2] . '/' . explode('/',$file)[3];
-                ?>
-                        @if( ($count) % 3 == 0)
-                            <div class="row">
-                        @endif
-                            <div class="col-lg-4">
-                                <img src="{{ asset('/storage/item_detail/' . $file_path) }}" alt="Image Error" data-id="{{ $count }}" onclick="checkBox(this)">
-                                <center><input type="checkbox" class="tobe-deleted" name="delete" id="{{ $count }}" value="{{ $file_path }}"></center>
-                            </div>
-                        @if( ($count+1) % 3 == 0 || count($files)-1 == $count)
-                            </div>
-                        @endif
-            @endforeach
+                    @foreach($files as $count => $file)
+                        <?php
+                            $file_path = explode('/',$file)[2] . '/' . explode('/',$file)[3];
+                        ?>
+                        <div class="col-lg-4 float-left">
+                            <img src="{{ asset('/storage/item_detail/' . $file_path) }}" alt="Image Error" data-id="{{ $count }}" onclick="checkBox(this)">
+                            <center><input type="checkbox" class="tobe-deleted" name="delete" id="{{ $count }}" value="{{ $file_path }}"></center>
+                        </div>
+                    @endforeach
             </div>
         </div>
     </div>

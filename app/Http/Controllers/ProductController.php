@@ -48,14 +48,24 @@ class ProductController extends Controller
             $discounts          = array();
 
             foreach($products as $count => $product)
+                $product_images[$count] = array();
+
+            foreach($products as $count => $product)
             {
-                foreach($product->item_detail as $detail)
+                foreach($product->item_detail as $key => $detail)
                 {
+                    if($detail->deleted == 1)
+                    {
+                        unset($product->item_detail[$key]);
+                        continue;                        
+                    }
+
                     $path = $detail->images;
 
                     $files = Storage::files('public/item_detail/' . $path);
 
-                    $product_images[$count] = $files;
+                    $product_images[$count] += $files;
+                    // $product_images = $files;
 
                     $discount = Discount::where('item_detail_id', '=', $detail->id)->first();
 
@@ -88,13 +98,18 @@ class ProductController extends Controller
             $products = Item::with('item_category', 'item_detail')->where('category_id', '=', $category_id)->where('deleted', '=', 0)->get();
             $product_images = array();
             $discounts = array();
+        
 
-            foreach ($products as $product)
+            foreach ($products as $key => $product)
             {
                 foreach ($product->item_detail as $detail)
                 {
+                    
                     if($detail->deleted == 1)
-                        continue;
+                    {
+                        unset($product->item_detail[$key]);
+                        continue;                        
+                    }
 
                     $path = $detail->images;
 
@@ -130,6 +145,7 @@ class ProductController extends Controller
         $products           = array();
         $cate               = ItemCategory::where('deleted', '=', 0)->get();
         $all_images         = array();
+        $discounts          = array();
 
         try {
 
@@ -139,17 +155,26 @@ class ProductController extends Controller
                 array_push($products, Item::with('item_category', 'item_detail')->where('category_id', '=', $category->id)->where('deleted', '=', 0)->get());
                 $product_images = array();
 
-                foreach ($products[$key] as $product) {
+                foreach ($products[$key] as $key_2 => $product) {
                     foreach ($product->item_detail as $detail) {
-                        
+                    
                         if($detail->deleted == 1)
-                            continue;
+                        {
+                            unset($product->item_detail[$key_2]);
+                            continue;       
+                        }
 
                         $path = $detail->images;
 
                         $files = Storage::files('public/item_detail/' . $path);
+                        $discount = Discount::where('item_detail_id', '=', $detail->id)->first();
 
-                        array_push($product_images, $files);
+                        if($discount != null)
+                        {
+                            $discounts[$detail->id] = $discount->amount;
+                        }
+
+                        $product_images += $files;
                     }
                 }
 
@@ -159,6 +184,7 @@ class ProductController extends Controller
             return response()->json([
                 'error'         => false,
                 'products'      => $products,
+                'discounts'     => $discounts,
                 'images'        => $all_images,
                 'categories'    => $cate
             ], 200);
@@ -183,6 +209,8 @@ class ProductController extends Controller
                 $item_detail = ItemDetail::with('item')->where('id', '=', $discount->item_detail_id)->where('deleted', '=', 0)->first();
 
                 if($item_detail == null)
+                    continue;
+                else if($item_detail->deleted == 1)
                     continue;
 
                 $products[$counter]['item'] = $item_detail;

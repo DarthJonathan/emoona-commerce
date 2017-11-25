@@ -107,7 +107,7 @@
         var itemTable;
 
         $(document).ready(function(){
-            itemTable = $('#itemsTable').DataTable();
+            //itemTable = $('#itemsTable').DataTable();
         });
     </script>
 @endsection

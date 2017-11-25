@@ -654,7 +654,7 @@ ul {
 
 #p-main-con .p-main-img {
   width: 100%;
-  height: 97vh;
+  padding-bottom: 85vh;
   background: no-repeat;
   background-size: cover;
   background-position: center;
@@ -677,8 +677,7 @@ ul {
 }
 
 #p-second-con .p-second-img {
-  width: 20px;
-  height: 150px;
+  padding-bottom: 23vh;
   outline: none;
   background: no-repeat;
   background-size: cover;
@@ -731,6 +730,7 @@ ul {
 .sub-desc-product-desc {
   font-size: 14px;
   font-family: Emoona;
+  padding: 25px 5em 25px 5em;
 }
 
 .desc-product-color {
@@ -1626,6 +1626,32 @@ ul {
   }
   .subsc-content-wrapper {
     padding: 4% 15% 4% 15%;
+  }
+  #p-main-con .p-main-img {
+    padding-bottom: 65vh;
+  }
+  #p-second-con .p-second-img {
+    padding-bottom: 14vh;
+  }
+  .desc-product-title {
+    padding-bottom: 4%;
+    font-size: 24px;
+  }
+  .desc-product-price {
+    padding-bottom: 4%;
+    font-size: 22px;
+  }
+  .desc-product-desc {
+    padding-bottom: 4%;
+  }
+  .desc-product-color {
+    padding-bottom: 4%;
+  }
+  .desc-product-size {
+    padding-bottom: 4%;
+  }
+  .desc-product-qty {
+    padding-bottom: 4%;
   }
 }
 

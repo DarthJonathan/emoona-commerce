@@ -45,7 +45,7 @@
 
 		<div class="row">
 
-			<div class="col-md-6">
+			<div class="col-md-5">
 				<div class="product-pic-zone">
 					
 					<div class="p-main-wrapper">
@@ -70,7 +70,7 @@
 				</div><!--productpiczone-->
 			</div><!--col-md-6-->
 
-			<div class="col-md-6">
+			<div class="col-md-7">
 				<div class="desc-product-wrapper">
 
 					<div class="desc-product-title">
@@ -78,12 +78,12 @@
 					</div><!--deskproducttitle-->
 
 					<div class="desc-product-price">
-						IDR {{ $product['price'] }}
+						IDR <?php echo number_format($product['price'], 0, '.', ',') ?>
 					</div><!--deskproductprice-->
 
 					<div class="desc-product-desc">
 						DESCRIPTION
-						<div class="sub-desc-product-desc">
+						<div class="sub-desc-product-desc px-5">
 							{{ $product['description'] }}
 						</div><!--subdescprocuct-->
 					</div><!--deskproductdesc-->
@@ -184,6 +184,8 @@
     $(document).ready(function()
     {
         loadColors();
+
+		console.log(makePrice(100000));
     });
 
     var item_details = JSON.parse('<?php echo json_encode($product['item_detail']) ?>');
@@ -226,7 +228,7 @@
             if(key == id)
             {
                 var discounted = price-(price*value);
-                $('.desc-product-price').html('IDR <s>' + price + '</s> ' + discounted);
+                $('.desc-product-price').html('IDR <s>' + makePrice(price) + '</s> ' + makePrice(discounted));
             }
         });
 
@@ -282,7 +284,7 @@
             if(key == check)
             {
                 var discounted = price-(price*value);
-                $('.desc-product-price').html('IDR <s>' + price + '</s> ' + discounted);
+                $('.desc-product-price').html('IDR <s>' + makePrice(price) + '</s> ' + makePrice(discounted));
             }
 
         });

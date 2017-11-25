@@ -8,7 +8,7 @@
 
             <div class="form-row mb-3">
                 <div class="col">
-                    <input type="text" class="form-control" id="color" name="color" placeholder="Enter Item Color" required>
+                    <input type="color" class="form-control" id="color" name="color" placeholder="Enter Item Color" style="height: 50px;" required>
                 </div>
             </div>
 
