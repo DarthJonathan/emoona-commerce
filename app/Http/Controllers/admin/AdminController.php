@@ -8,6 +8,7 @@ use App\PaymentType;
 use App\HomeSlider;
 use App\User;
 use Analytics;
+use App\user_info;
 use Spatie\Analytics\Period;
 use Storage;
 use App\Webconfig;
@@ -101,7 +102,12 @@ class AdminController extends Controller
     public function newsletter ()
     {
         $newsletters = Newsletter::limit(30)->get();
-        $data = ['newsletters' => $newsletters];
+        $subscribers = user_info::with('User')->where('newsletter', '=', 1)->get();
+
+        $data = [
+            'newsletters'   => $newsletters,
+            'subscribers'   => $subscribers
+        ];
         return view('admin.newsletter.home', $data);
     }
 

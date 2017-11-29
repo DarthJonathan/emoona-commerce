@@ -519,7 +519,7 @@ class ItemManagement extends Controller
             return response()->json([
                 'error' => false,
                 'msg'   => 'Deletion Complete'
-            ]);
+            ], 200);
         }catch (\Exception $e)
         {
             return response()->json([

@@ -1276,7 +1276,6 @@ function editStudioItem (e)
 
     $.ajax({
         url: '/admin/studio/edit_item',
-        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
         type: 'GET',
         data: {id: id},
         success: function(data){

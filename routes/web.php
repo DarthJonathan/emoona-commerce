@@ -257,6 +257,9 @@ Route::middleware(['admin'])->group(function()
         Route::get('studio/deleteItem/{id}','admin\StudioController@deleteStudioItem');  
         Route::get('studio/edit_item','admin\StudioController@editStudioItem');
         Route::post('studio/edit_item','admin\StudioController@storeEditStudioItem');
+        Route::post('studio/delete_media_studio','admin\StudioController@deleteMediaItem');
+        Route::post('studio/change_banner_image_studio','admin\StudioController@changeBannerImageStudio');
+        Route::post('studio/add_studio_item_media','admin\StudioController@addStudioItemMedia');
     });
 });
 

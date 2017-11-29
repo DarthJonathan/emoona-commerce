@@ -174,7 +174,7 @@
                                         <td>{{$item->title}}</td>
                                         <td>{{$item->StudioCategory->name}}</td>
                                         <td>
-                                            <a onclick="editStudioItem(this)" data-id="{{ $item->id }}" class="btn btn-primary">Edit</a>
+                                            <a onclick="editStudioItem(this)" data-id="{{ $item->id }}" style="color:white" class="btn btn-primary">Edit</a>
                                             <span>&nbsp;</span>
                                             <a class="btn btn-primary" href="{{url('/admin/studio/deleteItem/'.$item->id)}}">Delete</a>
                                         </td>

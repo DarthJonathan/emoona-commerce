@@ -338,12 +338,6 @@ body {
 }
 
 .modal-body {
-  display: -webkit-box;
-  display: flex;
-  -webkit-box-pack: center;
-  justify-content: center;
-  -webkit-box-align: center;
-  align-items: center;
   max-width: 60vw;
   max-height: 60vh;
   overflow-y: scroll;

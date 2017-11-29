@@ -59,7 +59,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-12">
+            <div class="col-lg-7">
                 <h4>Past Newsletters</h4>
                 <table class="table" id="newsletterTable">
                     <thead>
@@ -87,6 +87,27 @@
                                 <td>{{ \Carbon\Carbon::parse($newsletter->created_at)->format('d M Y') }}</td>
                             </tr>
                         @endforeach
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-lg-5">
+                <h4>Subscribers</h4>
+                <table class="table" id="subscribersTabls">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($subscribers as $count => $subscriber)
+                        <tr>
+                            <td>{{ $count+1 }}</td>
+                            <td>{{ $subscriber->user->firstname . ' ' . $subscriber->user->lastname }}</td>
+                            <td>{{ $subscriber->user->email }}</td>
+                        </tr>
+                    @endforeach
                     </tbody>
                 </table>
             </div>

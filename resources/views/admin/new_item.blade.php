@@ -1,3 +1,4 @@
+<div class="container">
 <div class="row">
     <div class="col-lg-12">
         <form action="{{ action('admin\ItemManagement@newItem') }}" method="post" id="newItemForm">
@@ -73,7 +74,7 @@
         </form>
     </div>
 </div>
-
+</div>
 <script>
     var categories = JSON.parse('{!! $categories !!}');
 

@@ -1,3 +1,4 @@
+<div class="container">
 <div class="row">
     <div class="col-lg-12">
         <form action="{{ action('admin\ItemManagement@newItemDetail') }}" method="post" enctype="multipart/form-data" id="newItemDetailForm">
@@ -59,7 +60,7 @@
         </form>
     </div>
 </div>
-
+</div>
 <script>
     $(document).ready(function()
     {
