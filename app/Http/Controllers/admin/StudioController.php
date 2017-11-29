@@ -162,4 +162,26 @@ class StudioController extends Controller
 
         return redirect('admin/studio')->with('success', 'Deleting studio item success!');
     }
+
+    /**
+     * Previewing the studio item, for editing
+     *
+     * @param $req Gets the form request 
+     */
+    function editStudioItem (Request $req)
+    {
+        $studio = StudioItem::find($req->id);
+        return view('admin.edit_studio_item', ['studio' => $studio]);
+    }
+
+    /**
+     * To store the edited studio item
+     * 
+     * @param $req The edited from inform of a Request object
+     */
+    function storeEditStudioItem (Request $req)
+    {
+        
+    }
+
 }

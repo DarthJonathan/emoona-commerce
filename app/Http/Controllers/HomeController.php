@@ -7,6 +7,8 @@ use App\Mail\whisperMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Validator;
+use App\user_info;
+use Auth;
 
 class HomeController extends Controller
 {
@@ -86,7 +88,7 @@ class HomeController extends Controller
         $rules = [
             'firstname' => 'required|alpha',
             'lastname'  => 'required|alpha',
-            'email'     => 'required|email|unique:users,email'
+            'email'     => 'required|email'
         ];
 
         $validate = Validator::make($req->all(), $rules);
@@ -97,13 +99,37 @@ class HomeController extends Controller
             return back()->withErrors($message);
         }else
         {
-            return redirect('/register')->with($req->all());
+            if(Auth::check())
+            {
+                if($req->email != Auth::user()->email)
+                    return back()->withErrors("Email doesnt match!");
+
+                $user = user_info::where('user_id', '=', Auth::id())->first();
+                $user->newsletter = 1;
+                $user->save();
+                return redirect('/')->with('success', 'You have signed Up to our newsletter!');
+            }
+            else
+                return redirect('/register')->withInputs($req->all());
         }
     }
 
-    function checkMail ()
+    /**
+     * Unsubscribe for news letter
+     * 
+     * @param $id is the user id
+     */
+    function unsubscribeNewsletter($id = null)
     {
-        $data = ['activation_code' => 'aaa'];
-        return view('emails.activate', $data);
+        if($id == null)
+            redirect('/');
+
+        $user = user_info::where('user_id', '=', $id)->first();
+
+        $user->newsletter = 0;
+
+        $user->save();
+
+        return redirect('/')->with('msg', 'You have Successfully Unsubscribe From Our Newsletter');
     }
 }

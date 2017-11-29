@@ -13,15 +13,17 @@ class NewsletterMail extends Mailable
     use Queueable, SerializesModels;
 
     public $newsletter;
+    private $userid;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(Newsletter $news)
+    public function __construct(Newsletter $news, $id)
     {
-        $this->newsletter = $news;
+        $this->newsletter           = $news;
+        $this->userid               = $id;
     }
 
     /**
@@ -33,6 +35,7 @@ class NewsletterMail extends Mailable
     {
         return $this->from('newsletter@emoonastudio.com', 'Emoona Studio')
                     ->subject('Emoona Studio Newsletter')
-                    ->markdown('emails.newsletter');
+                    ->markdown('emails.newsletter')
+                    ->with('userid', $this->userid);
     }
 }

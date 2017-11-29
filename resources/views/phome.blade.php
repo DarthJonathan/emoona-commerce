@@ -174,6 +174,7 @@
 		<div class="col-lg-12">
 
 		<form action="{{ URL::to('/newsletter/sign.up') }}" method="post" id="signUpNewsletter">
+			{{ csrf_field() }}
 			<table border="0" class="subsc-tab-form">
 				<tr>
 					<td><input type="text" name="firstname" placeholder="First Name"></td>

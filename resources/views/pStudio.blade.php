@@ -35,8 +35,10 @@
 
 		<div id="banner-space">
 			@foreach($items as $item)
-				<a href=" /studio/{{ $item->id }}">
-					<div class="studio-link" style="background-image:url('/storage/img/studio/{{ explode('/', $item->files)[4] }}/banner.jpg')">
+				<a href="/studio/{{ $item->id }}" class="studio-item">
+					<div class="studio-link">
+						<div class="studio-background" style="background-image:url('/storage/img/studio/{{ explode('/', $item->files)[4] }}/banner.jpg')"></div>
+						<div class="studio-title">{{ $item->title }}</div>
 					</div>
 				</a>
 			@endforeach
@@ -58,10 +60,12 @@
 
 		        if(item.studio_category.template == template)
 		        {
-		            var html = '<a href=" /studio/' + item.id + '">' +
-		                    '<div class="studio-link" style="background-image:url(/storage/img/studio/' + item.files.split('/')[4] + '/banner.jpg)">' +
-		                    '</div>' +
-		                '</a>';
+		            var html = '<a href="/studio/' + item.id + '" class="studio-item">' +
+									'<div class="studio-link">' +
+										'<div class="studio-background" style="background-image:url(/storage/img/studio/' + item.files.split('/')[4] + '/banner.jpg)"></div>' +
+										'<div class="studio-title">' + item.title + '</div>' +
+									'</div>' +
+								'</a>';
 
 		            banner.append(html);
 		        }

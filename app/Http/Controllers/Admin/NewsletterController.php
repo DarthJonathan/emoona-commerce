@@ -10,15 +10,23 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Validator;
 use Mail;
+use Image;
 
 class NewsletterController extends Controller
 {
+    function __construct ()
+    {
+        ini_set('memory_limit','512M');
+    }
+
     function newNewsletter (Request $req)
     {
         $rules = [
             'title'     => 'required',
             'blast'     => 'required|date',
-            'content'   => 'required'
+            'content'   => 'required',
+            'image'     => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image.*'   => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ];
 
         $validation = Validator::make($req->all(), $rules);
@@ -26,16 +34,29 @@ class NewsletterController extends Controller
         if($validation->fails())
         {
             $message = $validation->messages();
-            return back()->withErrors($message);
+            return redirect('/admin/newsletter')->withErrors($message);
         }else
         {
             try {
 
                 $newsletter = new Newsletter();
+                
+                $path = time();
+                $fullpath = storage_path('app/public/newsletter/' . $path);
 
                 $newsletter->title          = $req->title;
                 $newsletter->content        = $req->input('content');
                 $newsletter->blasted_date   = $req->blast;
+
+                if($req->image)
+                {
+                    $newsletter->images         = $path;
+                    mkdir($fullpath);
+                    Image::make($req->image->getRealPath())->encode('jpg', 75)->interlace()->save($fullpath . '/image.jpg');
+                }else
+                {
+                    $newsletter->images         = null;
+                }
 
                 $newsletter->save();
 
@@ -48,15 +69,14 @@ class NewsletterController extends Controller
 
                 foreach($subcribers as $person)
                 {
-                    Mail::to($person->email)->queue((new NewsletterMail($newsletter))->delay($time_difference));
+                    Mail::to($person->email)->queue((new NewsletterMail($newsletter, $person->id))->delay($time_difference));
                     $time_difference = $when->addSeconds(30)->diffInDays(Carbon::now());
                 }
 
-                return back();
+                return redirect('/admin/newsletter')->with('msg', 'Newsletter created!');
 
             }catch (\Exception $e) {
-                return $e->getMessage();
-                return back()->withErrors($e->getMessage());
+                return redirect('/admin/newsletter')->withErrors($e->getMessage());
             }
         }
     }
@@ -67,6 +87,6 @@ class NewsletterController extends Controller
 
         $newsletter = Newsletter::find($id);
 
-        return new NewsletterMail($newsletter);
+        return new NewsletterMail($newsletter, '0');
     }
 }

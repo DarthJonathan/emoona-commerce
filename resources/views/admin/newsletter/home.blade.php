@@ -18,7 +18,10 @@
                         <h4>New Newsletter</h4>
                     </div>
                     <div class="card-body">
-                        <form action="{{ action('admin\NewsletterController@newNewsletter') }}" id="newNewsletter">
+                        <form action="/admin/newsletter/new.newsletter" method="post" enctype="multipart/form-data" id="newNewsletter">
+
+                            {{ csrf_field() }}
+
                             <div class="form-group row">
                                 <label for="title" class="col-sm-2 col-form-label">Title</label>
                                 <div class="col-sm-10">
@@ -31,6 +34,11 @@
                                 <div class="col-sm-10">
                                     <input type="date" class="form-control" id="blast" name="blast" placeholder="Blast Date">
                                 </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="blast" class="col-sm-2 col-form-label">Image</label>
+                                <input type="file" id="image" name="image" class="col-sm-10">
                             </div>
 
                             <div class="form-group row">

@@ -29,6 +29,7 @@ Route::post('/contact.send', 'HomeController@contactUsSend');
  * News Letter
  */
 Route::post('/newsletter/sign.up', 'HomeController@signUpNewsletter');
+Route::get('/unsubscribe/{id?}', 'HomeController@unsubscribeNewsletter');
 
 /*
  * Products
@@ -235,7 +236,7 @@ Route::middleware(['admin'])->group(function()
         /*
          * Newsletter
          */
-        Route::get('newsletter/new.newsletter', 'admin\NewsletterController@newNewsletter');
+        Route::post('newsletter/new.newsletter', 'admin\NewsletterController@newNewsletter');
         Route::post('newsletter/view.content', 'admin\NewsletterController@viewContent');
 
         /*
@@ -254,6 +255,8 @@ Route::middleware(['admin'])->group(function()
         Route::post('studio/getCategory','admin\StudioController@getCategory'); 
         Route::post('studio/addStudioItem','admin\StudioController@addStudioItem');
         Route::get('studio/deleteItem/{id}','admin\StudioController@deleteStudioItem');  
+        Route::get('studio/edit_item','admin\StudioController@editStudioItem');
+        Route::post('studio/edit_item','admin\StudioController@storeEditStudioItem');
     });
 });
 

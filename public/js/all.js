@@ -1267,5 +1267,22 @@ function editStudioCategory (e)
     });
 }
 
+function editStudioItem (e)
+{
+    var id = $(e).data('id');
 
+    $('.modal-title').empty();
+    $('#modal').modal('toggle');
+
+    $.ajax({
+        url: '/admin/studio/edit_item',
+        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+        type: 'GET',
+        data: {id: id},
+        success: function(data){
+            $('.modal-body').html(data);
+            $('#ajax-loading').hide();
+        }
+    });
+}
 //# sourceMappingURL=all.js.map

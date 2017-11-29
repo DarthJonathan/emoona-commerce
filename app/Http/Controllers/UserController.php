@@ -86,13 +86,14 @@ class UserController extends Controller
         }else
         {
             $updated_data = array (
-                'address'  => $req->input('address'),
-                'postcode'  => $req->input('postcode'),
-                'province'  => $req->input('province'),
-                'country'  => $req->input('country'),
-                'birthday'  => $req->input('birthday'),
-                'gender'  => $req->input('gender'),
-                'phone'  => $req->input('phone'),
+                'address'       => $req->input('address'),
+                'postcode'      => $req->input('postcode'),
+                'province'      => $req->input('province'),
+                'country'       => $req->input('country'),
+                'birthday'      => $req->input('birthday'),
+                'gender'        => $req->input('gender'),
+                'phone'         => $req->input('phone'),
+                'newsletter'    => $req->input('newsletter') ? 1 : 0
             );
 
             $updated_data_core = array (

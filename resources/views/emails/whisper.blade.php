@@ -11,6 +11,9 @@
 @endcomponent
 
 @component('mail::subcopy')
-    This email is computer generated.
+    This email is computer generated. <br>
+    Need Help? <br>
+    Contact Us Through <br>
+    help@emoonastudio.com <br>
 @endcomponent
 @endcomponent

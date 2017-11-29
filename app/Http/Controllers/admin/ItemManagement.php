@@ -563,7 +563,7 @@ class ItemManagement extends Controller
                 //Store the file
                 foreach ($req->image as $image) {
                     // array_push($singularPath, $image->store($path));
-                    Image::make($image)->encode('jpg', 75)->interlace()->save(storage_path('app/' . $path . '/' . time() . '.jpg'));
+                    Image::make($image->getRealPath())->encode('jpg', 75)->interlace()->save(storage_path('app/' . $path . '/' . time() . '.jpg'));
                 }
 
                 $return = ['error' => false, 'msg' => 'Successfully added a new item detail image!'];

@@ -1,7 +1,7 @@
 /* ---------- Jona's Stuff -------------- */
 .notification {
   position: fixed;
-  z-index: 10000;
+  z-index: 10000000;
   width: 100%;
   top: 70px;
   transition: all .3s ease-in-out;
@@ -122,7 +122,7 @@ ul {
   padding: 0;
   margin: 0;
   position: fixed;
-  z-index: 10;
+  z-index: 1000000;
   width: 100%;
 }
 
@@ -1167,12 +1167,45 @@ ul {
 
 .studio-link {
   width: 100%;
-  padding-bottom: 13%;
   margin-bottom: 3%;
+  height: 25vh;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+  overflow: hidden;
   background-image: url("../img/studiotest.jpg");
+  transition: all .3s ease-in-out;
+}
+
+.studio-link .studio-title {
+  color: #fff;
+  font-size: 56px;
+  opacity: 0;
+  transition: all .3s ease-in-out;
+  position: absolute;
+  z-index: 1000;
+}
+
+.studio-link .studio-background {
+  width: 150%;
+  height: 120%;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+  transition: all .3s ease-in-out;
+}
+
+.studio-link:hover > .studio-background {
+  -webkit-filter: grayscale(100%) blur(2px);
+  filter: grayscale(100%) blur(2px);
+  border: 0;
+}
+
+.studio-link:hover > .studio-title {
+  opacity: 1;
 }
 
 /*-------------------------------------------------------*/
