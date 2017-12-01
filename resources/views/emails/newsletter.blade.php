@@ -7,7 +7,7 @@
 
 @if($newsletter->images != null)
 <p style="text-align: center">
-    <img src="{{ URL::to('/storage/newsletter/' . $newsletter->images . '/image.jpg') }}" width="50%">
+    <img class="image-newspaper" src="{{ URL::to('/storage/newsletter/' . $newsletter->images . '/image.jpg') }}" width="50%">
 </p>
 @endif
 

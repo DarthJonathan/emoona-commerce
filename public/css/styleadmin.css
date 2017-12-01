@@ -406,6 +406,28 @@ body {
   padding: 10px;
 }
 
+.newsletter-new {
+  min-height: 85vh;
+}
+
+.newsletter-preview {
+  min-height: 85vh;
+}
+
+.newsletter-preview .preview {
+  width: 100%;
+  margin-bottom: 70px;
+}
+
+.newsletter-preview .preview table {
+  width: 100% !important;
+}
+
+.newsletter-preview .generate-btn {
+  position: absolute;
+  bottom: 20px;
+}
+
 /* Media */
 @media screen and (max-width: 900px) {
   .tabs-wrapper {

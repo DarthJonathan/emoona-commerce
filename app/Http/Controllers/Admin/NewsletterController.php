@@ -89,4 +89,15 @@ class NewsletterController extends Controller
 
         return new NewsletterMail($newsletter, '0');
     }
+
+    function previewNewsletter (Request $req)
+    {
+        $newsletter = new Newsletter();
+
+        $newsletter->title      = $req->title;
+        $newsletter->content    = $req->content;
+        $newsletter->images     = 'preview';
+
+        return new NewsletterMail($newsletter, '0');
+    }
 }

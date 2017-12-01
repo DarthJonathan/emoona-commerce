@@ -217,7 +217,7 @@ class StudioController extends Controller
 
                 $studio = StudioItem::find($req->id);
 
-                $studio->title      = $req->title;
+                $studio->title       = $req->title;
                 $studio->content     = $req->content;
 
                 $studio->save();

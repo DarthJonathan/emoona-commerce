@@ -238,6 +238,7 @@ Route::middleware(['admin'])->group(function()
          */
         Route::post('newsletter/new.newsletter', 'admin\NewsletterController@newNewsletter');
         Route::post('newsletter/view.content', 'admin\NewsletterController@viewContent');
+        Route::post('newsletter/preview', 'admin\NewsletterController@previewNewsletter');
 
         /*
          * Social 

@@ -108,7 +108,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group mb-0">
-                                        <p>Newsletter</p>
+                                        <p>Subscribe to newsletter and promotions</p>
                                         <div class="form-check form-check-inline mb-0">
                                             <label for="gender" class="form-check-label mr-5 ml-2">
                                                 <input class="form-check-input" type="checkbox" name="newsletter"

@@ -34,7 +34,7 @@ class NewsletterMail extends Mailable
     public function build()
     {
         return $this->from('newsletter@emoonastudio.com', 'Emoona Studio')
-                    ->subject('Emoona Studio Newsletter')
+                    ->subject($this->newsletter->title)
                     ->markdown('emails.newsletter')
                     ->with('userid', $this->userid);
     }

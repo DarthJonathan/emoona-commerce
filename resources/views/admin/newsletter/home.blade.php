@@ -12,8 +12,8 @@
     </style>
     <div class="container-fluid">
         <div class="row mb-5">
-            <div class="col-lg-12">
-                <div class="card">
+            <div class="col-lg-6">
+                <div class="card newsletter-new">
                     <div class="card-header">
                         <h4>New Newsletter</h4>
                     </div>
@@ -54,6 +54,17 @@
                                 </div>
                             </div>
                         </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-body newsletter-preview">
+                        <h2>Newsletter Preview</h2>
+                        <div class="preview mt-3">
+                            <!-- Filled with ajax -->
+                        </div>
+                        <button class="btn btn-dark generate-btn" onclick="generatePreview()">Generate Preview</button>
                     </div>
                 </div>
             </div>
@@ -118,5 +129,36 @@
         {
             $('#newsletterTable').DataTable();
         });
+
+        function generatePreview()
+        {
+            var preview = $('.preview');
+            tinyMCE.get("content").save();
+
+            var input = ($('#image'))[0];
+
+            var options = {
+                url: '/admin/newsletter/preview',
+                type: 'POST',
+                success: function(response) {
+                    preview.empty();
+                    preview.html(response);
+
+                    if(input.files && input.files[0]) {
+                        var reader = new FileReader();
+                        reader.onload = (e) => {
+                            $('.image-newspaper').attr('src', e.target.result);
+                        }
+                        reader.readAsDataURL(input.files[0]);
+                    }
+                },
+                error: function(response) {
+                    toggleError(JSON.stringify(response.responseJSON.errors));
+                    console.log(response.responseJSON.errors_debug);
+                }
+            };
+
+            $("#newNewsletter").ajaxSubmit(options);
+        }
     </script>
 @endsection
