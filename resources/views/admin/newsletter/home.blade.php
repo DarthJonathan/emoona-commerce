@@ -69,6 +69,39 @@
                 </div>
             </div>
         </div>
+        <div class="row my-5">
+            <div class="col-lg-12">
+                <div class="card p-3">
+                    <h1 class="mb-3">Email Banner</h1>
+                        <hr>
+                    <img src="/storage/newsletter/banner.jpg" style="width:100%" alt="">
+                        <hr>
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <span>Change newsletter banner</span>
+                        </div>
+                        <div class="col-lg-10">
+                            <form action="{{ action('admin\NewsletterController@changeNewsletterBanner') }}" method="post" enctype="multipart/form-data" class="row mt-3" id="addImageItemDetail">
+                                <div class="col-lg-6">
+                                    <div class="input-group">
+                                        {{ csrf_field() }}
+                                        <label class="input-group-btn mb-2 mb-sm-0 mr-0">
+                                        <span class="btn btn-primary" style="cursor: pointer">
+                                            Browse&hellip; <input type="file" nampe="image" style="display: none;">
+                                        </span>
+                                        </label>
+                                        <input type="text" class="form-control" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <button class="btn btn-primary btn-block" id="submit">Add New</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="row">
             <div class="col-lg-7">
                 <h4>Past Newsletters</h4>
@@ -128,6 +161,27 @@
         $(document).ready(function()
         {
             $('#newsletterTable').DataTable();
+
+            $(document).on('change', ':file', function() {
+                var input = $(this),
+                    numFiles = input.get(0).files ? input.get(0).files.length : 1,
+                    label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+                input.trigger('fileselect', [numFiles, label]);
+            });
+
+            $(':file').on('fileselect', function(event, numFiles, label) {
+
+                var input = $(this).parents('.input-group').find(':text'),
+                    log = numFiles > 1 ? numFiles + ' files selected' : label;
+
+                if( input.length ) {
+                    input.val(log);
+                } else {
+                    if( log ) alert(log);
+                }
+
+            });
+
         });
 
         function generatePreview()

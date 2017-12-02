@@ -8,6 +8,7 @@ use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 use Validator;
 use Mail;
 use Image;
@@ -99,5 +100,37 @@ class NewsletterController extends Controller
         $newsletter->images     = 'preview';
 
         return new NewsletterMail($newsletter, '0');
+    }
+
+    function changeNewsletterBanner (Request $req)
+    {
+        $rules = [
+            'image'     => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image.*'   => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+        ];
+
+        $validation = Validator::make($req->all(), $rules);
+
+        if($validation->fails())
+        {
+            return back()->withErrors($validation->messages());
+        }else{
+            try {
+                $fullpath = storage_path('app/public/newsletter/banner.jpg');
+
+                Storage::delete('public/newsletter/banner.jpg');
+
+                Image::make($req->image->getRealPath())
+                    ->encode('jpg', 75)
+                    ->interlace()
+                    ->fit(1440, 200)
+                    ->save($fullpath);
+
+                return back()->with('success', 'Newsletter Header Changed!');
+            }catch(\Exception $e)
+            {
+                return back()->withErrors($e->getMessage());
+            }
+        }
     }
 }

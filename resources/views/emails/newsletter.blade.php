@@ -1,5 +1,5 @@
 @component('mail::message')
-# {{ $newsletter->title }}
+{{--# {{ $newsletter->title }}--}}
 
 <p style="text-align: center">
     <img src="{{ URL::to('/storage/img/logo.png') }}" width="20%" alt="Emoona Logo">

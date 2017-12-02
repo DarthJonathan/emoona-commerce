@@ -1,7 +1,8 @@
 <tr>
-    <td class="header">
+    <td class="header" style="background: url( {{ URL::to('/storage/newsletter/banner.jpg') }} )">
         <a href="{{ $url }}">
-            {{ $slot }}
+            {{--{{ $slot }}--}}
+            &nbsp;
         </a>
     </td>
 </tr>
