@@ -141,7 +141,7 @@ class TransactionController extends Controller
         try {
 
             $rules = [
-                'image'     => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+                'image'     => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:8048'
             ];
 
             $validator = Validator::make($req->all(), $rules);
@@ -162,7 +162,7 @@ class TransactionController extends Controller
 
                 $saved_path = $req->image->getRealPath();
                 Image::make($saved_path)
-                    ->resize(500, null, function ($constraint) {
+                    ->resize(1000, null, function ($constraint) {
                             $constraint->aspectRatio();
                         })
                     ->encode('jpg', 45)

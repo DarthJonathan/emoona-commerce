@@ -90,7 +90,7 @@
 
 					{{-- Check if every item is empty --}}
 					@foreach($product['item_detail'] as $value => $item)
-						@if($item['stock']>1 && $item['status'] != 'hidden')
+						@if($item['stock']>=1 && $item['status'] != 'hidden')
 							<?php $flag++ ?>
 						@endif
 					@endforeach
@@ -185,7 +185,7 @@
     {
         loadColors();
 
-		console.log(makePrice(100000));
+        console.log(item_details);
     });
 
     var item_details = JSON.parse('<?php echo json_encode($product['item_detail']) ?>');
