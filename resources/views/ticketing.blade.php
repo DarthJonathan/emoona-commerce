@@ -13,6 +13,7 @@
 @section('content')
 <div class="container">
 
+	@if(!isset($toggle))
 	<div class="row">
 		<div class="col-md-7 m-auto">
 			<center><h5 class="section-title"> Create New Support Ticket</h5></center>
@@ -73,6 +74,7 @@
 			</form>
 		</div>
 	</div>
+    @endif
 
 	<div class="row section-all-tickets">
 		<div class="col-md-9 m-auto ticket-section">
@@ -158,4 +160,13 @@
 	</div>
 
 </div>
+
+@if(isset($toggle))
+    <script>
+        $(document).ready(function(){
+            $('#collapse-ticket-content{{ $toggle }}').collapse('toggle')
+        });
+    </script>
+@endif
+
 @endsection

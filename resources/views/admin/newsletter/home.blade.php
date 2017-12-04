@@ -38,7 +38,14 @@
 
                             <div class="form-group row">
                                 <label for="blast" class="col-sm-2 col-form-label">Image</label>
-                                <input type="file" id="image" name="image" class="col-sm-10">
+                                <div class="col-lg-10 input-group">
+                                    <label class="input-group-btn mb-2 mb-sm-0 mr-0">
+                                            <span class="btn btn-primary" style="cursor: pointer">
+                                                Browse&hellip; <input type="file" name="image" id="image" style="display: none;">
+                                            </span>
+                                    </label>
+                                    <input type="text" class="form-control" readonly>
+                                </div>
                             </div>
 
                             <div class="form-group row">
@@ -87,7 +94,7 @@
                                         {{ csrf_field() }}
                                         <label class="input-group-btn mb-2 mb-sm-0 mr-0">
                                         <span class="btn btn-primary" style="cursor: pointer">
-                                            Browse&hellip; <input type="file" nampe="image" style="display: none;">
+                                            Browse&hellip; <input type="file" name="image" style="display: none;">
                                         </span>
                                         </label>
                                         <input type="text" class="form-control" readonly>
@@ -176,10 +183,7 @@
 
                 if( input.length ) {
                     input.val(log);
-                } else {
-                    if( log ) alert(log);
                 }
-
             });
 
         });
@@ -197,6 +201,7 @@
                 success: function(response) {
                     preview.empty();
                     preview.html(response);
+                    console.log(input.files);
 
                     if(input.files && input.files[0]) {
                         var reader = new FileReader();

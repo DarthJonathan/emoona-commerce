@@ -2,7 +2,7 @@
 # Your Transaction for Today
 
 <p align="center">
-    <img align="center" src="/storage/img/logo.png" width="20%" alt="">
+    <img align="center" src="{{ URL::to('/storage/img/logo.png') }}" width="20%" alt="">
 </p>
 
 Thank you for your transaction, below is the detail for your transaction.
@@ -16,7 +16,7 @@ Thank you for your transaction, below is the detail for your transaction.
 | | | Total Price | IDR {{ Cart::getTotal() }} |
 @endcomponent
 
-@component('mail::button', ['url' => '/verify_payment/' . $data['transaction']['transaction_code'], 'color' => 'blue'])
+@component('mail::button', ['url' => URL::to('/verify_payment/' . $data['transaction']['transaction_code']), 'color' => 'blue'])
 Verify Your Payment
 @endcomponent
 

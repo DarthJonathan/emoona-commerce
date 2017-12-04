@@ -6,6 +6,7 @@ use App\TicketDetails;
 use App\Tickets;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Validator;
 
 class SupportController extends Controller
@@ -104,5 +105,12 @@ class SupportController extends Controller
                 return response()->json(['error' => true, 'errors' => 'Error Creating Reply (Err: 1200)', 'errors_debug' => $e->getMessage()], 400);
             }
         }
+    }
+
+    function viewTicket ($id)
+    {
+        $tickets = Tickets::with('ticket_detail')->where('user_id', '=', Auth::id())->get();
+        $data = ['tickets' => $tickets, 'toggle' => $id];
+        return view('ticketing', $data);
     }
 }

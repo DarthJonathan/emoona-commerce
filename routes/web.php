@@ -109,6 +109,7 @@ Route::middleware(['notifications', 'checkRole', 'suspended', 'auth'])->group(fu
      * User Tickets
      */
     Route::get('tickets', 'SupportController@allTickets');
+    Route::get('tickets/{id}', 'SupportController@viewTicket');
     Route::post('tickets', 'SupportController@getTickets');
     Route::post('tickets/reply.ticket', 'SupportController@replyTicket');
     Route::post('tickets/new.ticket', 'SupportController@newTicket');

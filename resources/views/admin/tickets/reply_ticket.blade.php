@@ -14,21 +14,21 @@
                 </div>
             </div>
 
-            <div class="form-row mb-3">
-                <div class="col-md-3">
-                    <label for="" class="ml-2">Image</label>
-                </div>
-                <div class="col pl-2">
-                    <div class="input-group">
-                        <label class="input-group-btn mb-2 mb-sm-0 mr-0">
-                            <span class="btn btn-primary" style="cursor: pointer">
-                                Browse&hellip; <input type="file" name="image" style="display: none;">
-                            </span>
-                        </label>
-                        <input type="text" class="form-control" readonly>
-                    </div>
-                </div>
-            </div>
+            {{--<div class="form-row mb-3">--}}
+                {{--<div class="col-md-3">--}}
+                    {{--<label for="" class="ml-2">Image</label>--}}
+                {{--</div>--}}
+                {{--<div class="col pl-2">--}}
+                    {{--<div class="input-group">--}}
+                        {{--<label class="input-group-btn mb-2 mb-sm-0 mr-0">--}}
+                            {{--<span class="btn btn-primary" style="cursor: pointer">--}}
+                                {{--Browse&hellip; <input type="file" name="image" style="display: none;">--}}
+                            {{--</span>--}}
+                        {{--</label>--}}
+                        {{--<input type="text" class="form-control" readonly>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
+            {{--</div>--}}
 
             <div class="form-group row mt-4 mb-0">
                 <div class="col-sm-12">

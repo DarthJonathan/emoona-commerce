@@ -141,7 +141,7 @@
                                         '</div>' +
                                         '<div class="card-body">' +
                                             '<p class="float-left">' + value.text + '</p>' +
-                                            '<button data-link="' + value.additionals + '" class="btn btn-primary float-right" onclick="openAdditionals(this)">Open Additionals</button>' +
+//                                            '<button data-link="' + value.additionals + '" class="btn btn-primary float-right" onclick="openAdditionals(this)">Open Additionals</button>' +
                                         '</div>'+
                                     '</div>';
 

@@ -53,8 +53,8 @@ class SupportController extends Controller
                 $notification = new user_notification();
 
                 $notification->user_id                  = $req->user_id;
-                $notification->notification_name        = "New Support Ticket (" . $ticket->id . ")";
-                $notification->notification_url         = "/tickets";
+                $notification->notification_name        = "New Message From Admin (" . $ticket->id . ")";
+                $notification->notification_url         = "/tickets/" . $ticket->id;
 
                 $notification->save();
 
@@ -63,15 +63,17 @@ class SupportController extends Controller
 
                 $path = 'public/support_ticket/' . $ticket->id;
 
-                if($img = $req->image)
-                {
-                    $additional = $img->store($path);
+                /*
+                    if($img = $req->image)
+                    {
+                        $additional = $img->store($path);
+                        $ticket_detail->additionals = $additional;
+                    }
+                */
 
-                    $ticket_detail->additionals = $additional;
-                }
                 $ticket_detail->save();
 
-                return response()->json(['error' => false, 'msg' => 'Success Creating a Support Ticket!'], 200);
+                return response()->json(['error' => false, 'msg' => 'Success Creating a Admin Message!'], 200);
 
             }catch(\Exception $e)
             {
@@ -116,20 +118,32 @@ class SupportController extends Controller
         {
             try {
 
+                $ticket = Tickets::find($req->id);
+
                 $ticket_detail = new TicketDetails ();
 
                 $ticket_detail->text                = $req->input('content');
                 $ticket_detail->ticket_id           = $req->input('id');
                 $ticket_detail->replying_user_id    = Auth::id();
 
-                $path = 'public/support_ticket/' . $req->id;
+//                $path = 'public/support_ticket/' . $req->id;
+//
+//                if($img = $req->image)
+//                {
+//                    $additional = $img->store($path);
+//
+//                    $ticket_detail->additionals = $additional;
+//                }
 
-                if($img = $req->image)
-                {
-                    $additional = $img->store($path);
+                //Create new user Notification
+                $notification = new user_notification();
 
-                    $ticket_detail->additionals = $additional;
-                }
+                $notification->user_id                  = $ticket->user_id;
+                $notification->notification_name        = "New Message From Admin (" . $req->id . ")";
+                $notification->notification_url         = "/tickets/" . $req->id;
+
+                $notification->save();
+
                 $ticket_detail->save();
 
                 return response()->json(['error' => false, 'msg' => 'Success Replying Support Ticket!', 'id' => $req->id], 200);

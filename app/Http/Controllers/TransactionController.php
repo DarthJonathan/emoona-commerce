@@ -157,10 +157,17 @@ class TransactionController extends Controller
 
                 $path = 'public/payment_verification/' . $req->input('id') . '/' . uniqid() . '.jpg';
 
-                mkdir(storage_path('app/public/payment_verification/' . $req->id));
+                if(!file_exists(storage_path('app/public/payment_verification/' . $req->id)))
+                    mkdir(storage_path('app/public/payment_verification/' . $req->id));
 
                 $saved_path = $req->image->getRealPath();
-                Image::make($saved_path)->fit(1280, 720)->encode('jpg', 75)->interlace()->save(storage_path('app/' . $path));
+                Image::make($saved_path)
+                    ->resize(500, null, function ($constraint) {
+                            $constraint->aspectRatio();
+                        })
+                    ->encode('jpg', 45)
+                    ->interlace()
+                    ->save(storage_path('app/' . $path));
 
                 $transaction = Transactions::find($req->id);
 

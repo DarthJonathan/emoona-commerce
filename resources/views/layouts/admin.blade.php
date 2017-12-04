@@ -298,6 +298,7 @@
 <script>
     tinymce.init({
         selector:'textarea',
+        plugins: "link",
         file_browser_callback: function(field_name, url, type, win) {
             win.document.getElementById(field_name).value = 'my browser value';
         }
