@@ -17,17 +17,18 @@
     <link rel="stylesheet" href="{{ asset('css/pace-theme.css') }}">
 
     <!-- JS -->
-    <script src="{{ asset('js/jquery-3.2.1.min.js') }}"></script>
-    <script src="{{ asset('js/popper.js') }}"></script>
-    <script src="{{ asset('js/popper-utils.js') }}" defer></script>
-    <script src="{{ asset('js/bootstrap.js') }}"></script>
+    {{--<script src="{{ asset('js/jquery-3.2.1.min.js') }}"></script>--}}
+    {{--<script src="{{ asset('js/popper.js') }}"></script>--}}
+    {{--<script src="{{ asset('js/popper-utils.js') }}" defer></script>--}}
+    {{--<script src="{{ asset('js/bootstrap.js') }}"></script>--}}
+    <script src="{{ asset('js/dependency.js') }}"></script>
     <script src="{{ asset('js/instafeed.min.js') }}"></script>
     <script src="{{ asset('js/script.js') }}"></script>
-    <script src="{{ asset('js/slick.min.js') }}"></script>
-    <script src="{{ asset('js/front.js') }}"></script>
+{{--    <script src="{{ asset('js/slick.min.js') }}"></script>--}}
     <script src="{{ asset('js/jquery.form.min.js') }}"></script>
     <script src="{{ asset('js/pace.min.js') }}"></script>
     <script src="{{ asset('js/all.js') }}"></script>
+    <script src="{{ asset('js/front.js') }}"></script>
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
