@@ -91,9 +91,12 @@
 					{{-- Check if every item is empty --}}
 					@foreach($product['item_detail'] as $value => $item)
 						@if($item['stock']>=1 && $item['status'] != 'hidden')
-							<?php $flag++ ?>
+							<?php $flag++; ?>
 						@endif
 					@endforeach
+                    @if(sizeof($product['item_detail']) > 0)
+                        <?php $flag++; ?>
+                    @endif
 
 					@if($product['item_detail'] != null && $flag != 0)
 

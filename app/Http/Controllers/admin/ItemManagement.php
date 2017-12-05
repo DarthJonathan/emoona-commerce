@@ -391,7 +391,7 @@ class ItemManagement extends Controller
 
             $user_notif->user_id = $notif->user_id;
             $user_notif->notification_name = "The item " . $item->item->name . " is now available";
-            $user_notif->notification_url = '/products/' . $item_cate->gender . '/' . $item_cate->name . '/' . $item->item->id;
+            $user_notif->notification_url = '/product/' . $item_cate->gender . '/' . $item_cate->name . '/' . $item->item->id;
 
             $user_notif->save();
 
@@ -411,7 +411,7 @@ class ItemManagement extends Controller
 
             $user_notif->user_id = $notif->user_id;
             $user_notif->notification_name = "The item " . $item->name . " is now available";
-            $user_notif->notification_url = '/products/' . $item->item_category->gender . '/' . $item->item_category->name . '/' . $item->id;
+            $user_notif->notification_url = '/product/' . $item->item_category->gender . '/' . $item->item_category->name . '/' . $item->id;
 
             $user_notif->save();
 

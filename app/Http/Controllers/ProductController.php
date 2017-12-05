@@ -14,14 +14,20 @@ class ProductController extends Controller
 {
     function viewProduct($gender, $category_id, $product_id)
     {
-        $product        = Item::with('item_category', 'item_detail')->where(['id' => $product_id])->where('deleted', '=', 0)->firstOrFail()->toArray();
+        $product        = Item::with('item_category', 'item_detail')->where(['id' => $product_id, 'deleted' => 0])->where('deleted', '=', 0)->firstOrFail();
         $discounts      = array();
 
         if(strcasecmp($product['item_category']['name'], $category_id) || strcasecmp($product['item_category']['gender'], $gender))
             abort(404);
 
-        foreach($product['item_detail'] as $detail)
+        foreach($product->item_detail as $key => $detail)
         {
+            //Remove the deleted item detail
+            if($detail->deleted == 1) {
+                unset($product->item_detail[$key]);
+                continue;
+            }
+
             $discount = Discount::where('item_detail_id', '=', $detail['id'])->first();
 
             if($discount != null)

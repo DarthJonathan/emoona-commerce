@@ -9,6 +9,7 @@ use App\TransactionDetails;
 use App\Transactions;
 use App\user_notification;
 use App\Mail\TransactionMail;
+use App\Webconfig;
 use Cart;
 use Validator;
 use Storage;
@@ -132,16 +133,16 @@ class TransactionController extends Controller
 
     function verifyPayment ($id, Request $req)
     {
-        $data = ['id' => $id];
+        $config = PaymentType::find(1);
+        $data = ['id' => $id, 'payment' => $config];
         return view('transaction/verify_payment', $data);
     }
 
     function verifyPaymentSubmit (Request $req)
     {
         try {
-
             $rules = [
-                'image'     => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:12048'
+                'image'     => 'required|image|mimes:jpeg,png,jpg,gif,svg,JPG,JPEG,PNG'
             ];
 
             $validator = Validator::make($req->all(), $rules);

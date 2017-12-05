@@ -1,4 +1,11 @@
 <div class="container">
+    <div class="row">
+        <div class="col-lg-12 mb-2">
+            <h3>Transfer To</h3>
+            <span>{!! $payment->value !!}</span>
+            <hr>
+        </div>
+    </div>
     <form action="" id="addVerificationImage">
     <div class="row">
         <div class="col-md-6">
@@ -58,7 +65,14 @@
                 error: function(response)
                 {
                     $('#modal').modal('toggle');
-                    toggleError(response.responseJSON.errors);
+
+                    var errors = response.responseJSON.errors;
+                    var error = "";
+
+                    $.each(errors, function(key, value){
+                        error += "<li>" + value + "</li>";
+                    });
+                    toggleError(error);
                     console.log(response.responseText);
                 }
             };

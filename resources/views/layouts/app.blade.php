@@ -25,6 +25,7 @@
     <script src="{{ asset('js/instafeed.min.js') }}"></script>
     <script src="{{ asset('js/script.js') }}"></script>
 {{--    <script src="{{ asset('js/slick.min.js') }}"></script>--}}
+{{--    <script src="{{ asset('js/slick.min.js') }}"></script>--}}
     <script src="{{ asset('js/jquery.form.min.js') }}"></script>
     <script src="{{ asset('js/pace.min.js') }}"></script>
     <script src="{{ asset('js/all.js') }}"></script>
@@ -192,7 +193,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div id="ajax-loading">
+                <div id="ajax-loading" class="m-auto">
                     <img id="loading-image" class="m-3" src="/storage/img/ajax-loader.gif"/>
                 </div>
                 <div class="modal-body">

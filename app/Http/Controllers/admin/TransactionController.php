@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Transactions;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 use Validator;
 
 class TransactionController extends Controller
@@ -88,6 +89,9 @@ class TransactionController extends Controller
                 $transaction->status = 3;
 
                 $transaction->save();
+
+                //Deletes the payment verification image for space saving measure
+                Storage::deleteDirectory('public/payment_verification/' . $transaction->id);
 
                 return response()->json(['error' => false, 'msg' => 'Setting Tracking Code Completed']);
 
