@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Support\Facades\Auth;
 Use Illuminate\Support\Facades\Session;
 use App\User;
 
@@ -17,7 +18,8 @@ class UserNotifications
      */
     public function handle($request, Closure $next)
     {
-        Session::put('notifications', User::getNotifications());
+        if(Auth::check())
+            Session::put('notifications', User::getNotifications());
 
         return $next($request);
     }

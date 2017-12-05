@@ -516,7 +516,7 @@ function notifyMe (e)
             toggleSuccess(res.msg);
         },
         error: function (res) {
-            toggleError(res.errors);
+            toggleError(res.responseJSON.errors);
             console.log(res.responseText);
         }
     });

@@ -55,11 +55,16 @@ class UserController extends Controller
 
     function removeNotification ($id)
     {
-        $notification = user_notification::find($id)->first();
-
-        $notification->delete();
-
-        return back();
+        try {
+            $notification = user_notification::where([
+                'id' => $id,
+                'user_id' => Auth::id()
+            ]);
+            $notification->delete();
+            return back()->with('success', 'Notification Removed');
+        }catch(\Exception $e) {
+            return abort(404);
+        }
     }
 
     public function update (Request $req)

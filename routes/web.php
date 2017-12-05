@@ -76,7 +76,7 @@ Route::get('suspended', function()
  * User Page
  */
 
-Route::middleware(['notifications', 'checkRole', 'suspended', 'auth'])->group(function()
+Route::middleware(['checkRole', 'suspended', 'auth'])->group(function()
 {
     Route::get('/account', 'HomeController@index')->name('profile');
     Route::get('/notifications', 'UserController@notifications')->name('notification');

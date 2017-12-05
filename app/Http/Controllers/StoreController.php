@@ -88,6 +88,17 @@ class StoreController extends Controller
             $cat = $req->cat;
             $id = $req->id;
 
+            $exists = ItemNotify::where([
+                'user_id'   => Auth::id(),
+                'item_id'   => $id,
+                'category'  => $cat
+            ])->first();
+
+            if(!empty($exists)) {
+                $return = ['error' => true, 'errors' => 'You already subscribed to this item.'];
+                return response()->json($return, 400);
+            }
+
             $notif = new ItemNotify();
 
             $notif->user_id = Auth::id();
@@ -96,7 +107,7 @@ class StoreController extends Controller
 
             $notif->save();
 
-            $return = ['error' => true, 'errors' => 'You will be notified if this item is available soon'];
+            $return = ['error' => false, 'msg' => 'You will be notified if this item is available soon'];
 
             return response()->json($return, 200);
 

@@ -141,7 +141,7 @@ class TransactionController extends Controller
         try {
 
             $rules = [
-                'image'     => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:8048'
+                'image'     => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:12048'
             ];
 
             $validator = Validator::make($req->all(), $rules);

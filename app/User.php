@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class User extends Authenticatable
 {
@@ -193,13 +194,14 @@ class User extends Authenticatable
                 $notif_url = $notif['notification_url'];
                 $notifications[$notif_name] = [$notif_url, $notif['id']];
             }
-        }else{
-            foreach (User::getNotificationTable() as $notif) {
-                $notif_name = $notif['notification_name'];
-                $notif_url = $notif['notification_url'];
-                $notifications[$notif_name] = [$notif_url, $notif['id']];
-            }
         }
+//        else{
+//            foreach (User::getNotificationTable() as $notif) {
+//                $notif_name = $notif['notification_name'];
+//                $notif_url = $notif['notification_url'];
+//                $notifications[$notif_name] = [$notif_url, $notif['id']];
+//            }
+//        }
 
         return $notifications;
     }

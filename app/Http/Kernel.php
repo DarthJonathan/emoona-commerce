@@ -34,6 +34,7 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            \App\Http\Middleware\UserNotifications::class,
         ],
 
         'api' => [
@@ -56,7 +57,6 @@ class Kernel extends HttpKernel
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        'notifications' => \App\Http\Middleware\UserNotifications::class,
         'admin' => \App\Http\Middleware\isAdmin::class,
         'checkRole' => \App\Http\Middleware\checkRole::class,
         'suspended' => \App\Http\Middleware\isSuspended::class,
