@@ -1,3 +1,9 @@
 {
-    "/js/app.js": "/js/app.js"
+    "/js/dependency.js": "/js/dependency.js",
+    "/css/styleadmin.css": "/css/styleadmin.css",
+    "/css/style404.css": "/css/style404.css",
+    "/css/style.css": "/css/style.css",
+    "/css/userstyle.css": "/css/userstyle.css",
+    "/js/all.js": "/js/all.js",
+    "/js/front.js": "/js/front.js"
 }

@@ -22,7 +22,7 @@
 		<div class="container">
 			<div class="row">
 				
-				<div class="col-md-4 col-sm-12 woman-coll collections" onclick="openCategory(this)" data-cat="woman">
+				<div class="col-md-4 col-sm-12 woman-coll collections" onclick="openCategory(this)" data-cat="man">
 					<div class="content-box cb1"
                          style="background-image: url('/storage/img/home-collections/{{ explode("/", $collections[0])[3] }}')"
                     >
@@ -30,7 +30,7 @@
 				
 				</div><!--col-->
 
-				<div class="col-md-4 col-sm-12 men-coll-text collections mb-sm-5 mb-md-0" onclick="openCategory(this)" data-cat="men">
+				<div class="col-md-4 col-sm-12 men-coll-text collections mb-sm-5 mb-md-0" onclick="openCategory(this)" data-cat="woman">
 					<div class="content-box cb2">
 						<div class="text-content-box tcb2">
 						<div class="wrapper-center">
@@ -39,7 +39,7 @@
 							</div><!--line-content-box-1-->
 							<hr>
 							<div class="line-content-box-3">
-								{!! $datas['1']->value_1 !!}
+								{!! $datas[0]->value_1 !!}
 							</div><!--line-content-box-1-->
 							</div><!--wrapper-center-->
 						</div><!--text-content-box-1-->
@@ -64,7 +64,7 @@
 							</div><!--line-content-box-1-->
 							<hr>
 							<div class="line-content-box-3">
-								{!! $datas['0']->value_1 !!}
+								{!! $datas[1]->value_1 !!}
 							</div><!--line-content-box-1-->
 							</div><!--wrapper-center-->	
 						</div><!--text-content-box-4-->

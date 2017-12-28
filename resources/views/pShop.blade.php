@@ -20,7 +20,6 @@
 			<li><span class="category-links" data-category="female" id="womanDropDown">WOMAN</span></li>
 			<li><span class="category-links" data-category="others" id="othersDropDown">OTHERS</span></li>
 			<li><span class="category-links" onclick="loadSale()" id="saleDropDown">SALE</span></li>
-
 		</ul>
 
 		<ul class= "wdropdown" id="wdropdowns">
@@ -54,10 +53,9 @@
 
 <script>
 	$(document).ready(function(){
-
 		//Load the store using ajax
 	    @if($category == null)
-			loadStore();
+	        loadStore();
 		@else
 			loadCategory('{!! $category !!}');
 		@endif

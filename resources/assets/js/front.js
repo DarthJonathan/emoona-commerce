@@ -2,6 +2,11 @@
  * Created by JohnNate on 10/10/17.
  */
 
+var store_cache = null;
+var category_cache = {};
+var categories_cache = {};
+var sale_cache = null;
+
 function addToCart()
 {
     var options = {
@@ -115,113 +120,15 @@ function loadCart()
     });
 }
 
-function loadStore()
-{
-    var store = $('.shop-page-shop');
+function getStore() {
+    return $.get('/products/front.page').promise();
+}
 
-    store.empty();
+function loadStore (){
+    if(store_cache === null)
+        store_cache = getStore();
 
-    $.ajax({
-        url: '/products/front.page',
-        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
-        type: 'GET',
-        success: function (res) {
-
-            // console.log(res);
-
-            //Load Default Products, limited 30 products
-            $.each(res.products, function(key, value){
-
-                //Check if item detail is not available
-                if(value.item_detail.length == 0) {
-                    return;
-                }
-
-                if(res.images[key][0] === null)
-                    var image = null;
-                else
-                    var image = res.images[key][0].split('/');
-                
-                image = '/storage/item_detail/' + image[2] + '/' + image[3];
-
-                var price = value.price;
-
-                var html = '<div class="col-md-3 float-left mb-5" style="cursor: pointer" onclick="openProduct(this)" data-id="' + value.id + '" data-category="' + value.item_category.name + '" data-gender="'+ value.item_category.gender +'">' +
-                                    '<div class="shop-picture ps1"' +
-                                        'style="background-image: url(' + image + ')"' +
-                                    '>' +
-                                    '</div>' +
-                                    '<div class="sale-tag-circle sale-'+ key + '">SALE</div>' +
-                                '<div class="shop-picture-desc">' +
-                                    '<div class="shop-picture-name">' +
-                                        value.name +
-                                    '</div>' +
-                                    '<div class="shop-picture-price">' +
-                                        'IDR ' + makePrice(value.price) +
-                                    '</div>'+
-                                '</div>' +
-                            '</div>';
-
-                store.append(html);
-                $('.sale-' + key).css('display', 'none');
-                var key_parent = key;
-
-                $.each(value.item_detail, function(key, value){
-                    if(res.discounts[value.id] != null) {
-                        $('.sale-' + key_parent).css('display', 'block');
-                        $('.shop-picture-price').html('IDR <s>' + makePrice(price) + '</s> ' + makePrice((price - (res.discounts[value.id] * price))));
-                    }
-                });
-            });
-
-            var mcat = $('#mdropdowns');
-            var wcat = $('#wdropdowns');
-            var ocat = $('#odropdowns');
-
-            mcat.empty();
-            wcat.empty();
-            ocat.empty();
-
-            var countMcat = 0;
-            var countWcat = 0;
-            var countOcat = 0;
-
-            //Load Categories
-            $.each(res.categories, function(key, value){
-
-                switch(value.gender)
-                {
-                    case 'male' :
-                    {
-                        mcat.append('<li class="category-links" data-id="' + value.id + '" onclick="loadFromCategory(this)">' + value.name.toUpperCase() + '</li>');
-                        countMcat++;
-                    }break;
-
-                    case 'female' :
-                    {
-                        wcat.append('<li class="category-links" data-id="' + value.id + '" onclick="loadFromCategory(this)">' + value.name.toUpperCase() + '</li>');
-                        countWcat++;
-                    }break;
-
-                    case 'others' :
-                    {
-                        ocat.append('<li class="category-links" data-id="' + value.id + '" onclick="loadFromCategory(this)">' + value.name.toUpperCase() + '</li>');
-                        countOcat++;
-                    }break;
-                }
-            });
-
-            $('#menDropDown').data('count', countMcat);
-            $('#womanDropDown').data('count', countWcat);
-            $('#othersDropDown').data('count', countOcat);
-            
-            
-        },
-        error: function (res) {
-            toggleError(res.errors);
-            console.log(res);
-        }
-    });
+    store_cache.done((data) => renderStore(data));
 }
 
 function openProduct (e)
@@ -234,82 +141,88 @@ function loadFromCategory (e)
 {
     var category_id = $(e).data('id');
 
-    var store = $('.shop-page-shop');
+    if(!categories_cache[category_id])
+        categories_cache[category_id] = $.get('/products/category.products',{category_id: category_id }).promise();
 
+    categories_cache[category_id].done((data) => renderFromCategory(data));
+}
+
+function renderFromCategory (res)
+{
+    var store = $('.shop-page-shop');
     store.empty();
 
-    $.ajax({
-        url: '/products/category.products',
-        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
-        type: 'GET',
-        data: {category_id: category_id},
-        success: function (res) {
-                
-            if(res.products.length == 0)
-            {
-                var html = "<div class='category-empty'><h4>we're making something great, stay connected!</h4></div>";
-                store.append(html);   
-                return true;
-            }
+    var counter = 0;
+    var counter_empty = 0;
 
-            //Load Default Products, limited 30 products
-            $.each(res.products, function(key, value) {
+    if(res.products.length == 0)
+    {
+        var html = "<div class='category-empty'><h4>we're making something great, stay connected!</h4></div>";
+        store.append(html);
+        return true;
+    }
 
-                //Check if item detail is not available
-                if(value.item_detail.length == 0) {
-                    store.empty();
-                    var html = "<div class='category-empty'><h4>we're making something great, stay connected!</h4></div>";
-                    store.append(html);   
-                    return;
-                }
+    //Load Default Products, limited 30 products
+    $.each(res.products, function(key, value) {
 
-                //Check if item detail is not available
-                if(res.images[key][0] === null)
-                    var image = null;
-                else
-                    var image = res.images[key][0].split('/');
-                
+        counter++;
 
-                var image = res.images[key][0].split('/');
-                image = '/storage/item_detail/' + image[2] + '/' + image[3];
-
-                var price = value.price;
-
-                var html = '<div class="col-md-3 float-left mb-5" style="cursor: pointer" onclick="openProduct(this)" data-id="' + value.id + '" data-category="' + value.item_category.name + '" data-gender="'+ value.item_category.gender +'">' +
-                    '<div class="shop-picture ps1"' +
-                    'style="background-image: url(' + image + ')"' +
-                    '>' +
-                    '</div>' +
-                    '<div class="sale-tag-circle sale-'+ key + '">SALE</div>' +
-                    '<div class="shop-picture-desc">' +
-                    '<div class="shop-picture-name">' +
-                    value.name +
-                    '</div>' +
-                    '<div class="shop-picture-price">' +
-                    'IDR ' + makePrice(value.price) +
-                    '</div>'+
-                    '</div>' +
-                    '</div>';
-
-                store.append(html);
-                $('.sale-' + key).css('display', 'none');
-                var key_parent = key;
-
-                $.each(value.item_detail, function(key, value){
-                    if(res.discounts[value.id] != null)
-                    {
-                        $('.sale-' + key_parent).css('display', 'block');
-                        $('.shop-picture-price').html('IDR <s>' + makePrice(price) + '</s> ' + makePrice((price - (res.discounts[value.id] * price))));
-                    }
-                });
-            });
-
-        },
-        error: function (res) {
-            toggleError(res.errors);
-            console.log(res);
+        //Check if item detail is not available
+        if(value.item_detail.length == 0) {
+            counter_empty++;
+            return true;
         }
+
+        //Check if item detail is not available
+        if(res.images[key].length == 0) {
+            var image = null;
+            return true;
+        }
+        else
+            var image = res.images[key][0].split('/');
+
+
+        var image = res.images[key][0].split('/');
+        image = '/storage/item_detail/' + image[2] + '/' + image[3];
+
+        var price = value.price;
+
+        var html = '<div class="col-md-3 float-left mb-5" style="cursor: pointer" onclick="openProduct(this)" data-id="' + value.id + '" data-category="' + value.item_category.name + '" data-gender="'+ value.item_category.gender +'">' +
+            '<div class="shop-picture ps1"' +
+            'style="background-image: url(' + image + ')"' +
+            '>' +
+            '</div>' +
+            '<div class="sale-tag-circle sale-'+ key + '">SALE</div>' +
+            '<div class="shop-picture-desc">' +
+            '<div class="shop-picture-name">' +
+            value.name +
+            '</div>' +
+            '<div class="shop-picture-price sale-price-' + key + '">' +
+            'IDR ' + makePrice(value.price) +
+            '</div>'+
+            '</div>' +
+            '</div>';
+
+        store.append(html);
+        $('.sale-' + key).css('display', 'none');
+        var key_parent = key;
+
+        $.each(value.item_detail, function(key, value){
+            if(res.discounts[value.id] != null)
+            {
+                $('.sale-' + key_parent).css('display', 'block');
+                $('.sale-price-' + key_parent).html('IDR <s>' + makePrice(price) + '</s> ' + makePrice((price - (res.discounts[value.id] * price))));
+            }
+        });
     });
+
+    if(counter_empty == counter)
+    {
+        store.empty();
+        var html = "<div class='category-empty'><h4>we're making something great, stay connected!</h4></div>";
+        store.append(html);
+    }
+
 }
 
 function orderHistory()
@@ -447,45 +360,45 @@ function openMobileNav ()
 
 function loadSale ()
 {
+    if(sale_cache === null)
+        sale_cache = $.get('/products/on.sale');
+
+    sale_cache.done((data) => renderSale(data));
+}
+
+function renderSale (res)
+{
     var store = $('.shop-page-shop');
     store.empty();
 
-    $.ajax({
-        url: '/products/on.sale',
-        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
-        type: 'GET',
-        success: function (res) {
+    //Load Default Products, limited 30 products
+    $.each(res.products, function(key, value){
 
-            //Load Default Products, limited 30 products
-            $.each(res.products, function(key, value){
-
-                var image = res.images[key][0].split('/');
-                image = '/storage/item_detail/' + image[2] + '/' + image[3];
-
-                var html = '<div class="col-md-3 float-left mb-5" style="cursor: pointer" onclick="openProduct(this)" data-id="' + value.item.item.id + '" data-category="' + value.category.name + '" data-gender="'+ value.category.gender +'">' +
-                    '<div class="shop-picture ps1"' +
-                    'style="background-image: url(' + image + ')"' +
-                    '>' +
-                    '</div>' +
-                    '<div class="sale-tag-circle">SALE</div>' +
-                    '<div class="shop-picture-desc">' +
-                    '<div class="shop-picture-name">' +
-                    value.item.item.name +
-                    '</div>' +
-                    '<div class="shop-picture-price">' +
-                    'IDR ' + makePrice(value.item.item.price) +
-                    '</div>'+
-                    '</div>' +
-                    '</div>';
-
-                store.append(html);
-            });
-
-        },
-        error: function (res) {
-            toggleError(res.errors);
-            console.log(res.responseText);
+        if(res.images[key].length == 0) {
+            var image = null;
+            return true;
         }
+
+        var image = res.images[key][0].split('/');
+        image = '/storage/item_detail/' + image[2] + '/' + image[3];
+
+        var html = '<div class="col-md-3 float-left mb-5" style="cursor: pointer" onclick="openProduct(this)" data-id="' + value.item.item.id + '" data-category="' + value.category.name + '" data-gender="'+ value.category.gender +'">' +
+            '<div class="shop-picture ps1"' +
+            'style="background-image: url(' + image + ')"' +
+            '>' +
+            '</div>' +
+            '<div class="sale-tag-circle">SALE</div>' +
+            '<div class="shop-picture-desc">' +
+            '<div class="shop-picture-name">' +
+            value.item.item.name +
+            '</div>' +
+            '<div class="shop-picture-price">' +
+            'IDR ' + makePrice(value.item.item.price) +
+            '</div>'+
+            '</div>' +
+            '</div>';
+
+        store.append(html);
     });
 }
 
@@ -550,123 +463,219 @@ function openCategory(e)
     }
 }
 
-function loadCategory (e)
+function getCategory (e)
 {
-    var category_id = e;
+    return $.get('/products/category.products_all', {category_id: e}).promise();
+}
+
+function loadCategory (e) {
+    var id = e;
+
+    if(!category_cache[id])
+        category_cache[id] = getCategory(id);
+
+    category_cache[id].done((data) => renderCategory(data));
+}
+
+function renderStore (res)
+{
+    var store = $('.shop-page-shop');
+    store.empty();
+    //Load Default Products, limited 30 products
+    $.each(res.products, function(key, value){
+
+        //Check if item detail is not available
+        if(value.item_detail.length == 0) {
+            return;
+        }
+
+        if(res.images[key].length == 0) {
+            var image = null;
+            return true;
+        }
+        else {
+            var image = res.images[key][0].split('/');
+        }
+
+        image = '/storage/item_detail/' + image[2] + '/' + image[3];
+
+        var price = value.price;
+
+        var html = '<div class="col-md-3 float-left mb-5" style="cursor: pointer" onclick="openProduct(this)" data-id="' + value.id + '" data-category="' + value.item_category.name + '" data-gender="'+ value.item_category.gender +'">' +
+            '<div class="shop-picture ps1"' +
+            'style="background-image: url(' + image + ')"' +
+            '>' +
+            '</div>' +
+            '<div class="sale-tag-circle sale-'+ key + '">SALE</div>' +
+            '<div class="shop-picture-desc">' +
+            '<div class="shop-picture-name">' +
+            value.name +
+            '</div>' +
+            '<div class="shop-picture-price sale-price-' + key + '">' +
+            'IDR ' + makePrice(value.price) +
+            '</div>'+
+            '</div>' +
+            '</div>';
+
+        store.append(html);
+        $('.sale-' + key).css('display', 'none');
+        var key_parent = key;
+
+        $.each(value.item_detail, function(key, value1){
+            if(res.discounts[value1.id] != null) {
+                $('.sale-' + key_parent).css('display', 'block');
+                $('.sale-price-' + key_parent).html('IDR <s>' + makePrice(price) + '</s> ' + makePrice((price - (res.discounts[value1.id] * price))));
+            }
+        });
+    });
+
+    var mcat = $('#mdropdowns');
+    var wcat = $('#wdropdowns');
+    var ocat = $('#odropdowns');
+
+    mcat.empty();
+    wcat.empty();
+    ocat.empty();
+
+    var countMcat = 0;
+    var countWcat = 0;
+    var countOcat = 0;
+
+    //Load Categories
+    $.each(res.categories, function(key, value){
+
+        switch(value.gender)
+        {
+            case 'male' :
+            {
+                mcat.append('<li class="category-links" data-id="' + value.id + '" onclick="loadFromCategory(this)">' + value.name.toUpperCase() + '</li>');
+                countMcat++;
+            }break;
+
+            case 'female' :
+            {
+                wcat.append('<li class="category-links" data-id="' + value.id + '" onclick="loadFromCategory(this)">' + value.name.toUpperCase() + '</li>');
+                countWcat++;
+            }break;
+
+            case 'others' :
+            {
+                ocat.append('<li class="category-links" data-id="' + value.id + '" onclick="loadFromCategory(this)">' + value.name.toUpperCase() + '</li>');
+                countOcat++;
+            }break;
+        }
+    });
+
+    $('#menDropDown').data('count', countMcat);
+    $('#womanDropDown').data('count', countWcat);
+    $('#othersDropDown').data('count', countOcat);
+}
+
+function renderCategory (res) {
 
     var store = $('.shop-page-shop');
-
     store.empty();
 
-    $.ajax({
-        url: '/products/category.products_all',
-        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
-        type: 'GET',
-        data: {category_id: category_id},
-        success: function (res) {
+    //Check if product is null
+    if(res.products.length == 0)
+    {
+        store.empty();
 
-            // console.log(res);
+        var html = "<div class='category-empty'><h4>we're making something great, stay connected!</h4></div>";
+        store.append(html);
+    }
 
-            //Check if product is null
-            if(res.products.length == 0)
-            {
-                store.empty();
-                
-                var html = "<div class='category-empty'><h4>we're making something great, stay connected!</h4></div>";
-                store.append(html);   
+    var counter = 0;
+
+    //Load Default Products, limited 30 products
+    $.each(res.products, function(key1, value1){
+        $.each(value1, function(key, value) {
+            //Check if item detail is not available
+            if (value.item_detail == "")
+                return true;
+
+            if(res.images[key1].length == 0 || res.images[key1][key][0][0] == null) {
+                var image = null;
+                return true;
             }
 
-            //Load Default Products, limited 30 products
-            $.each(res.products, function(key1, value1){
+            var image = res.images[key1][key][0][0].split('/');
+            image = '/storage/item_detail/' + image[2] + '/' + image[3];
 
-                $.each(value1, function(key, value) {
+            var html = '<div class="col-md-3 float-left mb-5" style="cursor: pointer" onclick="openProduct(this)" data-id="' + value.id + '" data-category="' + value.item_category.name + '" data-gender="' + value.item_category.gender + '">' +
+                '<div class="shop-picture ps1"' +
+                'style="background-image: url(' + image + ')"' +
+                '>' +
+                '</div>' +
+                '<div class="sale-tag-circle sale-'+ counter + '">SALE</div>' +
+                '<div class="shop-picture-desc">' +
+                '<div class="shop-picture-name">' +
+                value.name +
+                '</div>' +
+                '<div class="shop-picture-price sale-price-' + counter + '">' +
+                'IDR ' + makePrice(value.price) +
+                '</div>' +
+                '</div>' +
+                '</div>';
 
-                    //Check if item detail is not available
-                    if (value.item_detail == "")
-                        return true;
+            store.append(html);
+            $('.sale-' + counter).css('display', 'none');
+            var key_parent = counter;
+            var price = value.price;
 
-                    var image = res.images[key1][key].split('/');
-                    image = '/storage/item_detail/' + image[2] + '/' + image[3];
-
-                    var html = '<div class="col-md-3 float-left mb-5" style="cursor: pointer" onclick="openProduct(this)" data-id="' + value.id + '" data-category="' + value.item_category.name + '" data-gender="' + value.item_category.gender + '">' +
-                        '<div class="shop-picture ps1"' +
-                        'style="background-image: url(' + image + ')"' +
-                        '>' +
-                        '</div>' +
-                        '<div class="sale-tag-circle sale-'+ key + '">SALE</div>' +
-                        '<div class="shop-picture-desc">' +
-                        '<div class="shop-picture-name">' +
-                        value.name +
-                        '</div>' +
-                        '<div class="shop-picture-price">' +
-                        'IDR ' + makePrice(value.price) +
-                        '</div>' +
-                        '</div>' +
-                        '</div>';
-
-                    store.append(html);
-                    $('.sale-' + key).css('display', 'none');
-                    var key_parent = key;
-                    var price = value.price;
-
-                    $.each(value.item_detail, function(key, value){
-                        if(res.discounts[value.id] != null) {
-                            $('.sale-' + value.id).css('display', 'block');
-                            $('.shop-picture-price').html('IDR <s>' + makePrice(price) + '</s> ' + makePrice((price - (res.discounts[value.id] * price))));
-                        }
-                    });
-                });
-                
-            });
-
-            //Load the category dropdown
-            var mcat = $('#mdropdowns');
-            var wcat = $('#wdropdowns');
-            var ocat = $('#odropdowns');
-
-            mcat.empty();
-            wcat.empty();
-            ocat.empty();
-
-            var countMcat = 0;
-            var countWcat = 0;
-            var countOcat = 0;
-
-            //Load Categories
-            $.each(res.categories, function(key, value){
-
-                switch(value.gender)
-                {
-                    case 'male' :
-                    {
-                        mcat.append('<li class="category-links" data-id="' + value.id + '" onclick="loadFromCategory(this)">' + value.name.toUpperCase() + '</li>');
-                        countMcat++;
-                    }break;
-
-                    case 'female' :
-                    {
-                        wcat.append('<li class="category-links" data-id="' + value.id + '" onclick="loadFromCategory(this)">' + value.name.toUpperCase() + '</li>');
-                        countWcat++;
-                    }break;
-
-                    case 'others' :
-                    {
-                        ocat.append('<li class="category-links" data-id="' + value.id + '" onclick="loadFromCategory(this)">' + value.name.toUpperCase() + '</li>');
-                        countOcat++;
-                    }break;
+            $.each(value.item_detail, function(key, value2){
+                if(res.discounts[value2.id] != null) {
+                    $('.sale-' + key_parent).css('display', 'block');
+                    $('.sale-price-' + key_parent).html('IDR <s>' + makePrice(price) + '</s> ' + makePrice((price - (res.discounts[value2.id] * price))));
                 }
             });
 
-            $('#menDropDown').data('count', countMcat);
-            $('#womanDropDown').data('count', countWcat);
-            $('#othersDropDown').data('count', countOcat);
+            counter++;
+        });
 
-        },
-        error: function (res) {
-            toggleError(res.errors);
-            console.log(res.responseText);
+    });
+
+    //Load the category dropdown
+    var mcat = $('#mdropdowns');
+    var wcat = $('#wdropdowns');
+    var ocat = $('#odropdowns');
+
+    mcat.empty();
+    wcat.empty();
+    ocat.empty();
+
+    var countMcat = 0;
+    var countWcat = 0;
+    var countOcat = 0;
+
+    //Load Categories
+    $.each(res.categories, function(key, value){
+
+        switch(value.gender)
+        {
+            case 'male' :
+            {
+                mcat.append('<li class="category-links" data-id="' + value.id + '" onclick="loadFromCategory(this)">' + value.name.toUpperCase() + '</li>');
+                countMcat++;
+            }break;
+
+            case 'female' :
+            {
+                wcat.append('<li class="category-links" data-id="' + value.id + '" onclick="loadFromCategory(this)">' + value.name.toUpperCase() + '</li>');
+                countWcat++;
+            }break;
+
+            case 'others' :
+            {
+                ocat.append('<li class="category-links" data-id="' + value.id + '" onclick="loadFromCategory(this)">' + value.name.toUpperCase() + '</li>');
+                countOcat++;
+            }break;
         }
     });
+
+    $('#menDropDown').data('count', countMcat);
+    $('#womanDropDown').data('count', countWcat);
+    $('#othersDropDown').data('count', countOcat);
 }
 
 function loadStudioCategory(e){

@@ -53,7 +53,9 @@
 						<div class="product-main-pic" id="p-main-con">
 
 							@foreach($images as $image)
-								<div class="p-main-img" style="background-image: url({{ asset('storage/item_detail/' . $image) }})"></div>
+								<div class="p-main-img" style="padding-bottom: 0">
+                                    <img src="{{ asset('storage/item_detail/' . $image) }}" style="width: 100%" alt="">
+								</div>
 							@endforeach
 					</div><!--productmain-pic-->
 					</div><!--pmainwrapper-->

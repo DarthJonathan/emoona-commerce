@@ -99,6 +99,7 @@ class ProductController extends Controller
     function categoryProducts(Request $req)
     {
         $category_id = $req->category_id;
+        $all_images = [];
 
         try {
             $products = Item::with('item_category', 'item_detail')->where('category_id', '=', $category_id)->where('deleted', '=', 0)->get();
@@ -108,9 +109,9 @@ class ProductController extends Controller
 
             foreach ($products as $key => $product)
             {
+                $product_images = [];
                 foreach ($product->item_detail as $detail)
                 {
-                    
                     if($detail->deleted == 1)
                     {
                         unset($product->item_detail[$key]);
@@ -121,7 +122,7 @@ class ProductController extends Controller
 
                     $files = Storage::files('public/item_detail/' . $path);
 
-                    array_push($product_images, $files);
+                    $product_images += $files;
 
                     $discount = Discount::where('item_detail_id', '=', $detail->id)->first();
 
@@ -130,13 +131,15 @@ class ProductController extends Controller
                         $discounts[$detail->id] = $discount->amount;
                     }
                 }
+
+                array_push($all_images, $product_images);
             }
 
             return response()->json([
                 'error'         => false,
                 'products'      => $products,
                 'discounts'     => $discounts,
-                'images'        => $product_images
+                'images'        => $all_images
             ], 200);
 
         }catch(\Exception $e)
@@ -154,7 +157,6 @@ class ProductController extends Controller
         $discounts          = array();
 
         try {
-
             $categories = ItemCategory::where('gender', '=', $category_id)->where('deleted', '=', 0)->get();
 
             foreach($categories as $key => $category) {
@@ -162,11 +164,13 @@ class ProductController extends Controller
                 $product_images = array();
 
                 foreach ($products[$key] as $key_2 => $product) {
-                    foreach ($product->item_detail as $detail) {
+                    $product_images[$key_2] = [];
+
+                    foreach ($product->item_detail as $key_3 => $detail) {
                     
                         if($detail->deleted == 1)
                         {
-                            unset($product->item_detail[$key_2]);
+                            unset($product->item_detail[$key_3]);
                             continue;       
                         }
 
@@ -180,7 +184,7 @@ class ProductController extends Controller
                             $discounts[$detail->id] = $discount->amount;
                         }
 
-                        $product_images += $files;
+                        array_push($product_images[$key_2], $files);
                     }
                 }
 
