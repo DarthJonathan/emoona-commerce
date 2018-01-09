@@ -723,3 +723,18 @@ function makePrice (nStr)
     }
     return x1 + x2;
 }
+
+function viewStudioItem (e)
+{
+    var link = $(e).data('link');
+    var type = $(e).data('type');
+
+    $('#modal').modal('toggle');
+    $('.modal-title').html('Studio Item');
+    $('#ajax-loading').hide();
+    var modal = $('.modal-body');
+
+    modal.empty();
+    var html = "<img src='/storage/img/studio/" + link + "' width='100%'>";
+    modal.html(html);
+}

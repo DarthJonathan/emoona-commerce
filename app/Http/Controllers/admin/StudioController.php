@@ -266,7 +266,7 @@ class StudioController extends Controller
 
             Storage::delete('public/img/studio/' . $req->file_path . '/banner.jpg');
 
-            Image::make($img)->fit(1920, 1280)->encode('jpg', 45)->interlace()->save(storage_path($save_path));
+            Image::make($img)->resize(1280, null, function($constraint){ $constraint->aspectRatio(); $constraint->upsize(); })->encode('jpg', 45)->interlace()->save(storage_path($save_path));
 
             return response()->json([
                 'error' => false,

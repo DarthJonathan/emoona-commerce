@@ -22,7 +22,7 @@
     @foreach($files as $file)
       @if(explode('.', $file)[1]=="jpg" && explode('/',$file)[4]!='banner.jpg')
             <div class="col-md-4 m-auto mb-1"> 
-              <div class="media" style="background-image:url(/storage/img/studio/{{ explode('/',$file)[3] . '/' . explode('/',$file)[4] }})"> 
+              <div class="media" onclick="viewStudioItem(this)" data-link="{{ explode('/',$file)[3] . '/' . explode('/',$file)[4] }}" data-type="image" style="background-image:url(/storage/img/studio/{{ explode('/',$file)[3] . '/' . explode('/',$file)[4] }})">
               </div> 
             </div>
         @endif
@@ -35,7 +35,7 @@
             <div class="col-md-4 m-auto mb-1"> 
               <div class="media vid "> 
               <video width="100%" controls=""> 
-                <source src="/storage/img/studio/{{ explode('/',$file)[3] . '/' . explode('/',$file)[4] }}" type="video/mp4"> 
+                <source src="/storage/img/studio/{{ explode('/',$file)[3] . '/' . explode('/',$file)[4] }}" type="video/mp4">
               </video> 
               </div> 
        
