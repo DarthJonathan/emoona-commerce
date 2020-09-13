@@ -9,7 +9,9 @@ use App\ItemDetail;
 use App\ItemNotify;
 use App\user_notification;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Monolog\Logger;
 use Validator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -292,7 +294,9 @@ class ItemManagement extends Controller
             $this->sendNotification($parentId);
 
             //Make the directory
-            mkdir(storage_path('app/' . $imagePath));
+            if(!file_exists(storage_path('app/' . $imagePath . '/'))) {
+                mkdir(storage_path('app/' . $imagePath . '/'), 777, true);
+            }
 
             //Store the file
             foreach($req->image as $image)
@@ -308,6 +312,8 @@ class ItemManagement extends Controller
         }catch(\Exception $e) {
 
             $return = ['error' => true, 'errors' => 'Storing into Database Failed (ERR: 211)', 'errors_debug' => $e->getMessage()];
+
+            Log::error("Error storing file into database [" . $e . "]");
 
             return response()->json($return, 400);
 
@@ -560,6 +566,10 @@ class ItemManagement extends Controller
                 $path = 'public/item_detail/' . $req->input('id');
                 $singularPath = array();
 
+                if(!file_exists(storage_path('app/' . $path . '/'))) {
+                    mkdir(storage_path('app/' . $path . '/'), 777, true);
+                }
+
                 //Store the file
                 foreach ($req->image as $image) {
                     // array_push($singularPath, $image->store($path));
@@ -574,6 +584,8 @@ class ItemManagement extends Controller
         }catch(\Exception $e) {
 
             $return = ['error' => true, 'errors' => 'Storing into Database Failed (ERR: 111)', 'errors_debug' => $e->getMessage()];
+
+            Log::error("Error storing file into database [" . $e . "]");
 
             return response()->json($return, 400);
 

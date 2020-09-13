@@ -33,7 +33,7 @@
 
 
 <div class="product-page-wrapper">
-	<a href="" id="backtoshop">BACK TO SHOP</a>
+	<a href="{{ route('store') }}" id="backtoshop">BACK TO SHOP</a>
 
 	<form action="#" id="productForm">
 
